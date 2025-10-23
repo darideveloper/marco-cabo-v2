@@ -1,10 +1,15 @@
 import { create } from 'zustand'
 
-export const useMainFormStore = create((set) => ({
-  bears: 0,
-  vehicle: null,
-  service: null,
-  destination: null,
+interface MainFormStore {
+  vehicle: string
+  service: string
+  destination: string
+}
+
+export const useMainFormStore = create<MainFormStore>((set) => ({
+  vehicle: "",
+  service: "",
+  destination: "",
   setVehicle: (vehicle: string) => set({ vehicle }),
   setService: (service: string) => set({ service }),
   setDestination: (destination: string) => set({ destination }),
