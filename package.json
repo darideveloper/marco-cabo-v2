@@ -9,6 +9,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.14.8"
+    "@astrojs/react": "^4.4.0",
+    "@fontsource-variable/montserrat": "^5.2.8",
+    "@tailwindcss/vite": "^4.1.15",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "astro": "^5.14.8",
+    "astro-show-tailwindcss-breakpoint": "^1.0.10",
+    "clsx": "^2.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sweetalert2": "^11.26.3",
+    "tailwindcss": "^4.1.15"
+  },
+  "engines": {
+    "node": ">=20.3.0"
   }
 }
