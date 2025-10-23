@@ -1,0 +1,14 @@
+---
+// Components
+import Price from '../atoms/Price.tsx'
+import ServiceDetails from '../atoms/ServiceDetails.tsx'
+import H2 from '../atoms/H2.astro'
+---
+
+<article>
+  <H2>
+    <Price client:load />
+  </H2>
+
+  <ServiceDetails client:load />
+</article>

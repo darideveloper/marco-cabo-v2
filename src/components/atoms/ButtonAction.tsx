@@ -1,0 +1,1 @@
+// Optional: create a base component like in opo social

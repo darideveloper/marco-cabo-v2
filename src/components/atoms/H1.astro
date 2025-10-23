@@ -1,0 +1,27 @@
+---
+// Estandar size for all h2 elements
+
+// DUMMY COMPONENT: DELETE OR UPDATE IT
+
+// Libs
+import clsx from 'clsx'
+
+// Props
+interface Props {
+  className?: string
+}
+
+// Default props
+const { className } = Astro.props as Props
+---
+
+<h1
+  class={clsx(
+    'text-2xl md:text-4xl',
+    'font-bold',
+    'text-red hover:text-black',
+    className
+  )}
+>
+  <slot />
+</h1>
