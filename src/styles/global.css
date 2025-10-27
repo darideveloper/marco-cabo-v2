@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
+  /* Fonts */
   --font-title: 'Montserrat Variable', sans-serif;
   --font-sans: 'Montserrat Variable', sans-serif;
   --color-red: #f92905;
@@ -8,6 +9,8 @@
   --color-black: #000000;
   --color-grey-dark: #4d4d4d;
   --color-grey-light: #7e807f;
+  --color-red-light: #f929051a;
+  --color-red-lighter: #f929050d;
 }
 
 /* Hide horizontal scrollbar */

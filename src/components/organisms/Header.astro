@@ -1,25 +1,51 @@
 ---
-
+import { navLinks } from '../../libs/constants/navLinks';
+import Logo from '../atoms/Logo.astro';
 ---
 
-<header>
-  <a href=''>
-    <img
-      src=''
-      alt=''
-    />
-  </a>
-  <nav>
-    <ul>
-      <li>
-        <a href='/'>Home</a>
-      </li>
-      <li>
-        <a href='/about'>About</a>
-      </li>
-      <li>
-        <a href='/booking'>Booking</a>
-      </li>
-    </ul>
-  </nav>
+<header
+  class:list={[
+    'container',
+    'absolute top-0 left-0 right-0 z-10',
+    'px-2 py-2 md:px-8 md:py-4',
+  ]}
+>
+  <div
+    class:list={[
+      'flex justify-between items-center',
+      'p-2 md:p-4',
+      'border-4 border-red rounded-4xl',
+    ]}
+  >
+    <!-- Logo -->
+    <Logo />
+
+    <!-- Navigation -->
+    <nav>
+      <ul
+        class:list={[
+          'flex items-center gap-4 md:gap-8',
+          'm-0 p-0',
+          'list-none',
+        ]}
+      >
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class:list={[
+                  'text-black text-base font-medium uppercase tracking-wide',
+                  'hover:text-red',
+                  'transition-colors duration-200',
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
 </header>
