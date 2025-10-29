@@ -1,18 +1,32 @@
 ---
 // Libs
-import clsx from 'clsx'
+import clsx from "clsx";
+
+// components
+import H1 from "../atoms/H1.astro";
 
 // Full width section, check https://docs.apps.darideveloper.com/frontend/container/
 ---
 
 <section
-  class:list={[
-    'w-screen',
-    'h-[75vh]',
-    'bg-no-repeat  bg-center bg-cover',
-  ]}
+  class:list={["w-screen", "h-[70vh]", "bg-no-repeat  bg-center bg-cover"]}
   style="background-image: url('/images/escalade-gris.webp');"
-  id='hero'
+  id="hero"
 >
-  <div class={clsx('container')}></div>
+  <div
+    class={clsx(
+      "container",
+      "flex flex-col justify-center items-start",
+      "h-full",
+      "gap-4",
+    )}
+  >
+    <div class={clsx("max-w-xl", "text-center", "mt-[100px]", "md:mt-0")}>
+      <H1 className="py-12"> Airport Transportation in Los Cabos </H1>
+      <p class="text-xl">
+        Reserving your luxury Airport Transportation in Los Cabos is now fast
+        and easy. Enjoy unmatched comfort and style.
+      </p>
+    </div>
+  </div>
 </section>

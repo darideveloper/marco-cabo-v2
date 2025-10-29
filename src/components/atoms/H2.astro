@@ -1,1 +1,21 @@
-// Estandar size for all h2 elements
+---
+// Libs
+
+// Props
+interface Props {
+  className?: string
+}
+
+// Default props
+const { className } = Astro.props as Props
+---
+
+<h2
+  class:list={[
+    'text-xl md:text-4xl',
+    'font-bold',
+    className,
+  ]}
+>
+  <slot />
+</h2>
