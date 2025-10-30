@@ -3,23 +3,23 @@ import clsx from "clsx"
 
 //  props
 interface Props {
-    className?: string,
-    title: string,
-    image: string,
-    isSelected?: boolean,
-    onClick?: () => void,
+  className?: string,
+  title: string,
+  image: string,
+  isSelected?: boolean,
+  onClick?: () => void,
 }
 
 
-export default function DestinationCard({ 
-  className, 
-  title="Destination",
-  image="/images/destination.webp",
-  isSelected=false,
+export default function DestinationCard({
+  className,
+  title,
+  image,
+  isSelected,
   onClick }: Props) {
 
   return (
-    <div 
+    <div
       onClick={onClick}
       className={clsx(
         'rounded-lg overflow-hidden relative',
@@ -31,14 +31,14 @@ export default function DestinationCard({
         className
       )}
     >
-      <img 
-        src={image} 
-        alt={title} 
+      <img
+        src={image}
+        alt={title}
         className={clsx(
           'w-full h-full object-cover'
-        )} 
+        )}
       />
-      
+
       {/* Centered H2 section - positioned on top of image */}
       <div className={clsx(
         'flex justify-center items-center',
