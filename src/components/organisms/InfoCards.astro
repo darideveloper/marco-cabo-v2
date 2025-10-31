@@ -1,6 +1,7 @@
 ---
 //  components
-import InfoCards from "../molecules/InfoCards"
+import InfoCardsComponent from "../molecules/InfoCards"
+import ButtonAction from "../atoms/ButtonAction"
 ---
 
 
@@ -8,7 +9,14 @@ import InfoCards from "../molecules/InfoCards"
     'container',
     '!py-2',
 ]}>
-<InfoCards client:load/>
+<InfoCardsComponent client:load/>
+
+<div class="flex justify-center mt-6">
+    <ButtonAction 
+        client:load
+        text="CONTINUE TO YOUR INFORMATION & CHECK OUT"
+    />
+</div>
 
 </section>
 
