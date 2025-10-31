@@ -1,6 +1,9 @@
 //  libs
 import clsx from "clsx"
 
+// components
+import H2 from "../atoms/H2"
+
 //  props
 interface Props {
   className?: string,
@@ -45,13 +48,13 @@ export default function DestinationCard({
         'absolute top-0 left-0 right-0 bottom-0',
         'p-4'
       )}>
-        <h2 className={clsx(
-          'text-white font-bold text-xl md:text-4xl',
+        <H2 className={clsx(
+          'text-white text-xl md:text-4xl',
           'text-center',
           'm-0'
         )}>
           {title}
-        </h2>
+        </H2>
       </div>
     </div>
   )

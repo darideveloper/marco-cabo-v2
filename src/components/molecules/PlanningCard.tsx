@@ -3,6 +3,7 @@ import clsx from "clsx"
 
 // components
 import ButtonAction from "../atoms/ButtonAction"
+import H2 from "../atoms/H2"
 
 //  props
 interface Props {
@@ -37,28 +38,28 @@ export default function PlanningCard({
         'items-center',
         'mt-8'
       )}>
-        <h2 className={clsx(
-          'text-white font-bold text-3xl md:text-5xl',
+        <H2 className={clsx(
+          'text-white text-3xl md:text-5xl',
           'uppercase',
           'text-center',
           'm-0 mb-2'
         )}>
           {title1}
-        </h2>
+        </H2>
         <span className={clsx(
           'text-white text-2xl md:text-4xl',
           'm-0'
         )}>
           &
         </span>
-        <h2 className={clsx(
-          'text-white font-bold text-3xl md:text-5xl',
+        <H2 className={clsx(
+          'text-white text-3xl md:text-5xl',
           'uppercase',
           'text-center',
           'm-0 mt-2'
         )}>
           {title2}
-        </h2>
+        </H2>
       </div>
 
       <div className={clsx(

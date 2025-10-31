@@ -2,11 +2,11 @@
 // Components
 import Price from '../atoms/Price.tsx'
 import ServiceDetails from '../atoms/ServiceDetails.tsx'
-import H2 from '../atoms/H2.astro'
+import H2 from '../atoms/H2'
 ---
 
 <article>
-  <H2>
+  <H2 client:load>
     <Price client:load />
   </H2>
 

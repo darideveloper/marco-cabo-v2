@@ -1,6 +1,9 @@
 //  libs
 import clsx from "clsx"
 
+// components
+import H2 from "../atoms/H2"
+
 //  props
 interface Props {
     className?: string,
@@ -30,13 +33,13 @@ export default function TripButton({
         className
       )}
     >
-      <h2 className={clsx(
-        'text-white font-bold text-2xl md:text-3xl',
+      <H2 className={clsx(
+        'text-white text-2xl md:text-3xl',
         'm-0',
         'uppercase'
       )}>
         {title}
-      </h2>
+      </H2>
     </button>
   )
 }

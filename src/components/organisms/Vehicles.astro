@@ -1,6 +1,6 @@
 ---
 //  components
-import H2 from "../atoms/H2.astro"
+import H2 from "../atoms/H2"
 import VehicleSelect from "../molecules/VehicleSelect"
 ---
 
@@ -8,7 +8,7 @@ import VehicleSelect from "../molecules/VehicleSelect"
 <section class:list={[
     'container',
 ]}>
-<H2 className="text-center mb-12">Tap or Click to select your vehicle</H2>
+<H2 client:load className="text-center mb-12">Tap or Click to select your vehicle</H2>
 <VehicleSelect client:load/>
 
 </section>

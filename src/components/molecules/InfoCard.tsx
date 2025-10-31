@@ -1,6 +1,9 @@
 //  libs
 import clsx from "clsx"
 
+// components
+import H3 from "../atoms/H3"
+
 //  Type definitions
 interface BaseCardProps {
   className?: string
@@ -71,14 +74,14 @@ export default function InfoCard(props: InfoCardProps) {
           'p-6 flex flex-col',
           'justify-center items-center'
         )}>
-          <h3 className={clsx(
-            'text-white font-bold text-lg md:text-2xl',
+          <H3 className={clsx(
+            'text-white',
             'uppercase mb-4',
             'm-0',
             'text-center'
           )}>
             {props.title}
-          </h3>
+          </H3>
           <ul className={clsx(
             'text-white text-sm md:text-base',
             'space-y-2',
@@ -119,13 +122,13 @@ export default function InfoCard(props: InfoCardProps) {
           'flex flex-col items-center',
           'mb-4'
         )}>
-          <h3 className={clsx(
-            'text-white font-bold text-lg md:text-2xl',
+          <H3 className={clsx(
+            'text-white',
             'uppercase mb-4',
             'm-0'
           )}>
             Price
-          </h3>
+          </H3>
           <p className={clsx(
             'text-red font-bold text-2xl md:text-4xl',
             'm-0'
