@@ -1,8 +1,6 @@
 ---
 //  components
-import H2 from "../atoms/H2"
 import DestinationSelect from "../molecules/DestinationSelect"
-import clsx from "clsx"
 
 interface Props {
     className?: string
@@ -14,9 +12,8 @@ const { className } = Astro.props as Props
 
 <section class:list={[
     'container',
+    '!py-2',
     className
 ]}>
-<H2 client:load className={clsx("text-center mb-12")}>Tap or Click to select your destination</H2>
 <DestinationSelect client:load/>
-
 </section>

@@ -41,14 +41,18 @@ export default function InfoCard(props: InfoCardProps) {
     return (
       <div className={clsx(
         'rounded-lg overflow-hidden',
-        'aspect-[4/3]',
+        'w-full',
+        'h-full',
+        'min-h-[280px] md:aspect-[4/3]',
+        'relative',
         className
       )}>
         <img
           src={imageProps.image}
           alt={imageProps.title || 'Info'}
           className={clsx(
-            'w-full h-full object-cover'
+            'w-full h-full object-cover',
+            'absolute inset-0'
           )}
         />
       </div>
@@ -59,7 +63,9 @@ export default function InfoCard(props: InfoCardProps) {
     return (
       <div className={clsx(
         'rounded-lg overflow-hidden relative',
-        'aspect-[4/3]',
+        'w-full',
+        'h-full',
+        'min-h-[280px] md:aspect-[4/3]',
         className
       )}>
         <img
@@ -71,20 +77,21 @@ export default function InfoCard(props: InfoCardProps) {
         />
         <div className={clsx(
           'absolute top-0 left-0 right-0 bottom-0',
-          'p-6 flex flex-col',
+          'p-3 md:p-6 flex flex-col',
           'justify-center items-center'
         )}>
           <H3 className={clsx(
             'text-white',
-            'uppercase mb-4',
+            'uppercase mb-2 md:mb-4',
             'm-0',
-            'text-center'
+            'text-center',
+            'text-sm md:text-base'
           )}>
             {props.title}
           </H3>
           <ul className={clsx(
-            'text-white text-sm md:text-base',
-            'space-y-2',
+            'text-white text-xs md:text-base',
+            'space-y-1 md:space-y-2',
             'list-none',
             'p-0',
             'm-0',
@@ -113,25 +120,30 @@ export default function InfoCard(props: InfoCardProps) {
       <div className={clsx(
         'rounded-lg overflow-hidden',
         'bg-black',
-        'aspect-[4/3]',
+        'w-full',
+        'h-full',
+        'min-h-[280px] md:aspect-[4/3]',
         'flex flex-col',
-        'p-6',
+        'p-3 md:p-6',
         className
       )}>
         <div className={clsx(
           'flex flex-col items-center',
-          'mb-4'
+          'mb-2 md:mb-4',
+          'flex-shrink-0'
         )}>
           <H3 className={clsx(
             'text-white',
-            'uppercase mb-4',
-            'm-0'
+            'uppercase mb-2 md:mb-4',
+            'm-0',
+            'text-sm md:text-base'
           )}>
             Price
           </H3>
           <p className={clsx(
-            'text-red font-bold text-2xl md:text-4xl',
-            'm-0'
+            'text-red font-bold text-xl md:text-4xl',
+            'm-0',
+            'break-words'
           )}>
             {props.price}
           </p>
@@ -140,31 +152,33 @@ export default function InfoCard(props: InfoCardProps) {
         <div className={clsx(
           'bg-grey-dark',
           'rounded-lg',
-          'p-4',
+          'p-3 md:p-4',
           'flex-1',
           'flex flex-col justify-center',
-          'mb-4'
+          'mb-2 md:mb-4',
+          'min-h-0',
+          'overflow-hidden'
         )}>
           <div className={clsx(
-            'space-y-3',
-            'text-white text-sm md:text-base'
+            'space-y-2 md:space-y-3',
+            'text-white text-xs md:text-base'
           )}>
             {props.vehicle && (
-              <div className={clsx('flex justify-between')}>
-                <span className={clsx('font-medium')}>Vehicle:</span>
-                <span>{props.vehicle}</span>
+              <div className={clsx('flex flex-row justify-between items-center gap-2')}>
+                <span className={clsx('font-medium whitespace-nowrap')}>Vehicle:</span>
+                <span className={clsx('text-right break-words')}>{props.vehicle}</span>
               </div>
             )}
             {props.serviceType && (
-              <div className={clsx('flex justify-between')}>
-                <span className={clsx('font-medium')}>Service Type:</span>
-                <span>{props.serviceType}</span>
+              <div className={clsx('flex flex-row justify-between items-center gap-2')}>
+                <span className={clsx('font-medium whitespace-nowrap')}>Service Type:</span>
+                <span className={clsx('text-right break-words')}>{props.serviceType}</span>
               </div>
             )}
             {props.destination && (
-              <div className={clsx('flex justify-between')}>
-                <span className={clsx('font-medium')}>Destination:</span>
-                <span>{props.destination}</span>
+              <div className={clsx('flex flex-row justify-between items-center gap-2')}>
+                <span className={clsx('font-medium whitespace-nowrap')}>Destination:</span>
+                <span className={clsx('text-right break-words')}>{props.destination}</span>
               </div>
             )}
           </div>
@@ -173,7 +187,8 @@ export default function InfoCard(props: InfoCardProps) {
         <p className={clsx(
           'text-white text-xs md:text-sm',
           'm-0',
-          'text-left'
+          'text-left',
+          'flex-shrink-0'
         )}>
           * Prices in USD
         </p>

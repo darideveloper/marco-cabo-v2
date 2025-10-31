@@ -14,8 +14,8 @@ export default function InfoCards({ className }: Props) {
     <div className={clsx(
       'bg-grey-dark',
       'rounded-lg',
-      'p-6',
       'grid grid-cols-1 md:grid-cols-3 gap-4',
+      'items-stretch',
       'mx-auto',
       'w-full',
       className
