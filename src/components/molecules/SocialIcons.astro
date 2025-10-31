@@ -1,13 +1,36 @@
 ---
-// DUMMY DATA, UPDATE IT
-const data = [
-    {
-        "iconName": "facebook",
-        "href": "https://www.facebook.com/profile.php?id=100093181244966"
-    },
-    {
-        "iconName": "instagram",
-        "href": "https://www.instagram.com/profile.php?id=100093181244966"
-    }
-]
+import { Facebook } from '@lucide/astro';
+import { Instagram } from '@lucide/astro';
+import SocialIcon from '../atoms/SocialIcon.astro';
+
+interface SocialIconData {
+  iconName: string;
+  href: string;
+  label?: string;
+}
+
+interface Props {
+  data?: SocialIconData[];
+  className?: string;
+}
+
+let { data = [], className } = Astro.props;
+
+const iconMap: Record<string, any> = {
+  facebook: Facebook,
+  instagram: Instagram,
+};
 ---
+
+<div class:list={['flex items-center justify-start px-8 gap-4', className]}>
+  {data.map((social) => {
+    const IconComponent = iconMap[social.iconName.toLowerCase()];
+    if (!IconComponent) return null;
+    
+    return (
+      <SocialIcon href={social.href} label={social.label}>
+        <IconComponent class="w-5 h-5" />
+      </SocialIcon>
+    );
+  })}
+</div>

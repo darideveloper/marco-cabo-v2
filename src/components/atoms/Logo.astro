@@ -1,10 +1,19 @@
 ---
 
+
+interface Props {
+  className?: string;
+}
+
+let {className} = Astro.props;
+if (!className) {
+  className = '!h-10 !w-auto';
+}
 ---
 
 <a
   href="/"
-  class:list={['flex items-center']}
+  class:list={['flex','items-center']}
 >
   <div
     class:list={[
@@ -17,7 +26,7 @@
       src="/images/logo.png"
       alt="Cabo Logo"
       class:list={[
-        'h-10 w-auto',
+        className,
         'object-contain',
       ]}
     />
