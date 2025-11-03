@@ -9,14 +9,18 @@ import H1 from "../atoms/H1.astro";
 ---
 
 <section
-  class:list={["w-screen", "h-[70vh]", "bg-no-repeat  bg-center bg-cover"]}
+  class:list={[
+    "w-screen", "md:h-[70vh]",
+    "bg-no-repeat","bg-cover", "bg-left",
+
+    ]}
   style="background-image: url('/images/escalade-gris.webp');"
   id="hero"
 >
   <div
     class={clsx(
       "container",
-      "flex flex-col justify-center items-start",
+      "flex flex-col justify-center items-start items-center md:items-start",
       "h-full",
       "gap-4",
     )}
