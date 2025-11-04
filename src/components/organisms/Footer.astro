@@ -37,10 +37,12 @@ const socialLinks = [
       <!-- Left Column: Logo, Text, Socials -->
       <div class:list={[
         'flex flex-col',
-        'gap-4'
+        'gap-4',
+        'items-center md:items-start',
+        'text-center md:text-start'
       ]}>
         <Logo className="h-20 w-auto" />
-        <H2 client:load className="!text-xl text-start px-8">
+        <H2 client:load className="!text-xl px-8">
             Your Vacation Planer
         </H2>
 
@@ -49,7 +51,9 @@ const socialLinks = [
       <!-- Middle Column: Menu -->
       <div class:list={[
         'flex flex-col',
-        'gap-4'
+        'gap-4',
+        'items-center md:items-start',
+        'text-center md:text-start'
       ]}>
         <H3 client:load className="text-black uppercase m-0 mb-2">
           Menu
@@ -59,7 +63,8 @@ const socialLinks = [
             'flex flex-col',
             'gap-2 md:gap-3',
             'm-0 p-0',
-            'list-none'
+            'list-none',
+            'items-center md:items-start'
           ]}>
             {navLinks.map((link) => (
               <li>
@@ -83,7 +88,9 @@ const socialLinks = [
       <!-- Right Column: Contact -->
       <div class:list={[
         'flex flex-col',
-        'gap-4'
+        'gap-4',
+        'items-center md:items-start',
+        'text-center md:text-start'
       ]}>
         <H3 client:load className="text-black uppercase m-0 mb-2">
           Contact
@@ -91,7 +98,8 @@ const socialLinks = [
         <div class:list={[
           'flex flex-col',
           'gap-2 md:gap-3',
-          'text-black text-sm md:text-base'
+          'text-black text-sm md:text-base',
+          'items-center md:items-start'
         ]}>
           <p class:list={['m-0', 'flex items-center gap-2']}>
             <Mail class="w-4 h-4 flex-shrink-0" />

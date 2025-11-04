@@ -17,6 +17,7 @@ export default function InfoCards({ className }: Props) {
       'items-stretch',
       'mx-auto',
       'w-full',
+      'max-w-[500px] md:max-w-none',
       className
     )}>
       {/* Card 1: Visual/Branding Card - Image type */}

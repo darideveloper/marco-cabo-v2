@@ -16,6 +16,7 @@ export default function PlanningCards({ className }: Props) {
       'grid grid-cols-1 md:grid-cols-2 gap-4',
       'mx-auto',
       'w-full',
+      'max-w-[500px] md:max-w-none',
       className
     )}>
       {/* Video Card */}

@@ -40,6 +40,7 @@ export default function VehicleSelect({ className }: Props) {
         'grid grid-cols-1 md:grid-cols-3 gap-4',
         'mx-auto',
         'w-full',
+        'max-w-[500px] md:max-w-none',
         className
     )}>
         {vehicles.map((vehicle) => (

@@ -49,7 +49,7 @@ export default function DestinationCard({
         'p-4'
       )}>
         <H2 className={clsx(
-          'text-white text-xl md:text-4xl',
+          'text-white',
           'text-center',
           'm-0'
         )}>
