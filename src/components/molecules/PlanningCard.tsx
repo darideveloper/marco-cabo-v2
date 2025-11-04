@@ -29,14 +29,14 @@ export default function PlanningCard({
       'aspect-[2/1]',
       'flex flex-col',
       'justify-between',
-      'p-6 md:p-8',
+      'p-4 md:p-6 lg:p-8',
       'items-center',
       className
     )}>
       <div className={clsx(
         'flex flex-col',
         'items-center',
-        'mt-8'
+        'mt-0 xl:mt-8'
       )}>
         <H2 className={clsx(
           'text-white text-3xl md:text-5xl',
@@ -47,7 +47,8 @@ export default function PlanningCard({
           {title1}
         </H2>
         <span className={clsx(
-          'text-white text-2xl md:text-4xl',
+          'font-bold',
+          'text-white text-2xl xl:text-4xl',
           'm-0'
         )}>
           &

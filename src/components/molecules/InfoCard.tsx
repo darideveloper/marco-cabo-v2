@@ -72,13 +72,19 @@ export default function InfoCard(props: InfoCardProps) {
           src={props.image}
           alt={props.title}
           className={clsx(
-            'w-full h-full object-cover'
+            'w-full h-full object-cover',
+            'absolute inset-0'
           )}
         />
         <div className={clsx(
+          'absolute inset-0',
+          'bg-black/60'
+        )} />
+        <div className={clsx(
           'absolute top-0 left-0 right-0 bottom-0',
           'p-3 md:p-6 flex flex-col',
-          'justify-center items-center'
+          'justify-center items-center',
+          'z-10'
         )}>
           <H3 className={clsx(
             'text-white',
@@ -122,7 +128,7 @@ export default function InfoCard(props: InfoCardProps) {
         'bg-black',
         'w-full',
         'h-full',
-        'min-h-[280px] md:aspect-[4/3]',
+        'min-h-[280px]',
         'flex flex-col',
         'p-3 md:p-6',
         className
