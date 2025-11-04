@@ -37,10 +37,10 @@ export default function VehicleSelect({ className }: Props) {
     const [selectedVehicle, setSelectedVehicle] = useState<number>(1)
 
     return (<div className={clsx(
-        'grid grid-cols-1 md:grid-cols-3 gap-4',
+        'grid grid-cols-1 lg:grid-cols-3 gap-4',
         'mx-auto',
         'w-full',
-        'max-w-[500px] md:max-w-none',
+        'max-w-[500px] lg:max-w-none',
         className
     )}>
         {vehicles.map((vehicle) => (

@@ -30,7 +30,7 @@ export default function CardVehicle({
       
       {/* Bottom text section - positioned on top of image */}
       <div className={clsx(
-        'flex flex-col md:flex-row justify-between items-center md:items-center',
+        'flex flex-col lg:flex-row justify-between items-center lg:items-center',
         'absolute bottom-0 left-0 right-0',
         'p-4',
         'gap-2'

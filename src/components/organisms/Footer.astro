@@ -29,17 +29,17 @@ const socialLinks = [
   <!-- Top Section -->
   <div class:list={[
     'container',
-    'py-8 md:py-12'
+    'py-8 lg:py-12'
   ]}>
     <div class:list={[
-      'grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12'
+      'grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12'
     ]}>
       <!-- Left Column: Logo, Text, Socials -->
       <div class:list={[
         'flex flex-col',
         'gap-4',
-        'items-center md:items-start',
-        'text-center md:text-start'
+        'items-center lg:items-start',
+        'text-center lg:text-start'
       ]}>
         <Logo className="h-20 w-auto" />
         <H2 client:load className="!text-xl px-8">
@@ -52,8 +52,8 @@ const socialLinks = [
       <div class:list={[
         'flex flex-col',
         'gap-4',
-        'items-center md:items-start',
-        'text-center md:text-start'
+        'items-center lg:items-start',
+        'text-center lg:text-start'
       ]}>
         <H3 client:load className="text-black uppercase m-0 mb-2">
           Menu
@@ -61,17 +61,17 @@ const socialLinks = [
         <nav>
           <ul class:list={[
             'flex flex-col',
-            'gap-2 md:gap-3',
+            'gap-2 lg:gap-3',
             'm-0 p-0',
             'list-none',
-            'items-center md:items-start'
+            'items-center lg:items-start'
           ]}>
             {navLinks.map((link) => (
               <li>
                 <a
                   href={link.href}
                   class:list={[
-                    'text-black text-sm md:text-base',
+                    'text-black text-sm lg:text-base',
                     'hover:text-red',
                     'transition-colors duration-200',
                     'uppercase'
@@ -89,17 +89,17 @@ const socialLinks = [
       <div class:list={[
         'flex flex-col',
         'gap-4',
-        'items-center md:items-start',
-        'text-center md:text-start'
+        'items-center lg:items-start',
+        'text-center lg:text-start'
       ]}>
         <H3 client:load className="text-black uppercase m-0 mb-2">
           Contact
         </H3>
         <div class:list={[
           'flex flex-col',
-          'gap-2 md:gap-3',
-          'text-black text-sm md:text-base',
-          'items-center md:items-start'
+          'gap-2 lg:gap-3',
+          'text-black text-sm lg:text-base',
+          'items-center lg:items-start'
         ]}>
           <p class:list={['m-0', 'flex items-center gap-2']}>
             <Mail class="w-4 h-4 flex-shrink-0" />

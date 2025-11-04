@@ -24,7 +24,6 @@ export default function VideoCard({
   return (
     <div className={clsx(
       'rounded-lg overflow-hidden relative',
-      'aspect-[2/1]',
       'w-full',
       className
     )}>

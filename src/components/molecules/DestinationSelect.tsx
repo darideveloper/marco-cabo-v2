@@ -29,10 +29,10 @@ export default function DestinationSelect({ className }: Props) {
     const [selectedDestination, setSelectedDestination] = useState<number>(1)
 
     return (<div className={clsx(
-        'grid grid-cols-1 md:grid-cols-2 gap-4',
+        'grid grid-cols-1 lg:grid-cols-2 gap-4',
         'mx-auto',
         'w-full',
-        'max-w-[500px] md:max-w-none',
+        'max-w-[500px] lg:max-w-none',
         className
     )}>
         {destinations.map((destination) => (

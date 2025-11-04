@@ -43,9 +43,9 @@ export default function InfoCard(props: InfoCardProps) {
         'rounded-lg overflow-hidden',
         'w-full',
         'h-full',
-        'min-h-[280px] md:aspect-[4/3]',
+        'aspect-[4/3]',
         'relative',
-        className
+         className
       )}>
         <img
           src={imageProps.image}
@@ -65,7 +65,7 @@ export default function InfoCard(props: InfoCardProps) {
         'rounded-lg overflow-hidden relative',
         'w-full',
         'h-full',
-        'min-h-[280px] md:aspect-[4/3]',
+        'aspect-[4/3]',
         className
       )}>
         <img
@@ -82,22 +82,22 @@ export default function InfoCard(props: InfoCardProps) {
         )} />
         <div className={clsx(
           'absolute top-0 left-0 right-0 bottom-0',
-          'p-3 md:p-6 flex flex-col',
+          'p-3 lg:p-6 flex flex-col',
           'justify-center items-center',
           'z-10'
         )}>
           <H3 className={clsx(
             'text-white',
-            'uppercase mb-2 md:mb-4',
+            'uppercase mb-2 lg:mb-4',
             'm-0',
             'text-center',
-            'text-sm md:text-base'
+            'text-sm lg:text-base'
           )}>
             {props.title}
           </H3>
           <ul className={clsx(
-            'text-white text-xs md:text-base',
-            'space-y-1 md:space-y-2',
+            'text-white text-xs lg:text-base',
+            'space-y-1 lg:space-y-2',
             'list-none',
             'p-0',
             'm-0',
@@ -128,26 +128,25 @@ export default function InfoCard(props: InfoCardProps) {
         'bg-black',
         'w-full',
         'h-full',
-        'min-h-[280px]',
         'flex flex-col',
-        'p-3 md:p-6',
+        'p-3 lg:p-6',
         className
       )}>
         <div className={clsx(
           'flex flex-col items-center',
-          'mb-2 md:mb-4',
+          'mb-2 lg:mb-4',
           'flex-shrink-0'
         )}>
           <H3 className={clsx(
             'text-white',
-            'uppercase mb-2 md:mb-4',
+            'uppercase mb-2 lg:mb-4',
             'm-0',
-            'text-sm md:text-base'
+            'text-sm lg:text-base'
           )}>
             Price
           </H3>
           <p className={clsx(
-            'text-red font-bold text-xl md:text-4xl',
+            'text-red font-bold text-xl lg:text-4xl',
             'm-0',
             'break-words'
           )}>
@@ -158,25 +157,24 @@ export default function InfoCard(props: InfoCardProps) {
         <div className={clsx(
           'bg-grey-dark',
           'rounded-lg',
-          'p-3 md:p-4',
+          'p-3 lg:p-4',
           'flex-1',
           'flex flex-col justify-center',
-          'mb-2 md:mb-4',
-          'min-h-0',
+          'mb-2 lg:mb-4',
           'overflow-hidden'
         )}>
           <div className={clsx(
-            'space-y-2 md:space-y-3',
-            'text-white text-xs md:text-base'
+            'space-y-2 lg:space-y-3',
+            'text-white text-xs lg:text-base'
           )}>
             {props.vehicle && (
-              <div className={clsx('flex flex-row justify-between items-center gap-2')}>
+              <div className={clsx('flex flex-row justify-between items-center gap-2 border-b border-white/60 pb-2')}>
                 <span className={clsx('font-medium whitespace-nowrap')}>Vehicle:</span>
                 <span className={clsx('text-right break-words')}>{props.vehicle}</span>
               </div>
             )}
             {props.serviceType && (
-              <div className={clsx('flex flex-row justify-between items-center gap-2')}>
+              <div className={clsx('flex flex-row justify-between items-center gap-2 border-b border-white/60 pb-2tr ')}>
                 <span className={clsx('font-medium whitespace-nowrap')}>Service Type:</span>
                 <span className={clsx('text-right break-words')}>{props.serviceType}</span>
               </div>
@@ -191,7 +189,7 @@ export default function InfoCard(props: InfoCardProps) {
         </div>
 
         <p className={clsx(
-          'text-white text-xs md:text-sm',
+          'text-white text-xs lg:text-sm',
           'm-0',
           'text-left',
           'flex-shrink-0'

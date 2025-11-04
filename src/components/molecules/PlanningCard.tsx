@@ -26,7 +26,6 @@ export default function PlanningCard({
     <div className={clsx(
       'rounded-lg overflow-hidden',
       'bg-grey-dark',
-      'aspect-[2/1]',
       'flex flex-col',
       'justify-between',
       'p-4 md:p-6 lg:p-8',
@@ -39,7 +38,7 @@ export default function PlanningCard({
         'mt-0 xl:mt-8'
       )}>
         <H2 className={clsx(
-          'text-white text-3xl md:text-5xl',
+          'text-white !text-2xl lg:!text-4xl',
           'uppercase',
           'text-center',
           'm-0 mb-2'
@@ -48,16 +47,16 @@ export default function PlanningCard({
         </H2>
         <span className={clsx(
           'font-bold',
-          'text-white text-2xl xl:text-4xl',
+          'text-white text-2xl lg:text-4xl',
           'm-0'
         )}>
           &
         </span>
         <H2 className={clsx(
-          'text-white text-3xl md:text-5xl',
+          'text-white !text-2xl lg:!text-4xl',
           'uppercase',
           'text-center',
-          'm-0 mt-2'
+          'm-0 mb-4'
         )}>
           {title2}
         </H2>

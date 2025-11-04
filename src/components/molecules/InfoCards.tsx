@@ -13,11 +13,11 @@ export default function InfoCards({ className }: Props) {
   return (
     <div className={clsx(
       'rounded-lg',
-      'grid grid-cols-1 md:grid-cols-3 gap-4',
+      'grid grid-cols-1 lg:grid-cols-3 gap-4',
       'items-stretch',
       'mx-auto',
       'w-full',
-      'max-w-[500px] md:max-w-none',
+      'max-w-[500px] lg:max-w-none',
       className
     )}>
       {/* Card 1: Visual/Branding Card - Image type */}

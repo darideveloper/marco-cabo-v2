@@ -34,7 +34,7 @@ export default function TripButton({
       )}
     >
       <H2 className={clsx(
-        'text-white text-2xl md:text-3xl',
+        'text-white text-2xl lg:text-3xl',
         'm-0',
         'uppercase'
       )}>

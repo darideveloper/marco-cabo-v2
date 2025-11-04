@@ -13,7 +13,7 @@ export default function H3({
 }: Props) {
   return (
     <h3 className={clsx(
-      'text-lg md:text-2xl',
+      'text-lg lg:text-2xl',
       'font-bold',
       className
     )}>
