@@ -89,9 +89,9 @@ export default function InfoCard(props: InfoCardProps) {
           <H3 className={clsx(
             'text-white',
             'uppercase mb-2 lg:mb-4',
+            '!text-2xl lg:!text-4xl',
             'm-0',
             'text-center',
-            'text-sm lg:text-base'
           )}>
             {props.title}
           </H3>
@@ -110,7 +110,8 @@ export default function InfoCard(props: InfoCardProps) {
                 'before:content-["•"]',
                 'before:mr-2',
                 'before:text-white',
-                'before:font-bold'
+                'before:font-bold',
+                '!text-base lg:!text-lg'
               )}>
                 {item}
               </li>
