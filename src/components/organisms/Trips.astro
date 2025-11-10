@@ -1,5 +1,8 @@
 ---
 import TripSelect from "../molecules/TripSelect"
+import getServiceTypes from "../../libs/api/service-types"
+
+const serviceTypes = await getServiceTypes()
 ---
 
 <section class:list={[
@@ -8,5 +11,5 @@ import TripSelect from "../molecules/TripSelect"
 ]}>
 
 
-<TripSelect client:load/>
+<TripSelect client:load serviceTypes={serviceTypes.results}/>
 </section>

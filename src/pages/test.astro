@@ -1,6 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import getVehicles from "../libs/api/vehicles";
+
+const vehicles = await getVehicles()
+console.log(vehicles)
 ---
 <Layout title="Test">
   <h1 class="text-3xl font-bold underline my-96 py-96">Test</h1>
+  <pre>{JSON.stringify(vehicles )}</pre>
 </Layout>

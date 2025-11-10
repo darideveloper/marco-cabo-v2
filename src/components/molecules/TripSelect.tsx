@@ -8,21 +8,16 @@ import TripButton from "./TripButton"
 //  props
 interface Props {
     className?: string
+    serviceTypes: ServiceType[]
 }
 
 
-export default function TripSelect({ className }: Props) {
+export default function TripSelect({ className, serviceTypes }: Props) {
 
-    const trips = [
-        {
-            id: 1,
-            title: "One Way"
-        },
-        {
-            id: 2,
-            title: "Round Trip"
-        }
-    ]
+    const trips = serviceTypes.map((serviceType) => ({
+        id: serviceType.id,
+        title: serviceType.name
+    }))
 
     const [selectedTrip, setSelectedTrip] = useState<number>(1)
 
