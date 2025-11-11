@@ -9,13 +9,22 @@ interface VehicleType {
     image?: string
 }
 
-interface LocationType {
+interface LocationsType {
     id: number
     name: string
 }
 
-interface HotelType {
-    id: number
-    name: string
-    location: LocationType[] 
+
+interface HotelsDataType {
+    id : number,
+    name: string, 
+    locations: LocationsType[]
+
 }
+
+interface HotelDataType {
+    id: number,
+    name: string,
+    hotelName: string
+}
+

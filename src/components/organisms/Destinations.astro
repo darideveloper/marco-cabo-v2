@@ -1,7 +1,7 @@
 ---
 //  components
 import DestinationSelect from "../molecules/DestinationSelect"
-import getHotels from "../../libs/api/hotels"
+import getHotelsData from "../../libs/api/hotels"
 
 interface Props {
     className?: string
@@ -9,16 +9,25 @@ interface Props {
 
 const { className } = Astro.props as Props
 
-const hotels = await getHotels()
+const hotelsData = await getHotelsData()
 
-console.log(hotels.results)
+const hotels = hotelsData.results as HotelsDataType[]
 
-for (const hotel of hotels.results) {
-    console.log(hotel.locations)
-    for (const location of hotel.locations) {
-        console.log(location.name)
-    }
-}
+console.log(hotels)
+const hotelData: HotelDataType[] = []
+hotels.forEach(hotel => {
+    hotel.locations.forEach(location => {
+        hotelData.push({
+            id: location.id,
+            name: location.name,
+            hotelName: hotel.name
+        })
+    })
+})
+
+
+console.log(hotelData)
+
 
 ---
 
@@ -27,5 +36,5 @@ for (const hotel of hotels.results) {
     '!py-2',
     className
 ]}>
-<DestinationSelect client:load/>
+<DestinationSelect client:load hotels={hotelData}/>
 </section>

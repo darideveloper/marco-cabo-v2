@@ -8,10 +8,11 @@ import { useState } from "react"
 //  props
 interface Props {
     className?: string
+    hotelData: HotelDataType[]
 }
 
 
-export default function DestinationSelect({ className }: Props) {
+export default function DestinationSelect({ className, hotelData }: Props) {
 
     const destinations = [
         {
