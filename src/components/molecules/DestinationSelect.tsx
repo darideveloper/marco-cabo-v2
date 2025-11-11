@@ -4,6 +4,7 @@ import clsx from "clsx"
 
 // components
 import DestinationCard from "./DestinationCard"
+import HotelSelectModal from "./HotelSelectModal"
 import { useState } from "react"
 //  props
 interface Props {
@@ -27,24 +28,62 @@ export default function DestinationSelect({ className, hotelData }: Props) {
         }
     ]
 
-    const [selectedDestination, setSelectedDestination] = useState<number>(1)
+    const [selectedDestination, setSelectedDestination] = useState<number | null>(null)
+    const [selectedHotel, setSelectedHotel] = useState<HotelDataType | null>(null)
+    const [modalOpen, setModalOpen] = useState(false)
+    const [destinationForModal, setDestinationForModal] = useState<{ id: number; title: string } | null>(null)
 
-    return (<div className={clsx(
-        'grid grid-cols-1 lg:grid-cols-2 gap-4',
-        'mx-auto',
-        'w-full',
-        'max-w-[500px] lg:max-w-none',
-        className
-    )}>
-        {destinations.map((destination) => (
-            <DestinationCard 
-                key={destination.id} 
-                title={destination.title} 
-                image={destination.image} 
-                isSelected={destination.id === selectedDestination}
-                onClick={() => setSelectedDestination(destination.id)}
-            />
-        ))}
-    </div>)
+    const handleDestinationClick = (destinationId: number, destinationTitle: string) => {
+        // If already selected, do nothing
+        if (selectedDestination === destinationId) {
+            return
+        }
+        
+        // Show modal for hotel selection
+        setDestinationForModal({ id: destinationId, title: destinationTitle })
+        setModalOpen(true)
+    }
+
+    const handleHotelSelect = (hotel: HotelDataType) => {
+        if (destinationForModal) {
+            setSelectedDestination(destinationForModal.id)
+            setSelectedHotel(hotel)
+        }
+    }
+
+    return (
+        <>
+            <div className={clsx(
+                'grid grid-cols-1 lg:grid-cols-2 gap-4',
+                'mx-auto',
+                'w-full',
+                'max-w-[500px] lg:max-w-none',
+                className
+            )}>
+                {destinations.map((destination) => (
+                    <DestinationCard 
+                        key={destination.id} 
+                        title={destination.title} 
+                        image={destination.image} 
+                        isSelected={destination.id === selectedDestination}
+                        onClick={() => handleDestinationClick(destination.id, destination.title)}
+                    />
+                ))}
+            </div>
+            
+            {destinationForModal && (
+                <HotelSelectModal
+                    isOpen={modalOpen}
+                    onClose={() => {
+                        setModalOpen(false)
+                        setDestinationForModal(null)
+                    }}
+                    hotelData={hotelData}
+                    onSelect={handleHotelSelect}
+                    destinationTitle={destinationForModal.title}
+                />
+            )}
+        </>
+    )
 }
 
