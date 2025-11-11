@@ -28,3 +28,8 @@ interface HotelDataType {
     hotelName: string
 }
 
+
+interface PostalCodesType {
+    id: number,
+    name: string
+}

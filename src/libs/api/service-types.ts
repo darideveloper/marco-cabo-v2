@@ -1,8 +1,7 @@
 import fetchData from "../common/fetchData"
-import { API_URL } from "../common/config"
 
 const getServiceTypes = async () => {
-  const data = await fetchData(`${API_URL}/service-types`)
+  const data = await fetchData(`/service-types`)
   return data
 }
 
