@@ -5,15 +5,17 @@ import clsx from "clsx"
 // components
 import DestinationCard from "./DestinationCard"
 import HotelSelectModal from "./HotelSelectModal"
+import PostalCodeSelectModal from "./PostalCodeSelectModal"
 import { useState } from "react"
 //  props
 interface Props {
     className?: string
     hotelData: HotelDataType[]
+    postalCodesData: PostalCodesType[]
 }
 
 
-export default function DestinationSelect({ className, hotelData }: Props) {
+export default function DestinationSelect({ className, hotelData, postalCodesData }: Props) {
 
     const destinations = [
         {
@@ -30,6 +32,7 @@ export default function DestinationSelect({ className, hotelData }: Props) {
 
     const [selectedDestination, setSelectedDestination] = useState<number | null>(null)
     const [selectedHotel, setSelectedHotel] = useState<HotelDataType | null>(null)
+    const [selectedPostalCode, setSelectedPostalCode] = useState<PostalCodesType | null>(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [destinationForModal, setDestinationForModal] = useState<{ id: number; title: string } | null>(null)
 
@@ -39,7 +42,8 @@ export default function DestinationSelect({ className, hotelData }: Props) {
             return
         }
         
-        // Show modal for hotel selection
+        // Show modal based on destination ID
+        // ID 1 = Hotel modal, ID 2 = Postal Code modal
         setDestinationForModal({ id: destinationId, title: destinationTitle })
         setModalOpen(true)
     }
@@ -48,6 +52,13 @@ export default function DestinationSelect({ className, hotelData }: Props) {
         if (destinationForModal) {
             setSelectedDestination(destinationForModal.id)
             setSelectedHotel(hotel)
+        }
+    }
+
+    const handlePostalCodeSelect = (postalCode: PostalCodesType) => {
+        if (destinationForModal) {
+            setSelectedDestination(destinationForModal.id)
+            setSelectedPostalCode(postalCode)
         }
     }
 
@@ -71,7 +82,7 @@ export default function DestinationSelect({ className, hotelData }: Props) {
                 ))}
             </div>
             
-            {destinationForModal && (
+            {destinationForModal && destinationForModal.id === 1 && (
                 <HotelSelectModal
                     isOpen={modalOpen}
                     onClose={() => {
@@ -80,6 +91,19 @@ export default function DestinationSelect({ className, hotelData }: Props) {
                     }}
                     hotelData={hotelData}
                     onSelect={handleHotelSelect}
+                    destinationTitle={destinationForModal.title}
+                />
+            )}
+            
+            {destinationForModal && destinationForModal.id === 2 && (
+                <PostalCodeSelectModal
+                    isOpen={modalOpen}
+                    onClose={() => {
+                        setModalOpen(false)
+                        setDestinationForModal(null)
+                    }}
+                    postalCodesData={postalCodesData}
+                    onSelect={handlePostalCodeSelect}
                     destinationTitle={destinationForModal.title}
                 />
             )}

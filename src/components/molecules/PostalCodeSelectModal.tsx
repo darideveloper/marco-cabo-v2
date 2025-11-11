@@ -6,23 +6,22 @@ import { useState, useRef, useEffect } from "react"
 interface Props {
     isOpen: boolean
     onClose: () => void
-    hotelData: HotelDataType[]
-    onSelect: (hotel: HotelDataType) => void
+    postalCodesData: PostalCodesType[]
+    onSelect: (postalCode: PostalCodesType) => void
     destinationTitle: string
 }
 
-export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect, destinationTitle }: Props) {
-    const [selectedHotelId, setSelectedHotelId] = useState<number | null>(null)
+export default function PostalCodeSelectModal({ isOpen, onClose, postalCodesData, onSelect, destinationTitle }: Props) {
+    const [selectedPostalCodeId, setSelectedPostalCodeId] = useState<number | null>(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
 
-    // Filter hotels based on search query
-    const filteredHotels = hotelData.filter(hotel =>
-        hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        hotel.hotelName.toLowerCase().includes(searchQuery.toLowerCase())
+    // Filter postal codes based on search query
+    const filteredPostalCodes = postalCodesData.filter(postalCode =>
+        postalCode.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
 
     // Close dropdown when clicking outside
@@ -46,7 +45,7 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
     useEffect(() => {
         if (!isOpen) {
             setSearchQuery("")
-            setSelectedHotelId(null)
+            setSelectedPostalCodeId(null)
             setIsDropdownOpen(false)
             setIsClosing(false)
         }
@@ -56,7 +55,7 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
     const handleClose = () => {
         setIsClosing(true)
         setTimeout(() => {
-            setSelectedHotelId(null)
+            setSelectedPostalCodeId(null)
             setSearchQuery("")
             setIsDropdownOpen(false)
             onClose()
@@ -64,11 +63,11 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
     }
 
     const handleConfirm = () => {
-        if (selectedHotelId !== null) {
-            const selectedHotel = hotelData.find(hotel => hotel.id === selectedHotelId)
-            if (selectedHotel) {
-                onSelect(selectedHotel)
-                setSelectedHotelId(null)
+        if (selectedPostalCodeId !== null) {
+            const selectedPostalCode = postalCodesData.find(postalCode => postalCode.id === selectedPostalCodeId)
+            if (selectedPostalCode) {
+                onSelect(selectedPostalCode)
+                setSelectedPostalCodeId(null)
                 setSearchQuery("")
                 handleClose()
             }
@@ -77,13 +76,13 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
 
     if (!isOpen && !isClosing) return null
 
-    const handleHotelClick = (hotel: HotelDataType) => {
-        setSelectedHotelId(hotel.id)
-        setSearchQuery(`${hotel.name} - ${hotel.hotelName}`)
+    const handlePostalCodeClick = (postalCode: PostalCodesType) => {
+        setSelectedPostalCodeId(postalCode.id)
+        setSearchQuery(postalCode.name)
         setIsDropdownOpen(false)
     }
 
-    const selectedHotel = selectedHotelId ? hotelData.find(hotel => hotel.id === selectedHotelId) : null
+    const selectedPostalCode = selectedPostalCodeId ? postalCodesData.find(postalCode => postalCode.id === selectedPostalCodeId) : null
 
     return (
         <div
@@ -132,7 +131,7 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
                     'mb-4',
                     'text-gray-800'
                 )}>
-                    Select Hotel for {destinationTitle}
+                    Select Postal Code for {destinationTitle}
                 </h2>
 
                 {/* Searchable Dropdown */}
@@ -141,7 +140,7 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
                         'block text-sm font-medium',
                         'text-gray-700 mb-2'
                     )}>
-                        Choose a Hotel:
+                        Choose a Postal Code:
                     </label>
                     <div className={clsx('relative')}>
                         <input
@@ -152,12 +151,12 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
                                 setSearchQuery(e.target.value)
                                 setIsDropdownOpen(true)
                                 // Clear selection when user starts typing a new search
-                                if (selectedHotelId && e.target.value !== `${selectedHotel?.name} - ${selectedHotel?.hotelName}`) {
-                                    setSelectedHotelId(null)
+                                if (selectedPostalCodeId && e.target.value !== selectedPostalCode?.name) {
+                                    setSelectedPostalCodeId(null)
                                 }
                             }}
                             onFocus={() => setIsDropdownOpen(true)}
-                            placeholder="Search hotels..."
+                            placeholder="Search postal codes..."
                             className={clsx(
                                 'w-full',
                                 'px-4 py-2',
@@ -176,48 +175,42 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
                                 'shadow-lg',
                                 'max-h-60 overflow-y-auto'
                             )}>
-                                {filteredHotels.length > 0 ? (
-                                    filteredHotels.map((hotel) => (
+                                {filteredPostalCodes.length > 0 ? (
+                                    filteredPostalCodes.map((postalCode) => (
                                         <div
-                                            key={hotel.id}
-                                            onClick={() => handleHotelClick(hotel)}
+                                            key={postalCode.id}
+                                            onClick={() => handlePostalCodeClick(postalCode)}
                                             className={clsx(
                                                 'px-4 py-3',
                                                 'cursor-pointer',
                                                 'hover:bg-gray-50',
                                                 'transition-colors',
-                                                selectedHotelId === hotel.id && 'bg-red/10'
+                                                selectedPostalCodeId === postalCode.id && 'bg-red/10'
                                             )}
                                         >
                                             <div className={clsx('text-gray-800 font-medium')}>
-                                                {hotel.name}
-                                            </div>
-                                            <div className={clsx('text-gray-500 text-sm mt-0.5')}>
-                                                {hotel.hotelName}
+                                                {postalCode.name}
                                             </div>
                                         </div>
                                     ))
                                 ) : (
                                     <div className={clsx('px-4 py-3 text-gray-500 text-center')}>
-                                        No hotels found
+                                        No postal codes found
                                     </div>
                                 )}
                             </div>
                         )}
                     </div>
                     
-                    {/* Selected Hotel Display */}
-                    {selectedHotel && (
+                    {/* Selected Postal Code Display */}
+                    {selectedPostalCode && (
                         <div className={clsx(
                             'mt-3 p-3',
                             'bg-gray-50 rounded-lg',
                             'border border-gray-200'
                         )}>
                             <div className={clsx('text-gray-800 font-medium')}>
-                                {selectedHotel.name}
-                            </div>
-                            <div className={clsx('text-gray-500 text-sm mt-0.5')}>
-                                {selectedHotel.hotelName}
+                                {selectedPostalCode.name}
                             </div>
                         </div>
                     )}
@@ -242,7 +235,7 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
                     </button>
                     <button
                         onClick={handleConfirm}
-                        disabled={selectedHotelId === null}
+                        disabled={selectedPostalCodeId === null}
                         className={clsx(
                             'px-4 py-2',
                             'bg-red text-white rounded-lg',
