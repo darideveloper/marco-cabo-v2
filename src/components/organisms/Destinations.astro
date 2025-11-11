@@ -1,12 +1,24 @@
 ---
 //  components
 import DestinationSelect from "../molecules/DestinationSelect"
+import getHotels from "../../libs/api/hotels"
 
 interface Props {
     className?: string
 }
 
 const { className } = Astro.props as Props
+
+const hotels = await getHotels()
+
+console.log(hotels.results)
+
+for (const hotel of hotels.results) {
+    console.log(hotel.locations)
+    for (const location of hotel.locations) {
+        console.log(location.name)
+    }
+}
 
 ---
 

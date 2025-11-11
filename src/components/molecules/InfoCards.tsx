@@ -30,7 +30,7 @@ export default function InfoCards({ className }: Props) {
       {/* Card 2: Transfer Includes Card - Details type */}
       <InfoCard
         type="details"
-        image="/images/SUB.webp"
+        image="/images/Suburban.webp"
         title="YOUR TRANSFER INCLUDES"
         items={[
           'Private Transportation',

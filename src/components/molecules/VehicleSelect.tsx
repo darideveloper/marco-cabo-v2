@@ -8,31 +8,18 @@ import { useState } from "react"
 //  props
 interface Props {
     className?: string
+    vehiclesArray: VehicleType[]
 }
 
 
-export default function VehicleSelect({ className }: Props) {
+export default function VehicleSelect({ className, vehiclesArray }: Props) {
 
-    const vehicles = [
-        {
-            id: 1,
-            title: "Luxury SUV",
-            numberOfGuests: 4,
-            image: "/images/Sprinter.webp"
-        },
-        {
-            id: 2,
-            title: "Executive Van",
-            numberOfGuests: 8,
-            image: "/images/SUB.webp"
-        },
-        {
-            id: 3,
-            title: "Luxury SUV",
-            numberOfGuests: 12,
-            image: "/images/Van.webp"
-        }
-    ]
+    const vehicles = vehiclesArray.map((vehicle, index) => ({
+        id: vehicle.id,
+        name: vehicle.name,
+        numberOfGuests: 4*(index+1) || 4,
+        image: `/images/${vehicle.name}.webp`
+    }))
 
     const [selectedVehicle, setSelectedVehicle] = useState<number>(1)
 
@@ -44,7 +31,7 @@ export default function VehicleSelect({ className }: Props) {
         className
     )}>
         {vehicles.map((vehicle) => (
-            <CardVehicle key={vehicle.id} title={vehicle.title} numberOfGuests={vehicle.numberOfGuests} image={vehicle.image} isSelected={vehicle.id === selectedVehicle} />
+            <CardVehicle key={vehicle.id} title={vehicle.name} numberOfGuests={vehicle.numberOfGuests} image={vehicle.image} isSelected={vehicle.id === selectedVehicle} />
         ))}
     </div>)
 }

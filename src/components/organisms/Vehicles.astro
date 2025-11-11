@@ -2,6 +2,12 @@
 //  components
 import H2 from "../atoms/H2"
 import VehicleSelect from "../molecules/VehicleSelect"
+import getVehicles from "../../libs/api/vehicles"
+
+const vehicles = await getVehicles()
+console.log(vehicles)
+const vehiclesArray = vehicles.results as VehicleType[]
+
 ---
 
 
@@ -10,6 +16,6 @@ import VehicleSelect from "../molecules/VehicleSelect"
     '!py-2',
 ]}>
 <H2 client:load className="text-center py-8">Tap or Click to select your preferences</H2>
-<VehicleSelect client:load/>
+<VehicleSelect client:load vehiclesArray={vehiclesArray}/>
 
 </section>
