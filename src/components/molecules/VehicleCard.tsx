@@ -1,6 +1,9 @@
 //  libs
 import clsx from 'clsx'
 
+// Icons
+import { IoFingerPrint } from 'react-icons/io5'
+
 //  props
 interface Props {
   className?: string
@@ -25,6 +28,7 @@ export default function CardVehicle({
     <article
       data-aos='fade-up'
       data-aos-delay={index * 500}
+      className={clsx('group')}
     >
       <div
         onClick={onClick}
@@ -39,10 +43,26 @@ export default function CardVehicle({
           className
         )}
       >
+        <div
+          className={clsx(
+            'absolute bottom-0 left-1/2 -translate-x-1/2 z-10',
+            'p-4',
+            isSelected ? 'opacity-60' : 'opacity-0',
+            'transition-all duration-700'
+          )}
+        >
+          <IoFingerPrint className={clsx('text-red text-5xl')} />
+        </div>
+
         <img
           src={image}
           alt={title}
-          className={clsx('w-full')}
+          className={clsx(
+            'w-full',
+            isSelected ? 'scale-110' : 'group-hover:scale-110',
+            isSelected ? 'opacity-100' : 'opacity-80 group-hover:opacity-100',
+            'transition-all duration-300'
+          )}
         />
 
         {/* Bottom text section - positioned on top of image */}
