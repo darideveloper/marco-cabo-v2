@@ -19,7 +19,7 @@ export default function VehicleSelect({ className, vehiclesArray }: Props) {
         id: vehicle.id,
         name: vehicle.name,
         numberOfGuests: vehicle.passengers || 4,
-        image: `/images/${vehicle.name}.webp`,
+        image: `/images/vehicles/${vehicle.name}.webp`,
       })),
     [vehiclesArray]
   )
