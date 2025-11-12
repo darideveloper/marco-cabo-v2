@@ -25,7 +25,8 @@ export default function ButtonAction({
         'px-6 py-3',
         'rounded-lg',
         'transition-all duration-300',
-        'hover:opacity-90',
+        'opacity-100 hover:opacity-80',
+        'hover:scale-105',
         'cursor-pointer',
         className
       )}

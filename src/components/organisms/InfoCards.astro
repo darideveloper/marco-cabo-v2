@@ -1,22 +1,16 @@
 ---
 //  components
-import InfoCardsComponent from "../molecules/InfoCards"
-import ButtonAction from "../atoms/ButtonAction"
+import InfoCardsComponent from '../molecules/InfoCards'
+import ButtonAction from '../atoms/ButtonAction'
 ---
 
+<section class:list={['container', '']}>
+  <InfoCardsComponent client:load />
 
-<section class:list={[
-    'container',
-    '',
-]}>
-<InfoCardsComponent client:load/>
-
-<div class="flex justify-center mt-6">
-    <ButtonAction 
-        client:load
-        text="CONTINUE TO YOUR INFORMATION & CHECK OUT"
+  <div class='flex justify-center mt-6'>
+    <ButtonAction
+      client:load
+      text='CONTINUE TO YOUR INFORMATION & CHECK OUT'
     />
-</div>
-
+  </div>
 </section>
-
