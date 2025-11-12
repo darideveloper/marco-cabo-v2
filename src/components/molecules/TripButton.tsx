@@ -1,23 +1,32 @@
 //  libs
-import clsx from "clsx"
+import clsx from 'clsx'
 
 // components
-import H2 from "../atoms/H2"
+import H2 from '../atoms/H2'
+
+// Icons
+import { FaArrowsRotate, FaArrowRight } from 'react-icons/fa6'
 
 //  props
 interface Props {
-    className?: string,
-    title: string,
-    isSelected?: boolean,
-    onClick?: () => void,
+  className?: string
+  title: string
+  isSelected?: boolean
+  onClick?: () => void
 }
 
+export default function TripButton({
+  className,
+  title = 'One Way',
+  isSelected = false,
+  onClick,
+}: Props) {
+  const icons = {
+    'One Way': <FaArrowRight />,
+    'Round Trip': <FaArrowsRotate />,
+  }
 
-export default function TripButton({ 
-  className, 
-  title="One Way",
-  isSelected=false,
-  onClick }: Props) {
+  const icon = icons[title as keyof typeof icons]
 
   return (
     <button
@@ -29,18 +38,27 @@ export default function TripButton({
         'min-h-[200px]',
         'flex items-center justify-center',
         'cursor-pointer',
-        isSelected ? 'bg-grey-dark border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]' : 'bg-grey-light border-transparent',
+        isSelected
+          ? 'bg-grey-dark border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]'
+          : 'bg-grey-light border-transparent',
         className
       )}
     >
-      <H2 className={clsx(
-        'text-white text-2xl lg:text-3xl',
-        'm-0',
-        'uppercase'
-      )}>
-        {title}
+      <H2
+        className={clsx(
+          'text-white text-2xl lg:text-3xl',
+          'm-0',
+          'uppercase',
+          'flex',
+          'flex-col',
+          'items-center',
+          'justify-center',
+          'gap-2'
+        )}
+      >
+        <span>{title}</span>
+        <span>{icon}</span>
       </H2>
     </button>
   )
 }
-
