@@ -1,5 +1,6 @@
 //  libs
 import clsx from "clsx"
+import { useMainFormStore } from "../../libs/store/mainFormStore"
 
 // components
 import InfoCard from "./InfoCard"
@@ -10,6 +11,17 @@ interface Props {
 }
 
 export default function InfoCards({ className }: Props) {
+  const selectedTripName = useMainFormStore((state) => state.selectedTripName)
+  const selectedVehicleName = useMainFormStore((state) => state.selectedVehicleName)
+  const selectedHotel = useMainFormStore((state) => state.selectedHotel)
+  const selectedPostalCode = useMainFormStore((state) => state.selectedPostalCode)
+  
+  // Format destination display
+  const destinationDisplay = selectedHotel 
+    ? `${selectedHotel.name} - ${selectedHotel.hotelName}`
+    : selectedPostalCode 
+    ? selectedPostalCode.name
+    : undefined
   return (
     <div className={clsx(
       'rounded-lg',
@@ -44,9 +56,9 @@ export default function InfoCards({ className }: Props) {
       <InfoCard
         type="summary"
         price="$ 180.00"
-        vehicle="Luxury SUV"
-        serviceType="One Way"
-        destination="Montage"
+        vehicle={selectedVehicleName || undefined}
+        serviceType={selectedTripName || undefined}
+        destination={destinationDisplay}
       />
     </div>
   )

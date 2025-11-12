@@ -7,6 +7,7 @@ import DestinationCard from "./DestinationCard"
 import HotelSelectModal from "./HotelSelectModal"
 import PostalCodeSelectModal from "./PostalCodeSelectModal"
 import { useState } from "react"
+import { useMainFormStore } from "../../libs/store/mainFormStore"
 //  props
 interface Props {
     className?: string
@@ -35,6 +36,9 @@ export default function DestinationSelect({ className, hotelData, postalCodesDat
     const [selectedPostalCode, setSelectedPostalCode] = useState<PostalCodesType | null>(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [destinationForModal, setDestinationForModal] = useState<{ id: number; title: string } | null>(null)
+    
+    const setSelectedHotelStore = useMainFormStore((state) => state.setSelectedHotel)
+    const setSelectedPostalCodeStore = useMainFormStore((state) => state.setSelectedPostalCode)
 
     const handleDestinationClick = (destinationId: number, destinationTitle: string) => {
         // If already selected, do nothing
@@ -52,6 +56,8 @@ export default function DestinationSelect({ className, hotelData, postalCodesDat
         if (destinationForModal) {
             setSelectedDestination(destinationForModal.id)
             setSelectedHotel(hotel)
+            setSelectedHotelStore({ name: hotel.name, hotelName: hotel.hotelName })
+            setSelectedPostalCodeStore(null) // Clear postal code when hotel is selected
         }
     }
 
@@ -59,6 +65,8 @@ export default function DestinationSelect({ className, hotelData, postalCodesDat
         if (destinationForModal) {
             setSelectedDestination(destinationForModal.id)
             setSelectedPostalCode(postalCode)
+            setSelectedPostalCodeStore({ name: postalCode.name })
+            setSelectedHotelStore(null) // Clear hotel when postal code is selected
         }
     }
 

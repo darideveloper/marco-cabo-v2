@@ -1,9 +1,10 @@
 //  libs
 import clsx from "clsx"
-import { useState } from "react"
+import { useState, useEffect, useMemo } from "react"
 
 // components
 import TripButton from "./TripButton"
+import { useMainFormStore } from "../../libs/store/mainFormStore"
 
 //  props
 interface Props {
@@ -14,12 +15,25 @@ interface Props {
 
 export default function TripSelect({ className, serviceTypes }: Props) {
 
-    const trips = serviceTypes.map((serviceType) => ({
+    const trips = useMemo(() => serviceTypes.map((serviceType) => ({
         id: serviceType.id,
         title: serviceType.name
-    }))
+    })), [serviceTypes])
 
     const [selectedTrip, setSelectedTrip] = useState<number>(1)
+    const setSelectedTripStore = useMainFormStore((state) => state.setSelectedTrip)
+
+    // Initialize store with first trip
+    useEffect(() => {
+        if (trips.length > 0 && trips[0]) {
+            setSelectedTripStore(trips[0].id, trips[0].title)
+        }
+    }, [trips, setSelectedTripStore])
+
+    const handleTripClick = (tripId: number, tripName: string) => {
+        setSelectedTrip(tripId)
+        setSelectedTripStore(tripId, tripName)
+    }
 
     return (
         <div className={clsx(
@@ -34,7 +48,7 @@ export default function TripSelect({ className, serviceTypes }: Props) {
                     key={trip.id} 
                     title={trip.title} 
                     isSelected={trip.id === selectedTrip}
-                    onClick={() => setSelectedTrip(trip.id)}
+                    onClick={() => handleTripClick(trip.id, trip.title)}
                 />
             ))}
         </div>

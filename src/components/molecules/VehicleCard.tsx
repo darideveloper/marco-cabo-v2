@@ -8,6 +8,7 @@ interface Props {
     numberOfGuests: number,
     image: string,
     isSelected?: boolean,
+    onClick?: () => void,
 }
 
 
@@ -16,16 +17,20 @@ export default function CardVehicle({
   title="Luxury SUV",
   numberOfGuests=4,
   image="/images/Sprinter.webp",
-  isSelected=false }: Props) {
+  isSelected=false,
+  onClick }: Props) {
 
   return (
-    <div className={clsx(
-      'rounded-lg overflow-hidden relative',
-      'transition-all duration-300',
-      'border-4',
-      isSelected ? 'border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]' : 'border-transparent',
-      className
-    )}>
+    <div 
+      onClick={onClick}
+      className={clsx(
+        'rounded-lg overflow-hidden relative',
+        'transition-all duration-300',
+        'border-4',
+        'cursor-pointer',
+        isSelected ? 'border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]' : 'border-transparent',
+        className
+      )}>
       <img src={image} alt={title} className={clsx('w-full')} />
       
       {/* Bottom text section - positioned on top of image */}

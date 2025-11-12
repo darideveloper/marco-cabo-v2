@@ -1,10 +1,11 @@
 //  libs
 import clsx from "clsx"
-
+import { useState, useEffect, useMemo } from "react"
 
 // components
 import CardVehicle from "./VehicleCard"
-import { useState } from "react"
+import { useMainFormStore } from "../../libs/store/mainFormStore"
+
 //  props
 interface Props {
     className?: string
@@ -14,14 +15,27 @@ interface Props {
 
 export default function VehicleSelect({ className, vehiclesArray }: Props) {
 
-    const vehicles = vehiclesArray.map((vehicle, index) => ({
+    const vehicles = useMemo(() => vehiclesArray.map((vehicle, index) => ({
         id: vehicle.id,
         name: vehicle.name,
         numberOfGuests: 4*(index+1) || 4,
         image: `/images/${vehicle.name}.webp`
-    }))
+    })), [vehiclesArray])
 
     const [selectedVehicle, setSelectedVehicle] = useState<number>(1)
+    const setSelectedVehicleStore = useMainFormStore((state) => state.setSelectedVehicle)
+
+    // Initialize store with first vehicle
+    useEffect(() => {
+        if (vehicles.length > 0 && vehicles[0]) {
+            setSelectedVehicleStore(vehicles[0].name)
+        }
+    }, [vehicles, setSelectedVehicleStore])
+
+    const handleVehicleClick = (vehicleId: number, vehicleName: string) => {
+        setSelectedVehicle(vehicleId)
+        setSelectedVehicleStore(vehicleName)
+    }
 
     return (<div className={clsx(
         'grid grid-cols-1 lg:grid-cols-3 gap-4',
@@ -31,7 +45,14 @@ export default function VehicleSelect({ className, vehiclesArray }: Props) {
         className
     )}>
         {vehicles.map((vehicle) => (
-            <CardVehicle key={vehicle.id} title={vehicle.name} numberOfGuests={vehicle.numberOfGuests} image={vehicle.image} isSelected={vehicle.id === selectedVehicle} />
+            <CardVehicle 
+                key={vehicle.id} 
+                title={vehicle.name} 
+                numberOfGuests={vehicle.numberOfGuests} 
+                image={vehicle.image} 
+                isSelected={vehicle.id === selectedVehicle}
+                onClick={() => handleVehicleClick(vehicle.id, vehicle.name)}
+            />
         ))}
     </div>)
 }
