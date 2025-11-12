@@ -16,6 +16,7 @@ export default function PostalCodeSelectModal({ isOpen, onClose, postalCodesData
     const [searchQuery, setSearchQuery] = useState("")
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
+    const [isOpening, setIsOpening] = useState(isOpen)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -41,6 +42,20 @@ export default function PostalCodeSelectModal({ isOpen, onClose, postalCodesData
         }
     }, [isDropdownOpen])
 
+    // Handle opening animation
+    useEffect(() => {
+        if (isOpen && !isClosing) {
+            // Start with opening state to show initial closed position
+            setIsOpening(true)
+            // Use requestAnimationFrame to ensure DOM is ready, then trigger animation
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    setIsOpening(false)
+                })
+            })
+        }
+    }, [isOpen, isClosing])
+
     // Reset search when modal closes
     useEffect(() => {
         if (!isOpen) {
@@ -48,6 +63,7 @@ export default function PostalCodeSelectModal({ isOpen, onClose, postalCodesData
             setSelectedPostalCodeId(null)
             setIsDropdownOpen(false)
             setIsClosing(false)
+            setIsOpening(false)
         }
     }, [isOpen])
 
@@ -59,7 +75,7 @@ export default function PostalCodeSelectModal({ isOpen, onClose, postalCodesData
             setSearchQuery("")
             setIsDropdownOpen(false)
             onClose()
-        }, 200) // Match animation duration
+        }, 300) // Match animation duration
     }
 
     const handleConfirm = () => {
@@ -76,6 +92,8 @@ export default function PostalCodeSelectModal({ isOpen, onClose, postalCodesData
 
     if (!isOpen && !isClosing) return null
 
+    const isAnimating = isOpening || isClosing
+
     const handlePostalCodeClick = (postalCode: PostalCodesType) => {
         setSelectedPostalCodeId(postalCode.id)
         setSearchQuery(postalCode.name)
@@ -90,8 +108,8 @@ export default function PostalCodeSelectModal({ isOpen, onClose, postalCodesData
                 'fixed inset-0 z-50',
                 'flex items-center justify-center',
                 'bg-black/60',
-                'transition-opacity duration-200',
-                isClosing ? 'opacity-0' : 'opacity-100'
+                'transition-opacity duration-300 ease-out',
+                isAnimating && isClosing ? 'opacity-0' : 'opacity-100'
             )}
             onClick={handleClose}
         >
@@ -102,8 +120,10 @@ export default function PostalCodeSelectModal({ isOpen, onClose, postalCodesData
                     'max-w-md w-full mx-4',
                     'shadow-xl',
                     'relative',
-                    'transition-all duration-200',
-                    isClosing 
+                    'transition-all duration-300 ease-out',
+                    isOpening 
+                        ? 'opacity-0 scale-95 translate-y-2' 
+                        : isClosing 
                         ? 'opacity-0 scale-95 translate-y-2' 
                         : 'opacity-100 scale-100 translate-y-0'
                 )}

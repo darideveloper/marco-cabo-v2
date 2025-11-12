@@ -16,6 +16,7 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
     const [searchQuery, setSearchQuery] = useState("")
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
+    const [isOpening, setIsOpening] = useState(isOpen)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -42,6 +43,20 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
         }
     }, [isDropdownOpen])
 
+    // Handle opening animation
+    useEffect(() => {
+        if (isOpen && !isClosing) {
+            // Start with opening state to show initial closed position
+            setIsOpening(true)
+            // Use requestAnimationFrame to ensure DOM is ready, then trigger animation
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    setIsOpening(false)
+                })
+            })
+        }
+    }, [isOpen, isClosing])
+
     // Reset search when modal closes
     useEffect(() => {
         if (!isOpen) {
@@ -49,6 +64,7 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
             setSelectedHotelId(null)
             setIsDropdownOpen(false)
             setIsClosing(false)
+            setIsOpening(false)
         }
     }, [isOpen])
 
@@ -60,7 +76,7 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
             setSearchQuery("")
             setIsDropdownOpen(false)
             onClose()
-        }, 200) // Match animation duration
+        }, 300) // Match animation duration
     }
 
     const handleConfirm = () => {
@@ -77,6 +93,8 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
 
     if (!isOpen && !isClosing) return null
 
+    const isAnimating = isOpening || isClosing
+
     const handleHotelClick = (hotel: HotelDataType) => {
         setSelectedHotelId(hotel.id)
         setSearchQuery(`${hotel.name} - ${hotel.hotelName}`)
@@ -91,8 +109,8 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
                 'fixed inset-0 z-50',
                 'flex items-center justify-center',
                 'bg-black/60',
-                'transition-opacity duration-200',
-                isClosing ? 'opacity-0' : 'opacity-100'
+                'transition-opacity duration-300 ease-out',
+                isAnimating && isClosing ? 'opacity-0' : 'opacity-100'
             )}
             onClick={handleClose}
         >
@@ -103,8 +121,10 @@ export default function HotelSelectModal({ isOpen, onClose, hotelData, onSelect,
                     'max-w-md w-full mx-4',
                     'shadow-xl',
                     'relative',
-                    'transition-all duration-200',
-                    isClosing 
+                    'transition-all duration-300 ease-out',
+                    isOpening 
+                        ? 'opacity-0 scale-95 translate-y-2' 
+                        : isClosing 
                         ? 'opacity-0 scale-95 translate-y-2' 
                         : 'opacity-100 scale-100 translate-y-0'
                 )}

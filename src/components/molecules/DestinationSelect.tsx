@@ -78,6 +78,8 @@ export default function DestinationSelect({ className, hotelData, postalCodesDat
                         image={destination.image} 
                         isSelected={destination.id === selectedDestination}
                         onClick={() => handleDestinationClick(destination.id, destination.title)}
+                        selectedHotel={destination.id === 1 ? selectedHotel : null}
+                        selectedPostalCode={destination.id === 2 ? selectedPostalCode : null}
                     />
                 ))}
             </div>
