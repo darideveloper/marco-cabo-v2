@@ -17,6 +17,7 @@ interface VehicleType {
     id: number
     name: string
     image?: string
+    passengers?: number
 }
 
 interface LocationsType {

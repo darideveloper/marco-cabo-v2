@@ -14,7 +14,6 @@ const hotelsData = await getHotelsData()
 
 const hotels = hotelsData.results as HotelsDataType[]
 
-console.log(hotels)
 const hotelData: HotelDataType[] = []
 hotels.forEach(hotel => {
     hotel.locations.forEach(location => {
