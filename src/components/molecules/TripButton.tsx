@@ -28,14 +28,16 @@ export default function TripButton({
     'One Way': {
       icon: <FaArrowRight />,
       aosAnimation: 'fade-right',
+      iconAnimation: 'animate-bounce',
     },
     'Round Trip': {
       icon: <FaArrowsRotate />,
       aosAnimation: 'fade-left',
+      iconAnimation: 'animate-spin',
     }
   }
 
-  const { icon, aosAnimation } = data[title as keyof typeof data]
+  const { icon, aosAnimation, iconAnimation } = data[title as keyof typeof data]
 
   return (
     <div
@@ -55,6 +57,7 @@ export default function TripButton({
             ? 'bg-grey-dark border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]'
             : 'bg-grey-light border-transparent',
           'w-full',
+          'group',
           className
         )}
       >
@@ -71,7 +74,7 @@ export default function TripButton({
           )}
         >
           <span>{title}</span>
-          <span>{icon}</span>
+          <span className={`group-hover:${iconAnimation}`}>{icon}</span>
         </H2>
       </button>
     </div>
