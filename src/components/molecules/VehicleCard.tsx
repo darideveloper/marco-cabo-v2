@@ -46,6 +46,19 @@ export default function CardVehicle({
       >
         <div
           className={clsx(
+            'overlay',
+            'bg-linear-to-b from-transparent to-black',
+            'w-full',
+            'h-1/2',
+            'absolute',
+            'z-10',
+            'bottom-0',
+            'left-0',
+          )}
+        ></div>
+
+        <div
+          className={clsx(
             'absolute',
             'bottom-1/2 lg:bottom-0',
             'left-1/2',
@@ -78,7 +91,10 @@ export default function CardVehicle({
             'flex flex-col lg:flex-row justify-between items-center lg:items-center',
             'absolute bottom-0 left-0 right-0',
             'p-4',
-            'gap-2'
+            'gap-2',
+            'z-20',
+            'transition-all duration-1000',
+            isSelected ? 'opacity-100' : 'opacity-40 group-hover:opacity-100',
           )}
         >
           <p className={clsx('text-white font-medium text-lg', 'm-0')}>
