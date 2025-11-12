@@ -1,6 +1,8 @@
 //  libs
 import clsx from "clsx"
+import { useEffect, useState } from "react"
 import { useMainFormStore } from "../../libs/store/mainFormStore"
+import getPricing from "../../libs/api/pricing"
 
 // components
 import InfoCard from "./InfoCard"
@@ -11,17 +13,56 @@ interface Props {
 }
 
 export default function InfoCards({ className }: Props) {
+  const selectedTrip = useMainFormStore((state) => state.selectedTrip)
   const selectedTripName = useMainFormStore((state) => state.selectedTripName)
+  const selectedVehicleId = useMainFormStore((state) => state.selectedVehicleId)
   const selectedVehicleName = useMainFormStore((state) => state.selectedVehicleName)
+  const selectedLocationId = useMainFormStore((state) => state.selectedLocationId)
   const selectedHotel = useMainFormStore((state) => state.selectedHotel)
   const selectedPostalCode = useMainFormStore((state) => state.selectedPostalCode)
   
+  const [price, setPrice] = useState<string>("$ 0.00")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   // Format destination display
   const destinationDisplay = selectedHotel 
     ? `${selectedHotel.name} - ${selectedHotel.hotelName}`
     : selectedPostalCode 
     ? selectedPostalCode.name
     : undefined
+
+  // Fetch price when all required IDs are available
+  useEffect(() => {
+    const fetchPrice = async () => {
+      if (selectedTrip && selectedVehicleId && selectedLocationId) {
+        setIsLoading(true)
+        try {
+          const pricingData = await getPricing({
+            location: selectedLocationId,
+            vehicle: selectedVehicleId,
+            service_type: selectedTrip
+          })
+          
+          if (pricingData.results && pricingData.results.length > 0) {
+            const priceValue = pricingData.results[0].price
+            setPrice(`$ ${priceValue.toFixed(2)}`)
+          } else {
+            setPrice("$ 0.00")
+          }
+        } catch (error) {
+          console.error("Error fetching price:", error)
+          setPrice("$ 0.00")
+        } finally {
+          setIsLoading(false)
+        }
+      } else {
+        setPrice("$ 0.00")
+      }
+    }
+
+    fetchPrice()
+  }, [selectedTrip, selectedVehicleId, selectedLocationId])
+
   return (
     <div className={clsx(
       'rounded-lg',
@@ -55,7 +96,7 @@ export default function InfoCards({ className }: Props) {
       {/* Card 3: Price Card - Summary type */}
       <InfoCard
         type="summary"
-        price="$ 180.00"
+        price={isLoading ? "Loading..." : price}
         vehicle={selectedVehicleName || undefined}
         serviceType={selectedTripName || undefined}
         destination={destinationDisplay}

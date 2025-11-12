@@ -39,6 +39,7 @@ export default function DestinationSelect({ className, hotelData, postalCodesDat
     
     const setSelectedHotelStore = useMainFormStore((state) => state.setSelectedHotel)
     const setSelectedPostalCodeStore = useMainFormStore((state) => state.setSelectedPostalCode)
+    const setSelectedLocationId = useMainFormStore((state) => state.setSelectedLocationId)
 
     const handleDestinationClick = (destinationId: number, destinationTitle: string) => {
         // If already selected, do nothing
@@ -57,7 +58,9 @@ export default function DestinationSelect({ className, hotelData, postalCodesDat
             setSelectedDestination(destinationForModal.id)
             setSelectedHotel(hotel)
             setSelectedHotelStore({ name: hotel.name, hotelName: hotel.hotelName })
+            setSelectedLocationId(hotel.id) // Store location ID
             setSelectedPostalCodeStore(null) // Clear postal code when hotel is selected
+            setSelectedPostalCode(null) // Clear local postal code state
         }
     }
 
@@ -66,7 +69,9 @@ export default function DestinationSelect({ className, hotelData, postalCodesDat
             setSelectedDestination(destinationForModal.id)
             setSelectedPostalCode(postalCode)
             setSelectedPostalCodeStore({ name: postalCode.name })
+            setSelectedLocationId(postalCode.id) // Store location ID
             setSelectedHotelStore(null) // Clear hotel when postal code is selected
+            setSelectedHotel(null) // Clear local hotel state
         }
     }
 

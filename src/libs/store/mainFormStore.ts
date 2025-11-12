@@ -6,14 +6,17 @@ interface MainFormStore {
   destination: string
   selectedTrip: number | null
   selectedTripName: string | null
+  selectedVehicleId: number | null
   selectedVehicleName: string | null
+  selectedLocationId: number | null
   selectedHotel: { name: string; hotelName: string } | null
   selectedPostalCode: { name: string } | null
   setVehicle: (vehicle: string) => void
   setService: (service: string) => void
   setDestination: (destination: string) => void
   setSelectedTrip: (tripId: number, tripName: string) => void
-  setSelectedVehicle: (vehicleName: string) => void
+  setSelectedVehicle: (vehicleId: number, vehicleName: string) => void
+  setSelectedLocationId: (locationId: number | null) => void
   setSelectedHotel: (hotel: { name: string; hotelName: string } | null) => void
   setSelectedPostalCode: (postalCode: { name: string } | null) => void
 }
@@ -24,14 +27,17 @@ export const useMainFormStore = create<MainFormStore>((set) => ({
   destination: "",
   selectedTrip: null,
   selectedTripName: null,
+  selectedVehicleId: null,
   selectedVehicleName: null,
+  selectedLocationId: null,
   selectedHotel: null,
   selectedPostalCode: null,
   setVehicle: (vehicle: string) => set({ vehicle }),
   setService: (service: string) => set({ service }),
   setDestination: (destination: string) => set({ destination }),
   setSelectedTrip: (tripId: number, tripName: string) => set({ selectedTrip: tripId, selectedTripName: tripName }),
-  setSelectedVehicle: (vehicleName: string) => set({ selectedVehicleName: vehicleName }),
+  setSelectedVehicle: (vehicleId: number, vehicleName: string) => set({ selectedVehicleId: vehicleId, selectedVehicleName: vehicleName }),
+  setSelectedLocationId: (locationId: number | null) => set({ selectedLocationId: locationId }),
   setSelectedHotel: (hotel: { name: string; hotelName: string } | null) => set({ selectedHotel: hotel }),
   setSelectedPostalCode: (postalCode: { name: string } | null) => set({ selectedPostalCode: postalCode }),
 }))

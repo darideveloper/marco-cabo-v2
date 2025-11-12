@@ -28,13 +28,13 @@ export default function VehicleSelect({ className, vehiclesArray }: Props) {
     // Initialize store with first vehicle
     useEffect(() => {
         if (vehicles.length > 0 && vehicles[0]) {
-            setSelectedVehicleStore(vehicles[0].name)
+            setSelectedVehicleStore(vehicles[0].id, vehicles[0].name)
         }
     }, [vehicles, setSelectedVehicleStore])
 
     const handleVehicleClick = (vehicleId: number, vehicleName: string) => {
         setSelectedVehicle(vehicleId)
-        setSelectedVehicleStore(vehicleName)
+        setSelectedVehicleStore(vehicleId, vehicleName)
     }
 
     return (<div className={clsx(
