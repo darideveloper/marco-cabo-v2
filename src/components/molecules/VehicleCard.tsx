@@ -40,18 +40,25 @@ export default function CardVehicle({
           isSelected
             ? 'border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]'
             : 'border-transparent',
-          className
+          className,
+          'debug'
         )}
       >
         <div
           className={clsx(
-            'absolute bottom-0 left-1/2 -translate-x-1/2 z-10',
-            'p-4',
+            'absolute',
+            'bottom-1/2 lg:bottom-0',
+            'left-1/2',
+            '-translate-x-1/2',
+            '-translate-y-1/2 lg:translate-y-0',
+            'z-10',
             isSelected ? 'opacity-60' : 'opacity-0',
-            'transition-all duration-700'
+            'transition-all',
+            'duration-700',
+            '-mb-6 lg:mb-4'
           )}
         >
-          <IoFingerPrint className={clsx('text-red text-5xl')} />
+          <IoFingerPrint className={clsx('text-red', 'text-6xl lg:text-4xl')} />
         </div>
 
         <img
