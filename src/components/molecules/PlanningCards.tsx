@@ -17,7 +17,7 @@ export default function PlanningCards({ className }: Props) {
         'grid grid-cols-1 lg:grid-cols-2 gap-4',
         'mx-auto',
         'w-full',
-        'max-w-[500px] lg:max-w-none',
+        'max-w-[700px] lg:max-w-none',
         className
       )}
     >
