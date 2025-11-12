@@ -26,16 +26,10 @@ export default function DestinationCard({
   selectedPostalCode,
   index,
 }: Props) {
-
-  const aosAnimations = [
-    'fade-up',
-    'fade-down',
-  ]
+  const aosAnimations = ['fade-up', 'fade-down']
 
   return (
-    <article
-      data-aos={aosAnimations[index]}
-    >
+    <article data-aos={aosAnimations[index]}>
       <div
         onClick={onClick}
         className={clsx(
@@ -43,17 +37,23 @@ export default function DestinationCard({
           'transition-all duration-300',
           'border-4',
           'cursor-pointer',
-          'aspect-[4/3]',
+          'aspect-4/3',
           isSelected
             ? 'border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]'
             : 'border-transparent',
+          'group',
           className
         )}
       >
         <img
           src={image}
           alt={title}
-          className={clsx('w-full h-full object-cover')}
+          className={clsx(
+            'w-full h-full object-cover',
+            'transition-all duration-300',
+            isSelected ? 'scale-105' : 'group-hover:scale-105',
+            isSelected ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'
+          )}
         />
 
         {/* Overlay gradient for better text readability */}
