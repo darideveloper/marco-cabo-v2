@@ -1,3 +1,13 @@
+// Fetch Options Type
+interface FetchOptions {
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+  body?: Record<string, any> | FormData
+  headers?: Record<string, string>
+}
+
+
+// API Types
+
 interface ServiceType {
     id: number
     name: string
