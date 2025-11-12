@@ -6,7 +6,7 @@ const serviceTypes = await getServiceTypes()
 ---
 <section class:list={[
     'container',
-    '!py-2'
+    ''
 ]}>
 
 <TripSelect client:load serviceTypes={serviceTypes.results as ServiceType[]}/>

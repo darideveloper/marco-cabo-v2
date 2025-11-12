@@ -55,6 +55,7 @@ export default function TripSelect({ className, serviceTypes }: Props) {
           title={trip.title}
           isSelected={trip.id === selectedTrip}
           onClick={() => handleTripClick(trip.id, trip.title)}
+          index={index}
         />
       ))}
     </div>

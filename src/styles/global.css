@@ -29,10 +29,9 @@ html {
 
 /* Cenetr tailwind container and add padding */
 .container {
-  margin: 8rem auto;
   max-width: 1350px;
   margin: 0 auto;
-  padding: 4rem 1rem;
+  padding: 2rem 1rem;
 }
 
 /* Debug border */

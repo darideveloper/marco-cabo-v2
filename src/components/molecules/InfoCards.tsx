@@ -78,12 +78,13 @@ export default function InfoCards({ className }: Props) {
         type="image"
         image="/images/airport-representative.webp"
         title="Meet & Greet Staff"
+        aosAnimation="fade-right"
       />
 
       {/* Card 2: Transfer Includes Card - Details type */}
       <InfoCard
         type="details"
-        image="/images/Suburban.webp"
+        image="/images/vehicles/Luxury SUV.webp"
         title="YOUR TRANSFER INCLUDES"
         items={[
           'Private Transportation',
@@ -91,6 +92,7 @@ export default function InfoCards({ className }: Props) {
           'Meet & Greet Staff',
           '20 min. Groceries Shopping Stop'
         ]}
+        aosAnimation="fade-down"
       />
 
       {/* Card 3: Price Card - Summary type */}
@@ -100,6 +102,7 @@ export default function InfoCards({ className }: Props) {
         vehicle={selectedVehicleName || undefined}
         serviceType={selectedTripName || undefined}
         destination={destinationDisplay}
+        aosAnimation="fade-left"
       />
     </div>
   )

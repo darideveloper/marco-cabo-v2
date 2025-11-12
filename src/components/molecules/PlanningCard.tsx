@@ -19,7 +19,7 @@ export default function PlanningCard({
   title1="EXPERIENCES",
   title2="VACATION PLANNING",
   buttonText="START PLANNING NOW",
-  onClick
+  onClick,
 }: Props) {
 
   return (
@@ -31,7 +31,9 @@ export default function PlanningCard({
       'p-4 md:p-6 lg:p-8',
       'items-center',
       className
-    )}>
+    )}
+    data-aos="fade-up"
+    >
       <div className={clsx(
         'flex flex-col',
         'items-center',

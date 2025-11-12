@@ -15,6 +15,7 @@
     "@tailwindcss/vite": "^4.1.15",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
+    "aos": "^2.3.4",
     "astro": "^5.14.8",
     "astro-show-tailwindcss-breakpoint": "^1.0.10",
     "clsx": "^2.1.1",

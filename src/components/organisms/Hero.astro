@@ -43,10 +43,19 @@ import H1 from '../atoms/H1.astro'
         'lg:text-black'
       )}
     >
-      <H1 className='py-12 text-white lg:text-black'>
-        Airport Transportation in Los Cabos
-      </H1>
-      <p class='text-xl'>
+      <div
+        data-aos='fade-up'
+        class={clsx('h1-wrapper')}
+      >
+        <H1 className='py-12 text-white lg:text-black'>
+          Airport Transportation in Los Cabos
+        </H1>
+      </div>
+      <p
+        class='text-xl'
+        data-aos='fade-up'
+        data-aos-delay='1000'
+      >
         Reserving your luxury Airport Transportation in Los Cabos is now fast
         and easy. Enjoy unmatched comfort and style.
       </p>

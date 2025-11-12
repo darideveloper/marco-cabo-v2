@@ -51,7 +51,7 @@ export default function VehicleSelect({ className, vehiclesArray }: Props) {
         className
       )}
     >
-      {vehicles.map((vehicle) => (
+      {vehicles.map((vehicle, index) => (
         <CardVehicle
           key={vehicle.id}
           title={vehicle.name}
@@ -59,6 +59,7 @@ export default function VehicleSelect({ className, vehiclesArray }: Props) {
           image={vehicle.image}
           isSelected={vehicle.id === selectedVehicle}
           onClick={() => handleVehicleClick(vehicle.id, vehicle.name)}
+          index={index}
         />
       ))}
     </div>
