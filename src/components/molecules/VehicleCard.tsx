@@ -80,7 +80,7 @@ export default function CardVehicle({
           className={clsx(
             'w-full',
             isSelected ? 'scale-110' : 'group-hover:scale-110',
-            isSelected ? 'opacity-100' : 'opacity-80 group-hover:opacity-100',
+            isSelected ? 'opacity-100' : 'opacity-60 group-hover:opacity-100',
             'transition-all duration-300'
           )}
         />
