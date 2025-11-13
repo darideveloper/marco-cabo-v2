@@ -27,7 +27,7 @@ export default function CardVehicle({
   return (
     <article
       data-aos='fade-up'
-      data-aos-delay={index * 500}
+      data-aos-delay={(index + 1) * 500}
       className={clsx('group')}
     >
       <div
