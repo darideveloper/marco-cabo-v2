@@ -52,32 +52,49 @@ export default function DestinationCard({
             'w-full h-full object-cover',
             'transition-all duration-300',
             isSelected ? 'scale-105' : 'group-hover:scale-105',
-            isSelected ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'
+            isSelected ? 'opacity-100' : 'opacity-60 group-hover:opacity-100'
           )}
         />
 
         {/* Overlay gradient for better text readability */}
         <div className={clsx('absolute inset-0')} />
 
-        {/* Centered Title */}
-        <div
+        {/* Centered Title with overlay */}
+        <H2
           className={clsx(
-            'flex justify-center items-center',
-            'absolute top-0 left-0 right-0 bottom-0',
-            'p-4'
+            'text-white',
+            'text-center',
+            'm-0',
+            'drop-shadow-lg',
+            'inline-block',
+            'text-shadow-black/40',
+            isSelected ? 'text-4xl!' : 'text-3xl! group-hover:text-4xl!',
+            'transition-all duration-300',
+            'w-full',
+            'absolute',
+            'top-1/2',
+            'left-1/2',
+            '-translate-x-1/2',
+            '-translate-y-1/2',
+            'z-20',
+            'py-4'
           )}
         >
-          <H2
+          {title}
+
+          <span 
             className={clsx(
-              'text-white',
-              'text-center',
-              'm-0',
-              'drop-shadow-lg'
+              'absolute',
+              'bottom-0',
+              'left-0',
+              'right-0',
+              'top-0',
+              'bg-black/40',
+              'blur-sm',
+              '-z-10'
             )}
-          >
-            {title}
-          </H2>
-        </div>
+          />
+        </H2>
 
         {/* Selected Hotel Display - positioned at bottom */}
         {selectedHotel && (
