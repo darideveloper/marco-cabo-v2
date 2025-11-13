@@ -29,12 +29,12 @@ export default function TripButton({
     'One Way': {
       icon: <FaArrowRight />,
       aosAnimation: 'fade-right',
-      iconAnimation: 'animate-bounce',
+      iconAnimation: 'group-hover:animate-bounce',
     },
     'Round Trip': {
       icon: <FaArrowsRotate />,
       aosAnimation: 'fade-left',
-      iconAnimation: 'animate-spin',
+      iconAnimation: 'group-hover:animate-spin',
     },
   }
 
@@ -80,7 +80,7 @@ export default function TripButton({
               <FaCheck />
             </span>
           ) : (
-            <span className={`group-hover:${iconAnimation}`}>{icon}</span>
+            <span className={iconAnimation}>{icon}</span>
           )}
         </H2>
       </button>

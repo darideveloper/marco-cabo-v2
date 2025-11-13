@@ -1,13 +1,13 @@
 ---
-import TripSelect from "../molecules/TripSelect"
-import getServiceTypes from "../../libs/api/service-types"
+import TripSelect from '../molecules/TripSelect'
+import getServiceTypes from '../../libs/api/service-types'
 
 const serviceTypes = await getServiceTypes()
 ---
-<section class:list={[
-    'container',
-    ''
-]}>
 
-<TripSelect client:load serviceTypes={serviceTypes.results as ServiceType[]}/>
+<section class:list={['container', '']}>
+  <TripSelect
+    client:load
+    serviceTypes={serviceTypes.results as ServiceType[]}
+  />
 </section>
