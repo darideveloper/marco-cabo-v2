@@ -92,7 +92,7 @@ export default function InfoCard({
             className={clsx(
               'text-white',
               'uppercase mb-2 lg:mb-4',
-              '!text-2xl lg:!text-4xl',
+              'text-2xl! lg:text-4xl!',
               'm-0',
               'text-center'
             )}
@@ -115,11 +115,7 @@ export default function InfoCard({
                 className={clsx(
                   'flex items-center justify-center',
                   'font-bold',
-                  'before:content-["•"]',
-                  'before:mr-2',
-                  'before:text-white',
-                  'before:font-bold',
-                  '!text-base lg:!text-lg'
+                  'text-base! lg:text-lg!'
                 )}
               >
                 {item}
@@ -149,7 +145,7 @@ export default function InfoCard({
           className={clsx(
             'flex flex-col items-center',
             'mb-2 lg:mb-4',
-            'flex-shrink-0'
+            'shrink-0'
           )}
         >
           <H3
@@ -166,7 +162,7 @@ export default function InfoCard({
             className={clsx(
               'text-red font-bold text-xl lg:text-4xl',
               'm-0',
-              'break-words'
+              'wrap-break-words'
             )}
           >
             {props.price}
@@ -199,7 +195,7 @@ export default function InfoCard({
                 <span className={clsx('font-medium whitespace-nowrap')}>
                   Vehicle:
                 </span>
-                <span className={clsx('text-right break-words')}>
+                <span className={clsx('text-right wrap-break-words')}>
                   {props.vehicle}
                 </span>
               </div>
@@ -213,7 +209,7 @@ export default function InfoCard({
                 <span className={clsx('font-medium whitespace-nowrap')}>
                   Service Type:
                 </span>
-                <span className={clsx('text-right break-words')}>
+                <span className={clsx('text-right wrap-break-words')}>
                   {props.serviceType}
                 </span>
               </div>
@@ -227,7 +223,7 @@ export default function InfoCard({
                 <span className={clsx('font-medium whitespace-nowrap')}>
                   Destination:
                 </span>
-                <span className={clsx('text-right break-words')}>
+                <span className={clsx('text-right wrap-break-words')}>
                   {props.destination}
                 </span>
               </div>
@@ -240,7 +236,7 @@ export default function InfoCard({
             'text-white text-xs lg:text-sm',
             'm-0',
             'text-left',
-            'flex-shrink-0'
+            'shrink-0'
           )}
         >
           * Prices in USD
