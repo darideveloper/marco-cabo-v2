@@ -104,7 +104,8 @@ export default function DestinationCard({
               'text-white text-sm',
               'text-center',
               'bg-white/20 backdrop-blur-sm',
-              'rounded-lg px-3 py-2'
+              'rounded-lg px-3 py-2',
+              'z-20'
             )}
           >
             <div className={clsx('font-semibold')}>{selectedHotel.name}</div>
@@ -122,7 +123,8 @@ export default function DestinationCard({
               'text-white text-sm',
               'text-center',
               'bg-white/20 backdrop-blur-sm',
-              'rounded-lg px-3 py-2'
+              'rounded-lg px-3 py-2',
+              'z-20'
             )}
           >
             <div className={clsx('font-semibold')}>
@@ -130,6 +132,21 @@ export default function DestinationCard({
             </div>
           </div>
         )}
+
+        <div
+          className={clsx(
+            'overlay',
+            'bg-linear-to-b from-transparent to-black/50',
+            'w-full',
+            'h-1/2',
+            'absolute',
+            'z-10',
+            'bottom-0',
+            'left-0',
+            'transition-all duration-600',
+            selectedPostalCode || selectedHotel ? 'opacity-100' : 'opacity-0',
+          )}
+        />
       </div>
     </article>
   )

@@ -55,7 +55,7 @@ export default function CardVehicle({
             'bottom-0',
             'left-0',
           )}
-        ></div>
+        />
 
         <div
           className={clsx(
