@@ -41,7 +41,6 @@ export default function CardVehicle({
             ? 'border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]'
             : 'border-transparent',
           className,
-          'debug'
         )}
       >
         <div
