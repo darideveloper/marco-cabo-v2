@@ -68,7 +68,7 @@ export default function DestinationCard({
             'drop-shadow-lg',
             'inline-block',
             'text-shadow-black/40',
-            isSelected ? 'scale-115' : 'scale-95 group-hover:scale-115',
+            isSelected ? 'scale-115' : 'scale-100 group-hover:scale-115',
             'transition-all duration-300',
             'w-full',
             'absolute',
