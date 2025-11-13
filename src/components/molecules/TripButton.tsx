@@ -6,6 +6,7 @@ import H2 from '../atoms/H2'
 
 // Icons
 import { FaArrowsRotate, FaArrowRight } from 'react-icons/fa6'
+import { FaCheck } from 'react-icons/fa'
 
 //  props
 interface Props {
@@ -34,7 +35,7 @@ export default function TripButton({
       icon: <FaArrowsRotate />,
       aosAnimation: 'fade-left',
       iconAnimation: 'animate-spin',
-    }
+    },
   }
 
   const { icon, aosAnimation, iconAnimation } = data[title as keyof typeof data]
@@ -74,7 +75,13 @@ export default function TripButton({
           )}
         >
           <span>{title}</span>
-          <span className={`group-hover:${iconAnimation}`}>{icon}</span>
+          {isSelected ? (
+            <span className={clsx('animate-pulse')}>
+              <FaCheck />
+            </span>
+          ) : (
+            <span className={`group-hover:${iconAnimation}`}>{icon}</span>
+          )}
         </H2>
       </button>
     </div>
