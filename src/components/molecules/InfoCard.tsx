@@ -161,8 +161,8 @@ export default function InfoCard({
           <p
             className={clsx(
               'text-red font-bold text-xl lg:text-4xl',
-              'm-0',
-              'wrap-break-words'
+              'wrap-break-words',
+              '-ml-4!'
             )}
           >
             {props.price}
@@ -235,11 +235,11 @@ export default function InfoCard({
           className={clsx(
             'text-white text-xs lg:text-sm',
             'm-0',
-            'text-left',
+            'text-center',
             'shrink-0'
           )}
         >
-          * Prices in USD
+          Prices in USD
         </p>
       </div>
     )
