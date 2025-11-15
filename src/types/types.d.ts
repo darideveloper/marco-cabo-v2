@@ -1,8 +1,8 @@
 // Fetch Options Type
 interface FetchOptions {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
-  body?: Record<string, any> | FormData
-  headers?: Record<string, string>
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+    body?: Record<string, any> | FormData
+    headers?: Record<string, string>
 }
 
 
@@ -27,8 +27,8 @@ interface LocationsType {
 
 
 interface HotelsDataType {
-    id : number,
-    name: string, 
+    id: number,
+    name: string,
     locations: LocationsType[]
 
 }

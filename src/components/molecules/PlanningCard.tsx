@@ -57,7 +57,7 @@ export default function PlanningCard({
         </span>
         <H2
           className={clsx(
-            'text-white !text-2xl lg:!text-4xl',
+            'text-white text-2xl lg:text-4xl!',
             'uppercase',
             'text-center',
             'm-0 mb-4'

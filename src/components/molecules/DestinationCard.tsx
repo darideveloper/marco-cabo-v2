@@ -29,7 +29,10 @@ export default function DestinationCard({
   const aosAnimations = ['fade-up', 'fade-down']
 
   return (
-    <article data-aos={aosAnimations[index]} suppressHydrationWarning>
+    <article
+      data-aos={aosAnimations[index]}
+      suppressHydrationWarning
+    >
       <div
         onClick={onClick}
         className={clsx(
@@ -82,7 +85,7 @@ export default function DestinationCard({
         >
           {title}
 
-          <span 
+          <span
             className={clsx(
               'absolute',
               'bottom-0',
@@ -144,7 +147,7 @@ export default function DestinationCard({
             'bottom-0',
             'left-0',
             'transition-all duration-600',
-            selectedPostalCode || selectedHotel ? 'opacity-100' : 'opacity-0',
+            selectedPostalCode || selectedHotel ? 'opacity-100' : 'opacity-0'
           )}
         />
       </div>

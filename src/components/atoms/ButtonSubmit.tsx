@@ -17,14 +17,16 @@ export default function ButtonSubmit({ className, onClick }: Props) {
   // Get all states from the store
   const selectedTrip = useMainFormStore((state) => state.selectedTrip)
   const selectedVehicleId = useMainFormStore((state) => state.selectedVehicleId)
-  const selectedLocationId = useMainFormStore((state) => state.selectedLocationId)
+  const selectedLocationId = useMainFormStore(
+    (state) => state.selectedLocationId
+  )
 
   const [isDisabled, setIsDisabled] = useState(false)
 
   useEffect(() => {
     // Detect if any value if null
     const states = [selectedTrip, selectedVehicleId, selectedLocationId]
-    if (states.some(state => state === null)) {
+    if (states.some((state) => state === null)) {
       setIsDisabled(true)
     } else {
       setIsDisabled(false)
@@ -34,7 +36,7 @@ export default function ButtonSubmit({ className, onClick }: Props) {
   return (
     <ButtonAction
       className={className}
-      text={"CONTINUE TO YOUR INFORMATION & CHECK OUT"}
+      text={'CONTINUE TO YOUR INFORMATION & CHECK OUT'}
       onClick={onClick}
       isDisabled={isDisabled}
     />

@@ -5,7 +5,7 @@ import "aos/dist/aos.css"
 export default function AOSInit() {
   // Start AOS when component mounts
   useEffect(() => {
-    
+
     // Start Aos
     AOS.init({
       duration: 1000,

@@ -15,12 +15,6 @@ interface Props {
 const { className } = Astro.props as Props
 ---
 
-<h1
-  class={clsx(
-    'text-4xl lg:text-5xl',
-    'font-bold',
-    className
-  )}
->
+<h1 class={clsx('text-4xl lg:text-5xl', 'font-bold', className)}>
   <slot />
 </h1>

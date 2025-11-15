@@ -1,19 +1,23 @@
 ---
-
-
 interface Props {
-  className?: string;
+  className?: string
 }
 
-let {className} = Astro.props;
+let { className } = Astro.props
 if (!className) {
-  className = '!h-10 !w-auto';
+  className = '!h-10 !w-auto'
 }
 ---
 
 <a
-  href="/"
-  class:list={['flex','items-center', 'hover:scale-105', 'hover:opacity-50','transition-all duration-300']}
+  href='/'
+  class:list={[
+    'flex',
+    'items-center',
+    'hover:scale-105',
+    'hover:opacity-50',
+    'transition-all duration-300',
+  ]}
 >
   <div
     class:list={[
@@ -23,13 +27,9 @@ if (!className) {
     ]}
   >
     <img
-      src="/images/logo.png"
-      alt="Cabo Logo"
-      class:list={[
-        className,
-        'object-contain',
-      ]}
+      src='/images/logo.png'
+      alt='Cabo Logo'
+      class:list={[className, 'object-contain']}
     />
   </div>
 </a>
-

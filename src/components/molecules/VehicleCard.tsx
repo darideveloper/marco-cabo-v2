@@ -41,7 +41,7 @@ export default function CardVehicle({
           isSelected
             ? 'border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]'
             : 'border-transparent',
-          className,
+          className
         )}
       >
         <div
@@ -53,7 +53,7 @@ export default function CardVehicle({
             'absolute',
             'z-10',
             'bottom-0',
-            'left-0',
+            'left-0'
           )}
         />
 
@@ -94,7 +94,7 @@ export default function CardVehicle({
             'gap-2',
             'z-20',
             'transition-all duration-1000',
-            isSelected ? 'opacity-100' : 'opacity-40 group-hover:opacity-100',
+            isSelected ? 'opacity-100' : 'opacity-40 group-hover:opacity-100'
           )}
         >
           <p className={clsx('text-white font-medium text-lg', 'm-0')}>

@@ -31,7 +31,7 @@ const fetchData = async (url: string, options?: FetchOptions) => {
   }
 
   const response = await fetch(`${BASE_URL}/api${url}`, fetchOptions)
-  
+
   // Handle non-JSON responses
   const contentType = response.headers.get('content-type')
   if (contentType && contentType.includes('application/json')) {

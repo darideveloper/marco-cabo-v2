@@ -35,7 +35,7 @@ type InfoCardProps = ImageCardProps | DetailsCardProps | SummaryCardProps
 
 export default function InfoCard({
   className,
-  aosAnimation = "",
+  aosAnimation = '',
   ...props
 }: InfoCardProps) {
   // Default to image type if no type is specified
@@ -71,7 +71,7 @@ export default function InfoCard({
           'w-full',
           'h-full',
           'aspect-4/3',
-          className,
+          className
         )}
         data-aos={aosAnimation}
         suppressHydrationWarning

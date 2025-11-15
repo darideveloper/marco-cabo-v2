@@ -1,11 +1,11 @@
 ---
 //  components
-import DestinationSelect from "../molecules/DestinationSelect"
-import getHotelsData from "../../libs/api/hotels"
-import getPostalCodes from "../../libs/api/postal-codes"
+import DestinationSelect from '../molecules/DestinationSelect'
+import getHotelsData from '../../libs/api/hotels'
+import getPostalCodes from '../../libs/api/postal-codes'
 
 interface Props {
-    className?: string
+  className?: string
 }
 
 const { className } = Astro.props as Props
@@ -15,28 +15,24 @@ const hotelsData = await getHotelsData()
 const hotels = hotelsData.results as HotelsDataType[]
 
 const hotelData: HotelDataType[] = []
-hotels.forEach(hotel => {
-    hotel.locations.forEach(location => {
-        hotelData.push({
-            id: location.id,
-            name: location.name,
-            hotelName: hotel.name
-        })
+hotels.forEach((hotel) => {
+  hotel.locations.forEach((location) => {
+    hotelData.push({
+      id: location.id,
+      name: location.name,
+      hotelName: hotel.name,
     })
+  })
 })
-
 
 const postalCodes = await getPostalCodes()
 const postalCodesData = postalCodes.results as PostalCodesType[]
-
-
-
 ---
 
-<section class:list={[
-    'container',
-    '',
-    className
-]}>
-<DestinationSelect client:load hotelData={hotelData} postalCodesData={postalCodesData}/>
+<section class:list={['container', '', className]}>
+  <DestinationSelect
+    client:load
+    hotelData={hotelData}
+    postalCodesData={postalCodesData}
+  />
 </section>

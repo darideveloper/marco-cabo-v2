@@ -1,23 +1,22 @@
 ---
 interface Props {
-  href: string;
-  label?: string;
+  href: string
+  label?: string
 }
 
-let { href, label } = Astro.props;
+let { href, label } = Astro.props
 ---
 
-<a 
-  href={href} 
-  target="_blank"
-  rel="noopener noreferrer"
+<a
+  href={href}
+  target='_blank'
+  rel='noopener noreferrer'
   aria-label={label}
   class:list={[
     'text-black',
     'hover:text-red',
-    'transition-colors duration-200'
+    'transition-colors duration-200',
   ]}
 >
   <slot />
 </a>
-
