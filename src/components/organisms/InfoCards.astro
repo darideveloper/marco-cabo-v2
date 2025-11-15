@@ -1,16 +1,15 @@
 ---
 //  components
 import InfoCardsComponent from '../molecules/InfoCards'
-import ButtonAction from '../atoms/ButtonAction'
+import ButtonSubmit from '../atoms/ButtonSubmit'
 ---
 
 <section class:list={['container', '']}>
   <InfoCardsComponent client:load />
 
   <div class='flex justify-center mt-6'>
-    <ButtonAction
+    <ButtonSubmit
       client:load
-      text='CONTINUE TO YOUR INFORMATION & CHECK OUT'
     />
   </div>
 </section>
