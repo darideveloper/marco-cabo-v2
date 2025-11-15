@@ -29,7 +29,7 @@ export default function DestinationCard({
   const aosAnimations = ['fade-up', 'fade-down']
 
   return (
-    <article data-aos={aosAnimations[index]}>
+    <article data-aos={aosAnimations[index]} suppressHydrationWarning>
       <div
         onClick={onClick}
         className={clsx(

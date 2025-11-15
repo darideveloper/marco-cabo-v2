@@ -52,6 +52,7 @@ export default function InfoCard({
           className
         )}
         data-aos={aosAnimation}
+        suppressHydrationWarning
       >
         <img
           src={imageProps.image}
@@ -70,9 +71,10 @@ export default function InfoCard({
           'w-full',
           'h-full',
           'aspect-4/3',
-          className
+          className,
         )}
         data-aos={aosAnimation}
+        suppressHydrationWarning
       >
         <img
           src={props.image}
@@ -140,6 +142,7 @@ export default function InfoCard({
           className
         )}
         data-aos={aosAnimation}
+        suppressHydrationWarning
       >
         <div
           className={clsx(

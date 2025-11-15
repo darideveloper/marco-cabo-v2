@@ -29,6 +29,7 @@ export default function CardVehicle({
       data-aos='fade-up'
       data-aos-delay={(index + 1) * 500}
       className={clsx('group')}
+      suppressHydrationWarning
     >
       <div
         onClick={onClick}
