@@ -8,9 +8,15 @@ import { useConfirmationFormStore } from '../../libs/store/confirmationFormStore
 interface Props {
   className?: string
   defaultClientName?: string
+  serviceTypeName?: string
 }
 
-export default function ConfirmationForm({ className, defaultClientName = '' }: Props) {
+export default function ConfirmationForm({ className, defaultClientName = '', serviceTypeName = '' }: Props) {
+  // Determine if this is a round trip based on service type name
+  const isRoundTrip = useMemo(() => {
+    if (!serviceTypeName) return false
+    return serviceTypeName.toLowerCase().includes('round')
+  }, [serviceTypeName])
   const client_name = useConfirmationFormStore((state) => state.client_name)
   const passengers = useConfirmationFormStore((state) => state.passengers)
   const client_last_name = useConfirmationFormStore((state) => state.client_last_name)
@@ -47,7 +53,7 @@ export default function ConfirmationForm({ className, defaultClientName = '' }: 
   const setDetails = useConfirmationFormStore((state) => state.setDetails)
 
   const isFormValid = useMemo(() => {
-    return (
+    const baseValidation = (
       client_name.trim().length > 0 &&
       passengers !== null &&
       passengers > 0 &&
@@ -56,12 +62,22 @@ export default function ConfirmationForm({ className, defaultClientName = '' }: 
       arrival_date.trim().length > 0 &&
       arrival_time.trim().length > 0 &&
       arrival_airline.trim().length > 0 &&
-      arrival_flight_number.trim().length > 0 &&
-      departure_date.trim().length > 0 &&
-      departure_time.trim().length > 0 &&
-      departure_airline.trim().length > 0 &&
-      departure_flight_number.trim().length > 0
+      arrival_flight_number.trim().length > 0
     )
+
+    // If round trip, also validate departure fields
+    if (isRoundTrip) {
+      return (
+        baseValidation &&
+        departure_date.trim().length > 0 &&
+        departure_time.trim().length > 0 &&
+        departure_airline.trim().length > 0 &&
+        departure_flight_number.trim().length > 0
+      )
+    }
+
+    // For one-way trips, only validate arrival fields
+    return baseValidation
   }, [
     client_name,
     passengers,
@@ -75,6 +91,7 @@ export default function ConfirmationForm({ className, defaultClientName = '' }: 
     departure_time,
     departure_airline,
     departure_flight_number,
+    isRoundTrip,
   ])
 
   return (
@@ -244,86 +261,88 @@ export default function ConfirmationForm({ className, defaultClientName = '' }: 
         </div>
       </div>
 
-      {/* Departure Information */}
-      <div className='space-y-4'>
-        <h4 className='text-sm font-semibold text-gray-900 uppercase tracking-wide'>
-          Departure Information
-        </h4>
-        
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-          <div className='space-y-2'>
-            <label
-              className='text-sm font-medium text-gray-700'
-              htmlFor='departure-date'
-            >
-              Departure Date *
-            </label>
-            <input
-              id='departure-date'
-              type='date'
-              value={departure_date}
-              onChange={(e) => setDepartureDate(e.target.value)}
-              className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
-              required
-            />
+      {/* Departure Information - Only show for Round Trip */}
+      {isRoundTrip && (
+        <div className='space-y-4'>
+          <h4 className='text-sm font-semibold text-gray-900 uppercase tracking-wide'>
+            Departure Information
+          </h4>
+          
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+            <div className='space-y-2'>
+              <label
+                className='text-sm font-medium text-gray-700'
+                htmlFor='departure-date'
+              >
+                Departure Date *
+              </label>
+              <input
+                id='departure-date'
+                type='date'
+                value={departure_date}
+                onChange={(e) => setDepartureDate(e.target.value)}
+                className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
+                required
+              />
+            </div>
+
+            <div className='space-y-2'>
+              <label
+                className='text-sm font-medium text-gray-700'
+                htmlFor='departure-time'
+              >
+                Departure Time *
+              </label>
+              <input
+                id='departure-time'
+                type='time'
+                value={departure_time}
+                onChange={(e) => setDepartureTime(e.target.value)}
+                className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
+                required
+              />
+            </div>
           </div>
 
-          <div className='space-y-2'>
-            <label
-              className='text-sm font-medium text-gray-700'
-              htmlFor='departure-time'
-            >
-              Departure Time *
-            </label>
-            <input
-              id='departure-time'
-              type='time'
-              value={departure_time}
-              onChange={(e) => setDepartureTime(e.target.value)}
-              className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
-              required
-            />
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+            <div className='space-y-2'>
+              <label
+                className='text-sm font-medium text-gray-700'
+                htmlFor='departure-airline'
+              >
+                Departure Airline *
+              </label>
+              <input
+                id='departure-airline'
+                type='text'
+                value={departure_airline}
+                onChange={(e) => setDepartureAirline(e.target.value)}
+                placeholder='e.g. Volaris'
+                className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
+                required
+              />
+            </div>
+
+            <div className='space-y-2'>
+              <label
+                className='text-sm font-medium text-gray-700'
+                htmlFor='departure-flight-number'
+              >
+                Departure Flight Number *
+              </label>
+              <input
+                id='departure-flight-number'
+                type='text'
+                value={departure_flight_number}
+                onChange={(e) => setDepartureFlightNumber(e.target.value)}
+                placeholder='e.g. VO456'
+                className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
+                required
+              />
+            </div>
           </div>
         </div>
-
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-          <div className='space-y-2'>
-            <label
-              className='text-sm font-medium text-gray-700'
-              htmlFor='departure-airline'
-            >
-              Departure Airline *
-            </label>
-            <input
-              id='departure-airline'
-              type='text'
-              value={departure_airline}
-              onChange={(e) => setDepartureAirline(e.target.value)}
-              placeholder='e.g. Volaris'
-              className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
-              required
-            />
-          </div>
-
-          <div className='space-y-2'>
-            <label
-              className='text-sm font-medium text-gray-700'
-              htmlFor='departure-flight-number'
-            >
-              Departure Flight Number *
-            </label>
-            <input
-              id='departure-flight-number'
-              type='text'
-              value={departure_flight_number}
-              onChange={(e) => setDepartureFlightNumber(e.target.value)}
-              placeholder='e.g. VO456'
-              className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
-              required
-            />
-          </div>
-        </div>
-      </div>
+      )}
 
       {/* Additional Details */}
       <div className='space-y-2'>

@@ -76,3 +76,31 @@ h6 {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-grey-dark);
 }
+
+/* Input placeholder styles - more transparent, following page branding */
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-grey-light);
+  opacity: 0.6;
+}
+
+/* WebKit browsers */
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: var(--color-grey-light);
+  opacity: 0.6;
+}
+
+/* Firefox */
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: var(--color-grey-light);
+  opacity: 0.6;
+}
+
+/* IE/Edge */
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: var(--color-grey-light);
+  opacity: 0.6;
+}
