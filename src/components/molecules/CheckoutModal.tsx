@@ -1,9 +1,11 @@
 // libs
 import clsx from 'clsx'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 // store
 import { useMainFormStore } from '../../libs/store/mainFormStore'
+// api
+import createSale from '../../libs/api/sales'
 
 interface Props {
   isOpen: boolean
@@ -11,13 +13,18 @@ interface Props {
 }
 
 export default function CheckoutModal({ isOpen, onClose }: Props) {
+  const selectedTrip = useMainFormStore((state) => state.selectedTrip)
   const selectedTripName = useMainFormStore((state) => state.selectedTripName)
+  const selectedVehicleId = useMainFormStore((state) => state.selectedVehicleId)
   const selectedVehicleName = useMainFormStore(
     (state) => state.selectedVehicleName
   )
   const selectedHotel = useMainFormStore((state) => state.selectedHotel)
   const selectedPostalCode = useMainFormStore(
     (state) => state.selectedPostalCode
+  )
+  const selectedLocationId = useMainFormStore(
+    (state) => state.selectedLocationId
   )
   const contactName = useMainFormStore((state) => state.contactName)
   const contactEmail = useMainFormStore((state) => state.contactEmail)
@@ -30,8 +37,21 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
   const isFormValid = useMemo(() => {
     const nameValid = contactName.trim().length > 0
     const emailValid = contactEmail.trim().length > 0
-    return nameValid && emailValid
-  }, [contactName, contactEmail])
+    const idsValid =
+      selectedTrip !== null &&
+      selectedVehicleId !== null &&
+      selectedLocationId !== null
+    return nameValid && emailValid && idsValid
+  }, [
+    contactName,
+    contactEmail,
+    selectedTrip,
+    selectedVehicleId,
+    selectedLocationId,
+  ])
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!isOpen) return
@@ -143,6 +163,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
               Please complete both fields to continue.
             </p>
           )}
+          {submitError && <p className='text-sm text-red-600'>{submitError}</p>}
         </div>
 
         <div className='flex flex-col sm:flex-row justify-end gap-3'>
@@ -160,22 +181,57 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
             Cancel
           </button>
           <button
-            onClick={() => {
-              if (isFormValid) {
-                onClose()
+            onClick={async () => {
+              const errorApiMessage =
+                'Something went wrong. Please try again in a moment.'
+
+              if (!isFormValid || isSubmitting) {
+                setSubmitError('Please complete both fields to continue.')
+                return
+              }
+              setSubmitError(null)
+              setIsSubmitting(true)
+              try {
+                const response = await createSale({
+                  vehicle: selectedVehicleId as number,
+                  service_type: selectedTrip as number,
+                  location: selectedLocationId as number,
+                  client_name: contactName.trim(),
+                  client_email: contactEmail.trim(),
+                })
+
+                const paymentLink = response?.data?.payment_link
+                if (paymentLink) {
+                  if (typeof window !== 'undefined') {
+                    window.location.assign(paymentLink)
+                  }
+                } else if (response?.status === 'success') {
+                  onClose()
+                } else {
+                  throw new Error(response?.message || errorApiMessage)
+                }
+              } catch (error) {
+                console.error('Error submitting sale:', error)
+                const errorMessage =
+                  error instanceof Error ? error.message : errorApiMessage
+                setSubmitError(errorMessage)
+              } finally {
+                setIsSubmitting(false)
               }
             }}
-            disabled={!isFormValid}
+            disabled={!isFormValid || isSubmitting}
             className={clsx(
               'w-full sm:w-auto',
               'px-4 py-2.5',
               'bg-red text-white rounded-lg',
               'font-semibold uppercase tracking-wide',
               'transition-opacity',
-              isFormValid ? 'hover:opacity-90' : 'opacity-60 cursor-not-allowed'
+              isFormValid && !isSubmitting
+                ? 'hover:opacity-90'
+                : 'opacity-60 cursor-not-allowed'
             )}
           >
-            Continue
+            {isSubmitting ? 'Sending...' : 'Continue'}
           </button>
         </div>
       </div>
