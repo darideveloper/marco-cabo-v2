@@ -1,0 +1,221 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/organisms/Hero.astro";
+---
+
+<Layout title="About">
+    <!-- Hero Section -->
+    <!-- <section class:list={["relative", "h-[50vh]"]}>
+        <img
+            src="/images/about-hero.webp"
+            alt="About"
+            class:list={["w-full h-full object-cover"]}
+        />
+        <div
+            class:list={[
+                "absolute inset-0 bg-black/40 flex items-center justify-center",
+            ]}
+        >
+            <h1
+                class:list={[
+                    "text-white text-5xl lg:text-7xl font-bold tracking-wider uppercase",
+                ]}
+            >
+                About Us
+            </h1>
+        </div>
+    </section> -->
+    <Hero title="About Us" image="/images/about-hero.webp" description="" />
+    <!-- First section -->
+    <section class:list={["container py-12 lg:py-20"]}>
+        <div
+            class:list={["grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch"]}
+        >
+            <div
+                class:list={[
+                    "col-span-1 border border-gray-400 rounded-3xl p-8 lg:p-12 flex flex-col justify-center max-w-[700px] mx-auto",
+                ]}
+            >
+                <h2
+                    class:list={[
+                        "text-3xl lg:text-4xl font-bold text-center mb-8 tracking-wide",
+                    ]}
+                >
+                    Beyond Transportation
+                </h2>
+                <p
+                    class:list={[
+                        "text-gray-700 text-lg leading-relaxed text-justify lg:text-left",
+                    ]}
+                >
+                    At marco-cabo.com, we believe that the journey to your Los
+                    Cabos adventure should be as memorable as the destination
+                    itself. With over 27 years of dedicated experience in this
+                    beautiful region, we founded our company for travelers who
+                    crave authentic, unforgettable experiences.
+                </p>
+            </div>
+            <div class:list={["col-span-1 h-full max-w-[700px] mx-auto"]}>
+                <img
+                    src="/images/about-hero.webp"
+                    alt="About"
+                    class:list={[
+                        "w-full h-full object-cover rounded-3xl min-h-[300px]",
+                    ]}
+                />
+            </div>
+        </div>
+    </section>
+    <!-- second section -->
+    <section class:list={["container py-8"]}>
+        <div
+            class:list={[
+                "bg-[#4a4a4a] rounded-2xl p-8 lg:p-12 text-white shadow-lg max-w-[700px] mx-auto lg:max-w-full",
+            ]}
+        >
+            <h2
+                class:list={[
+                    "text-3xl lg:text-4xl font-bold text-center mb-6 tracking-wide",
+                ]}
+            >
+                Crafting Your Perfect Journey
+            </h2>
+
+            <p
+                class:list={[
+                    "text-lg leading-relaxed mb-8 text-center lg:text-left",
+                ]}
+            >
+                We specialize in crafting seamless ground transportation
+                experiences that leave you with compelling stories and lifelong
+                memories. More than just transfers, we offer peace of mind from
+                the moment you arrive.
+            </p>
+
+            <h3 class:list={["text-xl font-bold mb-4 text-[#c4b07b]"]}>
+                Our Commitment to You:
+            </h3>
+
+            <ul class:list={["space-y-6"]}>
+                <li class:list={["flex items-start gap-3"]}>
+                    <span
+                        class:list={[
+                            "mt-2 min-w-[6px] h-[6px] rounded-full bg-white",
+                        ]}></span>
+                    <p class:list={["text-lg leading-relaxed"]}>
+                        <span class:list={["font-bold"]}
+                            >Personalized Service Excellence:</span
+                        > We are committed to working closely with you from initial
+                        planning to the final detail of your vacation. We offer insightful
+                        suggestions and innovative ideas along the way.
+                    </p>
+                </li>
+                <li class:list={["flex items-start gap-3"]}>
+                    <span
+                        class:list={[
+                            "mt-2 min-w-[6px] h-[6px] rounded-full bg-white",
+                        ]}></span>
+                    <p class:list={["text-lg leading-relaxed"]}>
+                        <span class:list={["font-bold"]}
+                            >Local Expertise Meets Your Vision:</span
+                        > Our approach seamlessly merges your personal interests
+                        with our extensive local expertise to create a customized
+                        itinerary that perfectly reflects your style and desires.
+                        Share with us the type of Cabo adventure you envision, and
+                        we will meticulously plan every detail to bring it to life!
+                    </p>
+                </li>
+                <li class:list={["flex items-start gap-3"]}>
+                    <span
+                        class:list={[
+                            "mt-2 min-w-[6px] h-[6px] rounded-full bg-white",
+                        ]}></span>
+                    <p class:list={["text-lg leading-relaxed"]}>
+                        <span class:list={["font-bold"]}
+                            >Safety & Comfort First:</span
+                        > Travel with confidence in our late-model, clean, well-maintained,
+                        and air-conditioned vehicles. Our professional, fully licensed,
+                        and courteous drivers ensure a safe, comfortable, and timely
+                        transfer to your hotel, resort, or private venue.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- Third section -->
+    <section class:list={["container py-12 lg:py-20"]}>
+        <div
+            class:list={["grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch"]}
+        >
+            <div class:list={["col-span-1 h-full max-w-[700px] mx-auto"]}>
+                <img
+                    src="/images/about-hero.webp"
+                    alt="Cabo Arch"
+                    class:list={[
+                        "w-full h-full object-cover rounded-3xl min-h-[300px]",
+                    ]}
+                />
+            </div>
+            <div
+                class:list={[
+                    "col-span-1 border border-gray-400 rounded-3xl p-8 lg:p-12 flex flex-col justify-center max-w-[700px] mx-auto",
+                ]}
+            >
+                <h2
+                    class:list={[
+                        "text-3xl lg:text-4xl font-bold text-center mb-8 tracking-wide leading-tight",
+                    ]}
+                >
+                    Experience the<br />
+                    MarCo.- Cabo Difference
+                </h2>
+
+                <p
+                    class:list={[
+                        "text-gray-700 text-lg leading-relaxed text-justify mb-6",
+                    ]}
+                >
+                    With nearly three decades of trusted service, we understand
+                    and deliver ground transportation managed to perfection. We
+                    proactively work to ensure a flawless service for every
+                    client, whether you require airport transfers,
+                    point-to-point service, or specialized tours.
+                </p>
+
+                <p class:list={["text-gray-700 text-lg mb-4"]}>
+                    We proudly offer:
+                </p>
+
+                <ul class:list={["space-y-2 mb-6 pl-4"]}>
+                    <li class:list={["text-gray-700 text-lg flex gap-2"]}>
+                        <span class:list={["font-bold"]}>•</span>
+                        Extensive Experience & Unmatched Local Knowledge
+                    </li>
+                    <li class:list={["text-gray-700 text-lg flex gap-2"]}>
+                        <span class:list={["font-bold"]}>•</span>
+                        Professional, Courteous, and Reliable Drivers
+                    </li>
+                    <li class:list={["text-gray-700 text-lg flex gap-2"]}>
+                        <span class:list={["font-bold"]}>•</span>
+                        A Fleet Focused on Luxury, Comfort, and Safety
+                    </li>
+                    <li class:list={["text-gray-700 text-lg flex gap-2"]}>
+                        <span class:list={["font-bold"]}>•</span>
+                        Competitive Rates with an Unwavering Commitment to Exceeding
+                        Expectations
+                    </li>
+                </ul>
+
+                <p
+                    class:list={[
+                        "text-gray-700 text-lg leading-relaxed text-justify",
+                    ]}
+                >
+                    Let marco-cabo.com be the trusted partner for your
+                    transportation needs.<br />
+                    We look forward to showing you the best of Los Cabos!
+                </p>
+            </div>
+        </div>
+    </section>
+</Layout>

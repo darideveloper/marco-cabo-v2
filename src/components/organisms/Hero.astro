@@ -1,61 +1,67 @@
 ---
 // Libs
-import clsx from 'clsx'
+import clsx from "clsx";
 
 // components
-import H1 from '../atoms/H1.astro'
+import H1 from "../atoms/H1.astro";
 
 // Full width section, check https://docs.apps.darideveloper.com/frontend/container/
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description, image } = Astro.props as Props;
 ---
 
 <section
   class:list={[
-    'w-screen',
-    'lg:h-screen',
-    'bg-no-repeat',
-    'bg-cover',
-    'bg-center',
-    'relative',
+    "w-screen",
+    "lg:h-screen",
+    "bg-no-repeat",
+    "bg-cover",
+    "bg-center",
+    "relative",
   ]}
-  style="background-image: url('/images/hero.webp');"
-  id='hero'
+  style={image
+    ? `background-image: url(${image});`
+    : "background-image: url('/images/hero.webp');"}
+  id="hero"
 >
   <!-- Dark overlay for mobile -->
-  <div class='absolute inset-0 bg-black/60 z-0'></div>
+  <div class="absolute inset-0 bg-black/60 z-0"></div>
 
   <div
     class={clsx(
-      'container',
-      'flex flex-col justify-center items-center',
-      'h-full',
-      'gap-4',
-      'relative z-10'
+      "container",
+      "flex flex-col justify-center items-center",
+      "h-full",
+      "gap-4",
+      "relative z-10",
     )}
   >
     <div
       class={clsx(
-        'text-center',
-        'mt-[100px]',
-        'lg:mt-0',
-        'text-white',
-        'max-w-2xl'
+        "text-center",
+        "mt-[100px]",
+        "lg:mt-0",
+        "text-white",
+        "max-w-2xl",
       )}
     >
-      <div
-        data-aos='fade-up'
-        class={clsx('h1-wrapper')}
-      >
-        <H1 className='py-12 text-white'>
-          Airport Transportation in Los Cabos
+      <div data-aos="fade-up" class={clsx("h1-wrapper")}>
+        <H1 className="py-12 text-white">
+          {title ? title : "Airport Transportation in Los Cabos"}
         </H1>
       </div>
-      <p
-        class='text-xl'
-        data-aos='fade-up'
-        data-aos-delay='1000'
-      >
-        Reserving your luxury Airport Transportation in Los Cabos is now fast
-        and easy. Enjoy unmatched comfort and style.
+      <p class="text-xl" data-aos="fade-up" data-aos-delay="1000">
+        {
+          description?.length === 0
+            ? description
+            : "Reserving your luxury Airport Transportation in Los Cabos is now fast and easy. Enjoy unmatched comfort and style."
+        }
       </p>
     </div>
   </div>
