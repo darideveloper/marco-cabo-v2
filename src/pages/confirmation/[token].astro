@@ -1,0 +1,55 @@
+---
+export const prerender = false
+
+import Layout from '../../layouts/Layout.astro'
+import Hero from '../../components/organisms/Hero.astro'
+
+// Get the token from the URL params
+const { token } = Astro.params
+
+if (!token) {
+  return Astro.redirect('/', 302)
+}
+
+const pageTitle = 'Confirmation | Mar Co. CABO'
+const pageDescription = 'Thank you for your confirmation.'
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Hero
+    title='Confirmation'
+    description={`Thank you for your confirmation. Token: ${token}`}
+  />
+  <fragment slot='head'>
+    <meta
+      property='og:title'
+      content={pageTitle}
+    />
+    <meta
+      property='og:description'
+      content={pageDescription}
+    />
+    <meta
+      property='og:type'
+      content='website'
+    />
+    <link
+      rel='canonical'
+      href={`${Astro.url.origin}/confirmation/${token}`}
+    />
+  </fragment>
+
+  <section class='container mx-auto px-4 py-16 lg:py-24'>
+    <div class='max-w-3xl mx-auto text-center'>
+      <p class='text-lg text-black mb-4'>
+        Your confirmation has been received.
+      </p>
+      <p class='text-sm text-gray-600'>
+        Token: {token}
+      </p>
+    </div>
+  </section>
+</Layout>
