@@ -3,6 +3,8 @@ export const prerender = false
 
 import Layout from '../../layouts/Layout.astro'
 import Hero from '../../components/organisms/Hero.astro'
+import ConfirmationForm from '../../components/molecules/ConfirmationForm'
+import { getSaleByStripeCode, type SaleData } from '../../libs/api/sales'
 
 // Get the token from the URL params
 const { token } = Astro.params
@@ -11,8 +13,28 @@ if (!token) {
   return Astro.redirect('/', 302)
 }
 
+// Fetch sale data using the token as stripe_code
+let saleData: SaleData | null = null
+let error: string | null = null
+
+try {
+  const response = await getSaleByStripeCode(token)
+  if (response.status === 'success' && response.data) {
+    saleData = response.data
+  } else {
+    error = response.message || 'Failed to retrieve sale data'
+  }
+} catch (err) {
+  error =
+    err instanceof Error
+      ? err.message
+      : 'An error occurred while fetching sale data'
+}
+
+const confirmationMessage = `Thanks for your purchase, ${saleData?.client.name.toUpperCase()}!. Complete your reservation by filling out the form below.`
+
 const pageTitle = 'Confirmation | Mar Co. CABO'
-const pageDescription = 'Thank you for your confirmation.'
+const pageDescription = confirmationMessage
 ---
 
 <Layout
@@ -21,7 +43,7 @@ const pageDescription = 'Thank you for your confirmation.'
 >
   <Hero
     title='Confirmation'
-    description={`Thank you for your confirmation. Token: ${token}`}
+    description={confirmationMessage}
   />
   <fragment slot='head'>
     <meta
@@ -43,13 +65,83 @@ const pageDescription = 'Thank you for your confirmation.'
   </fragment>
 
   <section class='container mx-auto px-4 py-16 lg:py-24'>
-    <div class='max-w-3xl mx-auto text-center'>
-      <p class='text-lg text-black mb-4'>
-        Your confirmation has been received.
-      </p>
-      <p class='text-sm text-gray-600'>
-        Token: {token}
-      </p>
+    <div class='max-w-3xl mx-auto'>
+      {
+        error ? (
+          <div class='text-center'>
+            <p class='text-lg text-red-600 mb-4'>{error}</p>
+            <p class='text-sm text-gray-600'>Token: {token}</p>
+          </div>
+        ) : saleData ? (
+          <>
+            <div class='bg-white rounded-lg shadow-md p-8'>
+              <h2 class='text-2xl font-bold text-center mb-6'>
+                Order Confirmation
+              </h2>
+
+              <div class='space-y-4 mb-6'>
+                <div class='flex justify-between items-center py-2 border-b'>
+                  <span class='text-gray-600'>Order ID:</span>
+                  <span class='font-semibold'>#{saleData.id}</span>
+                </div>
+
+                <div class='flex justify-between items-center py-2 border-b'>
+                  <span class='text-gray-600'>Service Type:</span>
+                  <span class='font-semibold'>
+                    {saleData.service_type.name}
+                  </span>
+                </div>
+
+                <div class='flex justify-between items-center py-2 border-b'>
+                  <span class='text-gray-600'>Location:</span>
+                  <span class='font-semibold'>{saleData.location.name}</span>
+                </div>
+
+                <div class='flex justify-between items-center py-2 border-b'>
+                  <span class='text-gray-600'>Vehicle:</span>
+                  <span class='font-semibold'>{saleData.vehicle.name}</span>
+                </div>
+
+                <div class='flex justify-between items-center py-2 border-b'>
+                  <span class='text-gray-600'>Client Name:</span>
+                  <span class='font-semibold'>{saleData.client.name}</span>
+                </div>
+
+                <div class='flex justify-between items-center py-2 border-b'>
+                  <span class='text-gray-600'>Client Email:</span>
+                  <span class='font-semibold'>{saleData.client.email}</span>
+                </div>
+
+                <div class='flex justify-between items-center py-3 border-t-2 border-gray-300 mt-4'>
+                  <span class='text-xl text-gray-700'>Total:</span>
+                  <span class='text-2xl font-bold text-black'>
+                    ${saleData.total.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+
+              <div class='text-center mt-6'>
+                <p class='text-sm text-gray-500'>
+                  Stripe Code: {saleData.stripe_code}
+                </p>
+              </div>
+            </div>
+            <div class='bg-white rounded-lg shadow-md p-8 mt-8'>
+              <ConfirmationForm
+                client:load
+                defaultClientName={saleData.client.name}
+                serviceTypeName={saleData.service_type.name}
+              />
+            </div>
+          </>
+        ) : (
+          <div class='text-center'>
+            <p class='text-lg text-black mb-4'>
+              Loading confirmation details...
+            </p>
+          </div>
+        )
+      }
     </div>
   </section>
 </Layout>
