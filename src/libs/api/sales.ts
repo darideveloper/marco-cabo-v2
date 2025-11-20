@@ -30,7 +30,8 @@ export interface SaleData {
     }
     vehicle: {
         id: number
-        name: string
+        name: string,
+        passengers: number
     }
     total: number
     stripe_code: string

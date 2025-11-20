@@ -9,9 +9,15 @@ interface Props {
   className?: string
   defaultClientName?: string
   serviceTypeName?: string
+  maxPassengers?: number
 }
 
-export default function ConfirmationForm({ className, defaultClientName = '', serviceTypeName = '' }: Props) {
+export default function ConfirmationForm({
+  className,
+  defaultClientName = '',
+  serviceTypeName = '',
+  maxPassengers = 0,
+}: Props) {
   // Determine if this is a round trip based on service type name
   const isRoundTrip = useMemo(() => {
     if (!serviceTypeName) return false
@@ -19,22 +25,40 @@ export default function ConfirmationForm({ className, defaultClientName = '', se
   }, [serviceTypeName])
   const client_name = useConfirmationFormStore((state) => state.client_name)
   const passengers = useConfirmationFormStore((state) => state.passengers)
-  const client_last_name = useConfirmationFormStore((state) => state.client_last_name)
+  const client_last_name = useConfirmationFormStore(
+    (state) => state.client_last_name
+  )
   const client_phone = useConfirmationFormStore((state) => state.client_phone)
   const arrival_date = useConfirmationFormStore((state) => state.arrival_date)
   const arrival_time = useConfirmationFormStore((state) => state.arrival_time)
-  const arrival_airline = useConfirmationFormStore((state) => state.arrival_airline)
-  const arrival_flight_number = useConfirmationFormStore((state) => state.arrival_flight_number)
-  const departure_date = useConfirmationFormStore((state) => state.departure_date)
-  const departure_time = useConfirmationFormStore((state) => state.departure_time)
-  const departure_airline = useConfirmationFormStore((state) => state.departure_airline)
-  const departure_flight_number = useConfirmationFormStore((state) => state.departure_flight_number)
+  const arrival_airline = useConfirmationFormStore(
+    (state) => state.arrival_airline
+  )
+  const arrival_flight_number = useConfirmationFormStore(
+    (state) => state.arrival_flight_number
+  )
+  const departure_date = useConfirmationFormStore(
+    (state) => state.departure_date
+  )
+  const departure_time = useConfirmationFormStore(
+    (state) => state.departure_time
+  )
+  const departure_airline = useConfirmationFormStore(
+    (state) => state.departure_airline
+  )
+  const departure_flight_number = useConfirmationFormStore(
+    (state) => state.departure_flight_number
+  )
   const details = useConfirmationFormStore((state) => state.details)
 
   const setClientName = useConfirmationFormStore((state) => state.setClientName)
   const setPassengers = useConfirmationFormStore((state) => state.setPassengers)
-  const setClientLastName = useConfirmationFormStore((state) => state.setClientLastName)
-  const setClientPhone = useConfirmationFormStore((state) => state.setClientPhone)
+  const setClientLastName = useConfirmationFormStore(
+    (state) => state.setClientLastName
+  )
+  const setClientPhone = useConfirmationFormStore(
+    (state) => state.setClientPhone
+  )
 
   // Initialize client name with default value if provided and store is empty
   useEffect(() => {
@@ -42,18 +66,34 @@ export default function ConfirmationForm({ className, defaultClientName = '', se
       setClientName(defaultClientName)
     }
   }, [defaultClientName, client_name, setClientName])
-  const setArrivalDate = useConfirmationFormStore((state) => state.setArrivalDate)
-  const setArrivalTime = useConfirmationFormStore((state) => state.setArrivalTime)
-  const setArrivalAirline = useConfirmationFormStore((state) => state.setArrivalAirline)
-  const setArrivalFlightNumber = useConfirmationFormStore((state) => state.setArrivalFlightNumber)
-  const setDepartureDate = useConfirmationFormStore((state) => state.setDepartureDate)
-  const setDepartureTime = useConfirmationFormStore((state) => state.setDepartureTime)
-  const setDepartureAirline = useConfirmationFormStore((state) => state.setDepartureAirline)
-  const setDepartureFlightNumber = useConfirmationFormStore((state) => state.setDepartureFlightNumber)
+  const setArrivalDate = useConfirmationFormStore(
+    (state) => state.setArrivalDate
+  )
+  const setArrivalTime = useConfirmationFormStore(
+    (state) => state.setArrivalTime
+  )
+  const setArrivalAirline = useConfirmationFormStore(
+    (state) => state.setArrivalAirline
+  )
+  const setArrivalFlightNumber = useConfirmationFormStore(
+    (state) => state.setArrivalFlightNumber
+  )
+  const setDepartureDate = useConfirmationFormStore(
+    (state) => state.setDepartureDate
+  )
+  const setDepartureTime = useConfirmationFormStore(
+    (state) => state.setDepartureTime
+  )
+  const setDepartureAirline = useConfirmationFormStore(
+    (state) => state.setDepartureAirline
+  )
+  const setDepartureFlightNumber = useConfirmationFormStore(
+    (state) => state.setDepartureFlightNumber
+  )
   const setDetails = useConfirmationFormStore((state) => state.setDetails)
 
   const isFormValid = useMemo(() => {
-    const baseValidation = (
+    const baseValidation =
       client_name.trim().length > 0 &&
       passengers !== null &&
       passengers > 0 &&
@@ -63,7 +103,6 @@ export default function ConfirmationForm({ className, defaultClientName = '', se
       arrival_time.trim().length > 0 &&
       arrival_airline.trim().length > 0 &&
       arrival_flight_number.trim().length > 0
-    )
 
     // If round trip, also validate departure fields
     if (isRoundTrip) {
@@ -105,7 +144,7 @@ export default function ConfirmationForm({ className, defaultClientName = '', se
         <h4 className='text-sm font-semibold text-gray-900 uppercase tracking-wide'>
           Client Information
         </h4>
-        
+
         <div className='space-y-2'>
           <label
             className='text-sm font-medium text-gray-700'
@@ -154,10 +193,13 @@ export default function ConfirmationForm({ className, defaultClientName = '', se
             type='number'
             min='1'
             value={passengers || ''}
-            onChange={(e) => setPassengers(e.target.value ? parseInt(e.target.value) : null)}
-            placeholder='e.g. 2'
+            onChange={(e) =>
+              setPassengers(e.target.value ? parseInt(e.target.value) : null)
+            }
+            placeholder={`max. ${maxPassengers}`}
             className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
             required
+            max={maxPassengers.toString()}
           />
         </div>
 
@@ -185,7 +227,7 @@ export default function ConfirmationForm({ className, defaultClientName = '', se
         <h4 className='text-sm font-semibold text-gray-900 uppercase tracking-wide'>
           Arrival Information
         </h4>
-        
+
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
           <div className='space-y-2'>
             <label
@@ -267,7 +309,7 @@ export default function ConfirmationForm({ className, defaultClientName = '', se
           <h4 className='text-sm font-semibold text-gray-900 uppercase tracking-wide'>
             Departure Information
           </h4>
-          
+
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
             <div className='space-y-2'>
               <label
@@ -370,4 +412,3 @@ export default function ConfirmationForm({ className, defaultClientName = '', se
     </div>
   )
 }
-

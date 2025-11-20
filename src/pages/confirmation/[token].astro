@@ -115,14 +115,14 @@ const pageDescription = confirmationMessage
                 <div class='flex justify-between items-center py-3 border-t-2 border-gray-300 mt-4'>
                   <span class='text-xl text-gray-700'>Total:</span>
                   <span class='text-2xl font-bold text-black'>
-                    ${saleData.total.toFixed(2)}
+                    ${saleData.total.toFixed(2)} (paid)
                   </span>
                 </div>
               </div>
 
               <div class='text-center mt-6'>
                 <p class='text-sm text-gray-500'>
-                  Stripe Code: {saleData.stripe_code}
+                  Sale ID: {saleData.stripe_code}
                 </p>
               </div>
             </div>
@@ -131,6 +131,7 @@ const pageDescription = confirmationMessage
                 client:load
                 defaultClientName={saleData.client.name}
                 serviceTypeName={saleData.service_type.name}
+                maxPassengers={saleData.vehicle?.passengers || 0}
               />
             </div>
           </>
