@@ -1,15 +1,18 @@
 // libs
 import clsx from 'clsx'
-import { useMemo, useEffect } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 
 // store
 import { useConfirmationFormStore } from '../../libs/store/confirmationFormStore'
+import { completeSale } from '../../libs/api/sales'
 
 interface Props {
   className?: string
   defaultClientName?: string
   serviceTypeName?: string
   maxPassengers?: number
+  stripeCode?: string
+  clientEmail?: string
 }
 
 export default function ConfirmationForm({
@@ -17,7 +20,13 @@ export default function ConfirmationForm({
   defaultClientName = '',
   serviceTypeName = '',
   maxPassengers = 0,
+  stripeCode = '',
+  clientEmail = '',
 }: Props) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+
   // Determine if this is a round trip based on service type name
   const isRoundTrip = useMemo(() => {
     if (!serviceTypeName) return false
@@ -133,11 +142,103 @@ export default function ConfirmationForm({
     isRoundTrip,
   ])
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!isFormValid || !stripeCode || !clientEmail) {
+      setSubmitError('Please fill in all required fields')
+      return
+    }
+
+    if (!passengers || passengers <= 0) {
+      setSubmitError('Please enter a valid number of passengers')
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitError(null)
+    setSubmitSuccess(false)
+
+    try {
+      // Build payload - only include departure fields if it's a round trip and they're filled
+      const payload: any = {
+        sale_stripe_code: stripeCode,
+        passengers: passengers,
+        client_email: clientEmail,
+        client_last_name: client_last_name.trim(),
+        client_phone: client_phone.trim(),
+        arrival_date: arrival_date.trim(),
+        arrival_time: arrival_time.trim(),
+        arrival_airline: arrival_airline.trim(),
+        arrival_flight_number: arrival_flight_number.trim(),
+      }
+
+      // Only add departure fields if it's a round trip and they have values
+      if (
+        isRoundTrip &&
+        departure_date &&
+        departure_time &&
+        departure_airline &&
+        departure_flight_number
+      ) {
+        payload.departure_date = departure_date.trim()
+        payload.departure_time = departure_time.trim()
+        payload.departure_airline = departure_airline.trim()
+        payload.departure_flight_number = departure_flight_number.trim()
+      }
+
+      // Add details if provided
+      if (details && details.trim().length > 0) {
+        payload.details = details.trim()
+      }
+
+      const response = await completeSale(payload)
+
+      if (response.status === 'success') {
+        setSubmitSuccess(true)
+        // Scroll to top to show success message
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else {
+        setSubmitError(
+          response.message || 'Failed to submit the form. Please try again.'
+        )
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : 'An error occurred while submitting the form. Please try again.'
+      )
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
-    <div className={clsx('space-y-6', className)}>
+    <form
+      onSubmit={handleSubmit}
+      className={clsx('space-y-6', className)}
+    >
       <h3 className='text-xl font-bold text-gray-900 mb-4'>
         Additional Information
       </h3>
+
+      {submitSuccess && (
+        <div className='bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg'>
+          <p className='font-medium'>Success!</p>
+          <p className='text-sm'>
+            Your reservation details have been submitted successfully.
+          </p>
+        </div>
+      )}
+
+      {submitError && (
+        <div className='bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg'>
+          <p className='font-medium'>Error</p>
+          <p className='text-sm'>{submitError}</p>
+        </div>
+      )}
 
       {/* Client Information */}
       <div className='space-y-4'>
@@ -409,6 +510,25 @@ export default function ConfirmationForm({
           Please complete all required fields (marked with *) to continue.
         </p>
       )}
-    </div>
+
+      <div className='pt-4'>
+        <button
+          type='submit'
+          disabled={!isFormValid || isSubmitting || submitSuccess}
+          className={clsx(
+            'w-full px-6 py-3 rounded-lg font-semibold text-white transition-colors',
+            isFormValid && !isSubmitting && !submitSuccess
+              ? 'bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
+              : 'bg-gray-400 cursor-not-allowed'
+          )}
+        >
+          {isSubmitting
+            ? 'Submitting...'
+            : submitSuccess
+            ? 'Submitted ✓'
+            : 'Submit Reservation'}
+        </button>
+      </div>
+    </form>
   )
 }

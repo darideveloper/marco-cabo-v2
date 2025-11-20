@@ -132,6 +132,8 @@ const pageDescription = confirmationMessage
                 defaultClientName={saleData.client.name}
                 serviceTypeName={saleData.service_type.name}
                 maxPassengers={saleData.vehicle?.passengers || 0}
+                stripeCode={saleData.stripe_code}
+                clientEmail={saleData.client.email}
               />
             </div>
           </>

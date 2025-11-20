@@ -65,6 +65,41 @@ const getSaleByStripeCode = async (
     return data as GetSaleResponse
 }
 
-export { getSaleByStripeCode }
+export interface CompleteSalePayload {
+    sale_stripe_code: string
+    passengers: number
+    client_email: string
+    client_last_name: string
+    client_phone: string
+    arrival_date: string
+    arrival_time: string
+    arrival_airline: string
+    arrival_flight_number: string
+    departure_date?: string
+    departure_time?: string
+    departure_airline?: string
+    departure_flight_number?: string
+    details?: string
+}
+
+export interface CompleteSaleResponse {
+    status: string
+    message: string
+    data?: unknown
+    [key: string]: unknown
+}
+
+const completeSale = async (
+    payload: CompleteSalePayload
+): Promise<CompleteSaleResponse> => {
+    const data = await fetchData('/sales/done/', {
+        method: 'POST',
+        body: payload
+    })
+
+    return data as CompleteSaleResponse
+}
+
+export { getSaleByStripeCode, completeSale }
 export default createSale
 
