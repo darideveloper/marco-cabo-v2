@@ -7,7 +7,7 @@ updatedDate: '2025-06-01'
 
 **Effective Date:** June 1, 2025
 
-This Privacy Policy describes how Mar Co. CABO ("we," "us," or "our") collects, uses, and protects the personal information you provide when you register on our website at [https://vsc.wqb.mybluehost.me/](https://vsc.wqb.mybluehost.me/).
+This Privacy Policy describes how Mar Co. CABO ("we," "us," or "our") collects, uses, and protects the personal information you provide when you register on our website at [https://marco-cabo.com/](https://marco-cabo.com/).
 
 By registering and using our services, you consent to the collection and use of your information as described in this policy.
 
