@@ -36,7 +36,7 @@ export default function ButtonSubmit({ className, onClick }: Props) {
   return (
     <ButtonAction
       className={className}
-      text={'CONTINUE TO YOUR INFORMATION & CHECK OUT'}
+      text={'Confirm your reservation'}
       onClick={onClick}
       isDisabled={isDisabled}
     />
