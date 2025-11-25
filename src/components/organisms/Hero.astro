@@ -5,21 +5,13 @@ import clsx from 'clsx'
 // Components
 import H1 from '../atoms/H1.astro'
 
-// Props
 interface Props {
   title: string
   description?: string
-  backgroundImage?: string
+  image?: string
 }
 
-// Default props
-const {
-  title,
-  description,
-  backgroundImage = '/images/hero.webp',
-} = Astro.props as Props
-
-// Full width section, check https://docs.apps.darideveloper.com/frontend/container/
+const { title, description, image } = Astro.props as Props
 ---
 
 <section
@@ -31,7 +23,7 @@ const {
     'bg-center',
     'relative',
   ]}
-  style={`background-image: url('${backgroundImage}');`}
+  style={`background-image: url('${image}');`}
   id='hero'
 >
   <!-- Dark overlay for mobile -->
@@ -63,15 +55,17 @@ const {
           {title}
         </H1>
       </div>
-      {description && (
-        <p
-          class='text-xl'
-          data-aos='fade-up'
-          data-aos-delay='1000'
-        >
-          {description}
-        </p>
-      )}
+      {
+        description && (
+          <p
+            class='text-xl'
+            data-aos='fade-up'
+            data-aos-delay='1000'
+          >
+            {description}
+          </p>
+        )
+      }
     </div>
   </div>
 </section>
