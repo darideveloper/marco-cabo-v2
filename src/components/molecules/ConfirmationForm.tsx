@@ -197,8 +197,13 @@ export default function ConfirmationForm({
 
       if (response.status === 'success') {
         setSubmitSuccess(true)
-        // Scroll to top to show success message
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+        // Scroll to "Your Travel Itinerary" heading
+        setTimeout(() => {
+          const itineraryHeading = document.getElementById('travel-itinerary-heading')
+          if (itineraryHeading) {
+            itineraryHeading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }, 100)
       } else {
         setSubmitError(
           response.message || 'Failed to submit the form. Please try again.'
@@ -221,7 +226,10 @@ export default function ConfirmationForm({
       onSubmit={handleSubmit}
       className={clsx('space-y-6', className)}
     >
-      <h3 className='text-xl font-bold text-gray-900 mb-4'>
+      <h3
+        id='travel-itinerary-heading'
+        className='text-xl font-bold text-gray-900 mb-4'
+      >
         Your Travel Itinerary
       </h3>
 
