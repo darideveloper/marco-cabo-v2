@@ -221,7 +221,7 @@ export default function ConfirmationForm({
       className={clsx('space-y-6', className)}
     >
       <h3 className='text-xl font-bold text-gray-900 mb-4'>
-        Additional Information
+        Your Travel Itinerary
       </h3>
 
       {submitSuccess && (
