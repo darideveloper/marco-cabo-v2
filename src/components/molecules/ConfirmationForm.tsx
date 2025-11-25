@@ -165,6 +165,7 @@ export default function ConfirmationForm({
         sale_stripe_code: stripeCode,
         passengers: passengers,
         client_email: clientEmail,
+        client_name: client_name.trim(),
         client_last_name: client_last_name.trim(),
         client_phone: client_phone.trim(),
         arrival_date: arrival_date.trim(),
