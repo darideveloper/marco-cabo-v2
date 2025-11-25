@@ -104,3 +104,8 @@ textarea:-ms-input-placeholder {
   color: var(--color-grey-light);
   opacity: 0.6;
 }
+
+a,
+button {
+  cursor: pointer;
+}
