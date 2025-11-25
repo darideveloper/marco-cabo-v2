@@ -329,6 +329,14 @@ export default function ConfirmationForm({
         <h4 className='text-sm font-semibold text-gray-900 uppercase tracking-wide'>
           Arrival Information
         </h4>
+        <p className='text-xs text-gray-600 my-4! opacity-70'>
+          To ensure a seamless and timely transfer, please provide your complete
+          flight details exactly as they appear on your reservation
+          confirmation. This includes the arriving flight number to SJD, the
+          scheduled landing time at SJD (Los Cabos International Airport), the
+          departing flight number from SJD, and the scheduled take-off time from
+          SJD. Accuracy is paramount for coordinating your transportation.
+        </p>
 
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
           <div className='space-y-2'>
