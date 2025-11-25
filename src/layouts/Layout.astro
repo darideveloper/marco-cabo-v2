@@ -16,11 +16,6 @@ interface Props {
   title?: string
   description?: string
 }
-
-const {
-  title = 'Mar Co. CABO - Premium Private Transportation in Los Cabos',
-  description = 'Premium private transportation and vacation planning in Los Cabos, Mexico.',
-} = Astro.props
 ---
 
 <!doctype html>
@@ -40,9 +35,7 @@ const {
       name='generator'
       content={Astro.generator}
     />
-    <title>{title}</title>
-    <meta name='description' content={description} />
-    <slot name='head' />
+    <slot name='seo' />
   </head>
   <body>
     <!-- AOS Init -->

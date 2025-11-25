@@ -6,9 +6,16 @@ import Trips from '../components/organisms/Trips.astro'
 import Destinations from '../components/organisms/Destinations.astro'
 import InfoCards from '../components/organisms/InfoCards.astro'
 import Planning from '../components/organisms/Planning.astro'
+import PageSEO from '../components/utils/PageSEO.astro'
 ---
 
 <Layout>
+  <PageSEO
+    slot='seo'
+    currentPage='Home'
+    pageDescription='Premium private transportation and vacation planning in Los Cabos, Mexico.'
+    extraKeywords='private transportation, vacation planning, los cabos, baja california sur, mexico, vacation packages, luxury transportation, airport transfers, private tours, car service, luxury cars, limousine service, luxury limousines, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease'
+  />
   <Hero
     title='Airport Transportation in Los Cabos'
     description='Reserving your luxury Airport Transportation in Los Cabos is now fast and easy. Enjoy unmatched comfort and style.'

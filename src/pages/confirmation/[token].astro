@@ -1,9 +1,13 @@
 ---
 export const prerender = false
 
+// Components
 import Layout from '../../layouts/Layout.astro'
 import Hero from '../../components/organisms/Hero.astro'
 import ConfirmationForm from '../../components/molecules/ConfirmationForm'
+import PageSEO from '../../components/utils/PageSEO.astro'
+
+// Libs
 import { getSaleByStripeCode, type SaleData } from '../../libs/api/sales'
 
 // Get the token from the URL params
@@ -41,6 +45,11 @@ const pageDescription = confirmationMessage
   title={pageTitle}
   description={pageDescription}
 >
+  <PageSEO
+    currentPage='Confirmation'
+    pageDescription={confirmationMessage}
+    extraKeywords='confirmation, mar co. cabo, los cabos, baja california sur, mexico, vacation packages, luxury transportation, airport transfers, private tours, car service, luxury cars, limousine service, luxury limousines, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease'
+  />
   <Hero
     title='Confirmation'
     description={confirmationMessage}

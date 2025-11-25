@@ -5,6 +5,7 @@ import { getEntry } from 'astro:content'
 // Components
 import Layout from '../layouts/Layout.astro'
 import Hero from '../components/organisms/Hero.astro'
+import PageSEO from '../components/utils/PageSEO.astro'
 
 // Get page content
 const privacyPolicy = await getEntry('legal', 'privacy-policy')
@@ -24,6 +25,11 @@ const pageDescription =
   title={pageTitle}
   description={pageDescription}
 >
+  <PageSEO
+    currentPage='Privacy Policy'
+    pageDescription='Learn how we collect, use, and protect your personal information.'
+    extraKeywords='privacy policy, mar co. cabo, los cabos, baja california sur, mexico, vacation packages, luxury transportation, airport transfers, private tours, car service, luxury cars, limousine service, luxury limousines, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease'
+  />
   <Hero
     title='Privacy Policy'
     description='Learn how we collect, use, and protect your personal information.'

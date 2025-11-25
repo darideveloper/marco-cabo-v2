@@ -1,0 +1,121 @@
+---
+// Components
+import BaseSEO from './base/BaseSEO.astro'
+
+// Data
+import { phone } from '../../libs/constants/contact'
+
+// Read props
+interface Props {
+  currentPage: string // Current page
+  pageDescription: string // Description
+  extraKeywords?: string // Extra keywords
+}
+const {
+  currentPage,
+  pageDescription,
+  extraKeywords = '',
+} = Astro.props as Props
+
+// Description and keywords
+const defaultDescription =
+  'Premium private transportation and vacation planning in Los Cabos, Mexico.'
+const defaultKeywords =
+  'private transportation, vacation planning, los cabos, baja california sur, mexico, vacation packages, luxury transportation, airport transfers, private tours, car service, luxury cars, limousine service, luxury limousines, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease'
+const description = pageDescription || defaultDescription
+const keywords = `${defaultKeywords}, ${extraKeywords}`
+
+const addressElems = {
+  //   streetAddress: 'Calle Juachi M13 L2, Hacienda San José',
+  addressLocality: 'Los Cabos',
+  addressRegion: 'Baja California Sur',
+  postalCode: '23444',
+  addressCountry: 'Mexico',
+}
+
+// Setup to open 24/7
+const openingHours = ['Mo-Su 00:00-23:59']
+const openingHoursSpecification = [
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ],
+    opens: '00:00',
+    closes: '23:59',
+  },
+]
+
+// Extra JSON
+const extraJson = {
+  // Price
+  priceRange: '$$',
+
+  // Contact
+  telephone: phone,
+
+  // Hours
+  openingHours: openingHours,
+  openingHoursSpecification: openingHoursSpecification,
+
+  // Services
+  //   makesOffer: [
+  //     ...plansData.map((plan) => ({
+  //       '@type': 'Offer',
+  //       name: plan.name,
+  //       description: plan.description,
+  //       url: `${domain}/pricing`,
+  //       priceCurrency: 'EUR',
+  //       price: plan.price,
+  //       availability: 'https://schema.org/InStock',
+  //       category: 'Servicio de Preparación de Oposiciones',
+  //     })),
+  //   ],
+
+  // Founder
+  foundingDate: '2018',
+  founder: {
+    '@type': 'Organization',
+    name: 'Mar Co. CABO',
+    description:
+      'Premium private transportation and vacation planning in Los Cabos, Mexico.',
+  },
+
+  // rating
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '112',
+  },
+
+  // Keywords adicionales para el JSON-LD
+  keywords:
+    'private transportation, vacation planning, los cabos, baja california sur, mexico, vacation packages, luxury transportation, airport transfers, private tours, car service, luxury cars, limousine service, luxury limousines, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease',
+
+  // Location
+  address: {
+    '@type': 'PostalAddress',
+    ...addressElems,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 22.89524,
+    longitude: -109.94086,
+  },
+}
+---
+
+<BaseSEO
+  currentPage={currentPage}
+  jsonType='EducationalOrganization'
+  extraJson={extraJson}
+  baseDescription={description}
+  baseKeywords={keywords}
+  author='Mar Co. CABO'
+/>
