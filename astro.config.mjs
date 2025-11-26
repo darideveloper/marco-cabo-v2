@@ -1,13 +1,15 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from 'astro/config'
 
-import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from '@tailwindcss/vite'
 
-import react from '@astrojs/react';
+import react from '@astrojs/react'
 
-import showTailwindcssBreakpoint from 'astro-show-tailwindcss-breakpoint';
+import showTailwindcssBreakpoint from 'astro-show-tailwindcss-breakpoint'
 
-import node from '@astrojs/node';
+import node from '@astrojs/node'
+
+import sitemap from '@astrojs/sitemap'
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,9 +17,10 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [react(), showTailwindcssBreakpoint()],
+  integrations: [react(), showTailwindcssBreakpoint(), sitemap()],
 
   adapter: node({
     mode: 'standalone'
-  })
-});
+  }),
+  site: "https://marco-cabo.com/"
+})
