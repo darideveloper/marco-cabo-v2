@@ -79,7 +79,14 @@ export default function ConfirmationForm({
     if (defaultClientLastName && !client_last_name) {
       setClientLastName(defaultClientLastName)
     }
-  }, [defaultClientName, defaultClientLastName, client_name, client_last_name, setClientName, setClientLastName])
+  }, [
+    defaultClientName,
+    defaultClientLastName,
+    client_name,
+    client_last_name,
+    setClientName,
+    setClientLastName,
+  ])
   const setArrivalDate = useConfirmationFormStore(
     (state) => state.setArrivalDate
   )
@@ -204,9 +211,14 @@ export default function ConfirmationForm({
         setSubmitSuccess(true)
         // Scroll to "Your Travel Itinerary" heading
         setTimeout(() => {
-          const itineraryHeading = document.getElementById('travel-itinerary-heading')
+          const itineraryHeading = document.getElementById(
+            'travel-itinerary-heading'
+          )
           if (itineraryHeading) {
-            itineraryHeading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            itineraryHeading.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            })
           }
         }, 100)
       } else {
@@ -230,8 +242,8 @@ export default function ConfirmationForm({
     <form
       onSubmit={handleSubmit}
       className={clsx('space-y-6', className)}
-      aria-label="Travel itinerary confirmation form"
-      aria-labelledby="travel-itinerary-heading"
+      aria-label='Travel itinerary confirmation form'
+      aria-labelledby='travel-itinerary-heading'
     >
       <h3
         id='travel-itinerary-heading'
