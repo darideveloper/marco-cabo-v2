@@ -35,7 +35,7 @@ try {
       : 'An error occurred while fetching sale data'
 }
 
-const confirmationMessage = `Thanks for your purchase, ${saleData?.client.name.toUpperCase()}!. Complete your reservation by filling out the form below.`
+const confirmationMessage = `Thank you for booking with us, ${saleData?.client.name.toUpperCase()}!`
 
 const pageTitle = 'Confirmation | Mar Co. CABO'
 const pageDescription = confirmationMessage
@@ -54,10 +54,16 @@ const pageDescription = confirmationMessage
   />
   <Hero
     title='Confirmation'
-    description={confirmationMessage}
     image='/images/confirmation/black-escalade.webp'
     autoScroll={true}
-  />
+  >
+    <span class='text-white'>
+      {confirmationMessage}
+    </span>
+    <span class='text-red text-3xl font-bold inline-block'>
+      NOW PLEASE SUBMIT YOUR TRAVEL ITINERARY BELOW
+    </span>
+  </Hero>
 
   <section class='container mx-auto px-4 py-16 lg:py-24'>
     <div class='max-w-3xl mx-auto'>

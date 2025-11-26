@@ -7,12 +7,11 @@ import H1 from '../atoms/H1.astro'
 
 interface Props {
   title: string
-  description?: string
   image?: string
   autoScroll?: boolean
 }
 
-const { title, description, image, autoScroll = false } = Astro.props as Props
+const { title, image, autoScroll = false } = Astro.props as Props
 ---
 
 <section
@@ -26,12 +25,12 @@ const { title, description, image, autoScroll = false } = Astro.props as Props
   ]}
   style={`background-image: url('${image}');`}
   id='hero'
-  aria-label={`Hero section: ${title}${description ? ` - ${description}` : ''}`}
+  aria-label={`Hero section: ${title}`}
 >
   <!-- Decorative image for SEO and accessibility -->
   <img
     src={image}
-    alt={`${title}${description ? ` - ${description}` : ' - Hero image'}`}
+    alt={`${title} - Hero image`}
     class="sr-only"
     loading="eager"
   />
@@ -65,13 +64,13 @@ const { title, description, image, autoScroll = false } = Astro.props as Props
         </H1>
       </div>
       {
-        description && (
+        Astro.slots.has('default') && (
           <p
             class='text-xl'
             data-aos='fade-up'
             data-aos-delay='1000'
           >
-            {description}
+            <slot />
           </p>
         )
       }
