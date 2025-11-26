@@ -255,10 +255,10 @@ function SummaryRow({ label, value }: SummaryRowProps) {
         'bg-gray-50 rounded-xl px-4 py-3 border border-gray-100'
       )}
     >
-      <span className='text-sm font-medium text-gray-500 uppercase tracking-wide'>
+      <span className='text-sm font-medium text-gray-500 uppercase tracking-wide w-full sm:w-1/2'>
         {label}
       </span>
-      <span className='text-base text-gray-900 font-semibold mt-1 sm:mt-0'>
+      <span className='text-base text-gray-900 font-semibold mt-1 sm:mt-0 w-full sm:w-1/2'>
         {value || '—'}
       </span>
     </div>
