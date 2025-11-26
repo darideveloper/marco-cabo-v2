@@ -25,7 +25,7 @@ const domain = import.meta.env.PUBLIC_BASE_URL
 // Get page metadata (no i18n)
 const title = 'Mar Co. CABO'
 const description = baseDescription
-const image = `${domain}/images/logo.png`
+const image = `${domain}/images/hero.webp`
 
 const twitterHandle = '@DeveloperDari'
 let keywords = baseKeywords
@@ -42,7 +42,7 @@ const jsonLd = {
   description: description,
   url: domain,
   logo: `${domain}/images/logo.png`,
-  image: `${domain}/images/banner.webp`,
+  image: `${domain}/images/hero.webp`,
   email: email,
   serviceArea: ['Los Cabos', 'Baja California Sur', 'México'],
   sameAs: [...socialLinks.map((social) => social.href)],
