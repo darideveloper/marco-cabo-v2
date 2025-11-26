@@ -85,7 +85,7 @@ export default function InfoCards({ className }: Props) {
       <InfoCard
         type='image'
         image='/images/airport-representative.webp'
-        title='Meet & Greet Staff'
+        title='Professional Meet & Greet Staff at Los Cabos Airport'
         aosAnimation='fade-right'
       />
 
@@ -93,7 +93,7 @@ export default function InfoCards({ className }: Props) {
       <InfoCard
         type='details'
         image='/images/vehicles/Luxury SUV.webp'
-        title='YOUR TRANSFER INCLUDES'
+        title='Your Transfer Includes - Luxury SUV Transportation'
         items={[
           'Private Transportation',
           'Bottled Water',

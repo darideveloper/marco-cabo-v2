@@ -76,7 +76,8 @@ export default function CardVehicle({
 
         <img
           src={image}
-          alt={title}
+          alt={`${title} - Luxury Vehicle for ${numberOfGuests} Guests - Mar Co. CABO Los Cabos Transportation`}
+          title={`${title} Vehicle - Up to ${numberOfGuests} Passengers - Los Cabos`}
           className={clsx(
             'w-full',
             isSelected ? 'scale-110' : 'group-hover:scale-110',

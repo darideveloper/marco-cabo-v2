@@ -50,7 +50,8 @@ export default function DestinationCard({
       >
         <img
           src={image}
-          alt={title}
+          alt={`${title} Destination Selection - Los Cabos Transportation - Mar Co. CABO`}
+          title={`${title} - Choose Your Los Cabos Destination`}
           className={clsx(
             'w-full h-full object-cover',
             'transition-all duration-300',

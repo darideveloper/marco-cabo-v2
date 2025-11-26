@@ -1,90 +1,86 @@
 ---
 interface Props {
-    image: string;
-    imageAlt?: string;
-    reverse?: boolean;
-    className?: string;
+  image: string
+  imageAlt?: string
+  imageTitle?: string
+  reverse?: boolean
+  className?: string
 }
 
-const { image, imageAlt = "Image", reverse = false, className } = Astro.props;
+const {
+  image,
+  imageAlt = 'Image',
+  imageTitle,
+  reverse = false,
+  className,
+} = Astro.props
+const titleAttr = imageTitle || imageAlt
 ---
 
-<section class:list={["container", "py-12", "lg:py-20", className]}>
-    <div
-        class:list={[
-            "grid",
-            "grid-cols-1",
-            "lg:grid-cols-2",
-            "gap-8",
-            "items-stretch",
-        ]}
-    >
-        {
-            reverse && (
-                <div
-                    class:list={[
-                        "col-span-1",
-                        "h-full",
-                        "max-w-[700px]",
-                        "mx-auto",
-                    ]}
-                >
-                    <img
-                        src={image}
-                        alt={imageAlt}
-                        class:list={[
-                            "w-full",
-                            "h-full",
-                            "object-cover",
-                            "rounded-3xl",
-                            "min-h-[300px]",
-                        ]}
-                    />
-                </div>
-            )
-        }
-
-        <div
+<section class:list={['container', 'py-12', 'lg:py-20', className]}>
+  <div
+    class:list={[
+      'grid',
+      'grid-cols-1',
+      'lg:grid-cols-2',
+      'gap-8',
+      'items-stretch',
+    ]}
+  >
+    {
+      reverse && (
+        <div class:list={['col-span-1', 'h-full', 'max-w-[700px]', 'mx-auto']}>
+          <img
+            src={image}
+            alt={imageAlt}
+            title={titleAttr}
             class:list={[
-                "col-span-1",
-                "border",
-                "border-grey-light",
-                "rounded-3xl",
-                "p-8",
-                "lg:p-12",
-                "flex",
-                "flex-col",
-                "justify-center",
-                "max-w-[700px]",
-                "mx-auto",
+              'w-full',
+              'h-full',
+              'object-cover',
+              'rounded-3xl',
+              'min-h-[300px]',
             ]}
-        >
-            <slot />
+          />
         </div>
+      )
+    }
 
-        {
-            !reverse && (
-                <div
-                    class:list={[
-                        "col-span-1",
-                        "h-full",
-                        "max-w-[700px]",
-                        "mx-auto",
-                    ]}
-                >
-                    <img
-                        src={image}
-                        alt={imageAlt}
-                        class:list={[
-                            "w-full",
-                            "h-full",
-                            "object-cover",
-                            "rounded-3xl",
-                            "min-h-[300px]",
-                        ]}
-                    />
-                </div>
-            )
-        }
+    <div
+      class:list={[
+        'col-span-1',
+        'border',
+        'border-grey-light',
+        'rounded-3xl',
+        'p-8',
+        'lg:p-12',
+        'flex',
+        'flex-col',
+        'justify-center',
+        'max-w-[700px]',
+        'mx-auto',
+      ]}
+    >
+      <slot />
     </div>
+
+    {
+      !reverse && (
+        <div class:list={['col-span-1', 'h-full', 'max-w-[700px]', 'mx-auto']}>
+          <img
+            src={image}
+            alt={imageAlt}
+            title={titleAttr}
+            class:list={[
+              'w-full',
+              'h-full',
+              'object-cover',
+              'rounded-3xl',
+              'min-h-[300px]',
+            ]}
+          />
+        </div>
+      )
+    }
+  </div>
 </section>

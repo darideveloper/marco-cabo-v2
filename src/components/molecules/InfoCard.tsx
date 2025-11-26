@@ -56,7 +56,16 @@ export default function InfoCard({
       >
         <img
           src={imageProps.image}
-          alt={imageProps.title || 'Info'}
+          alt={
+            imageProps.title
+              ? `${imageProps.title} - Mar Co. CABO Los Cabos Transportation Services`
+              : 'Mar Co. CABO Transportation Services in Los Cabos'
+          }
+          title={
+            imageProps.title
+              ? `${imageProps.title} - Los Cabos Transportation`
+              : 'Mar Co. CABO Transportation Services'
+          }
           className={clsx('w-full h-full object-cover', 'absolute inset-0')}
         />
       </div>
@@ -78,7 +87,8 @@ export default function InfoCard({
       >
         <img
           src={props.image}
-          alt={props.title}
+          alt={`${props.title} - Mar Co. CABO Los Cabos Transportation Services`}
+          title={`${props.title} - Los Cabos Transportation`}
           className={clsx('w-full h-full object-cover', 'absolute inset-0')}
         />
         <div className={clsx('absolute inset-0', 'bg-black/60')} />
