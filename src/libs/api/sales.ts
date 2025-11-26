@@ -5,6 +5,7 @@ export interface CreateSalePayload {
     service_type: number
     location: number
     client_name: string
+    client_last_name: string
     client_email: string
 }
 

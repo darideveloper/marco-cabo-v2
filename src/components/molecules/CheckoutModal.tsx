@@ -26,24 +26,32 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
   const selectedLocationId = useMainFormStore(
     (state) => state.selectedLocationId
   )
-  const contactName = useMainFormStore((state) => state.contactName)
+  const contactFirstName = useMainFormStore((state) => state.contactFirstName)
+  const contactLastName = useMainFormStore((state) => state.contactLastName)
   const contactEmail = useMainFormStore((state) => state.contactEmail)
-  const setContactName = useMainFormStore((state) => state.setContactName)
+  const setContactFirstName = useMainFormStore(
+    (state) => state.setContactFirstName
+  )
+  const setContactLastName = useMainFormStore(
+    (state) => state.setContactLastName
+  )
   const setContactEmail = useMainFormStore((state) => state.setContactEmail)
   const destinationDisplay = selectedHotel
     ? `${selectedHotel.name} - ${selectedHotel.hotelName}`
     : selectedPostalCode?.name
 
   const isFormValid = useMemo(() => {
-    const nameValid = contactName.trim().length > 0
+    const firstNameValid = contactFirstName.trim().length > 0
+    const lastNameValid = contactLastName.trim().length > 0
     const emailValid = contactEmail.trim().length > 0
     const idsValid =
       selectedTrip !== null &&
       selectedVehicleId !== null &&
       selectedLocationId !== null
-    return nameValid && emailValid && idsValid
+    return firstNameValid && lastNameValid && emailValid && idsValid
   }, [
-    contactName,
+    contactFirstName,
+    contactLastName,
     contactEmail,
     selectedTrip,
     selectedVehicleId,
@@ -128,16 +136,33 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
           <div className='space-y-2'>
             <label
               className='text-sm font-medium text-gray-700'
-              htmlFor='contact-name'
+              htmlFor='contact-first-name'
             >
-              Full name
+              First name
             </label>
             <input
-              id='contact-name'
+              id='contact-first-name'
               type='text'
-              value={contactName}
-              onChange={(event) => setContactName(event.target.value)}
-              placeholder='e.g. Maria Johnson'
+              value={contactFirstName}
+              onChange={(event) => setContactFirstName(event.target.value)}
+              placeholder='e.g. Maria'
+              className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
+              required
+            />
+          </div>
+          <div className='space-y-2'>
+            <label
+              className='text-sm font-medium text-gray-700'
+              htmlFor='contact-last-name'
+            >
+              Last name
+            </label>
+            <input
+              id='contact-last-name'
+              type='text'
+              value={contactLastName}
+              onChange={(event) => setContactLastName(event.target.value)}
+              placeholder='e.g. Johnson'
               className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
               required
             />
@@ -161,7 +186,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
           </div>
           {!isFormValid && (
             <p className='text-sm text-red-600'>
-              Please complete both fields to continue.
+              Please complete all fields to continue.
             </p>
           )}
           {submitError && <p className='text-sm text-red-600'>{submitError}</p>}
@@ -189,7 +214,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
                 'Something went wrong. Please try again in a moment.'
 
               if (!isFormValid || isSubmitting) {
-                setSubmitError('Please complete both fields to continue.')
+                setSubmitError('Please complete all fields to continue.')
                 return
               }
               setSubmitError(null)
@@ -199,7 +224,8 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
                   vehicle: selectedVehicleId as number,
                   service_type: selectedTrip as number,
                   location: selectedLocationId as number,
-                  client_name: contactName.trim(),
+                  client_name: contactFirstName.trim(),
+                  client_last_name: contactLastName.trim(),
                   client_email: contactEmail.trim(),
                 })
 
