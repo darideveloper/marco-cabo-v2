@@ -48,7 +48,9 @@ const pageDescription = confirmationMessage
   <PageSEO
     currentPage='Confirmation'
     pageDescription={confirmationMessage}
-    extraKeywords='confirmation, mar co. cabo, los cabos, baja california sur, mexico, vacation packages, luxury transportation, airport transfers, private tours, car service, luxury cars, limousine service, luxury limousines, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease'
+    extraKeywords='confirmation, reservation'
+    robots='noindex, nofollow'
+    canonicalUrl={`${Astro.url.origin}/confirmation/${token}`}
   />
   <Hero
     title='Confirmation'
@@ -56,24 +58,6 @@ const pageDescription = confirmationMessage
     image='/images/confirmation/black-escalade.webp'
     autoScroll={true}
   />
-  <fragment slot='head'>
-    <meta
-      property='og:title'
-      content={pageTitle}
-    />
-    <meta
-      property='og:description'
-      content={pageDescription}
-    />
-    <meta
-      property='og:type'
-      content='website'
-    />
-    <link
-      rel='canonical'
-      href={`${Astro.url.origin}/confirmation/${token}`}
-    />
-  </fragment>
 
   <section class='container mx-auto px-4 py-16 lg:py-24'>
     <div class='max-w-3xl mx-auto'>

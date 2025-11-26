@@ -10,11 +10,15 @@ interface Props {
   currentPage: string // Current page
   pageDescription: string // Description
   extraKeywords?: string // Extra keywords
+  robots?: string // Robots meta tag
+  canonicalUrl?: string // Canonical URL
 }
 const {
   currentPage,
   pageDescription,
   extraKeywords = '',
+  robots,
+  canonicalUrl,
 } = Astro.props as Props
 
 // Description and keywords
@@ -113,9 +117,11 @@ const extraJson = {
 
 <BaseSEO
   currentPage={currentPage}
-  jsonType='EducationalOrganization'
+  jsonType='LocalBusiness'
   extraJson={extraJson}
   baseDescription={description}
   baseKeywords={keywords}
   author='Mar Co. CABO'
+  robots={robots}
+  canonicalUrl={canonicalUrl}
 />

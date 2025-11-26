@@ -225,6 +225,8 @@ export default function ConfirmationForm({
     <form
       onSubmit={handleSubmit}
       className={clsx('space-y-6', className)}
+      aria-label="Travel itinerary confirmation form"
+      aria-labelledby="travel-itinerary-heading"
     >
       <h3
         id='travel-itinerary-heading'

@@ -33,14 +33,20 @@ export default function DestinationCard({
       data-aos={aosAnimations[index]}
       suppressHydrationWarning
     >
-      <div
+      <button
         onClick={onClick}
+        type="button"
+        aria-label={`Select ${title} destination`}
+        aria-pressed={isSelected}
         className={clsx(
           'rounded-lg overflow-hidden relative',
           'transition-all duration-300',
           'border-4',
           'cursor-pointer',
           'aspect-4/3',
+          'w-full',
+          'bg-transparent',
+          'p-0',
           isSelected
             ? 'border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]'
             : 'border-transparent',
@@ -52,6 +58,8 @@ export default function DestinationCard({
           src={image}
           alt={`${title} Destination Selection - Los Cabos Transportation - Mar Co. CABO`}
           title={`${title} - Choose Your Los Cabos Destination`}
+          loading="lazy"
+          decoding="async"
           className={clsx(
             'w-full h-full object-cover',
             'transition-all duration-300',
@@ -151,7 +159,7 @@ export default function DestinationCard({
             selectedPostalCode || selectedHotel ? 'opacity-100' : 'opacity-0'
           )}
         />
-      </div>
+      </button>
     </article>
   )
 }

@@ -26,9 +26,17 @@ const { title, description, image, autoScroll = false } = Astro.props as Props
   ]}
   style={`background-image: url('${image}');`}
   id='hero'
+  aria-label={`Hero section: ${title}${description ? ` - ${description}` : ''}`}
 >
+  <!-- Decorative image for SEO and accessibility -->
+  <img
+    src={image}
+    alt={`${title}${description ? ` - ${description}` : ' - Hero image'}`}
+    class="sr-only"
+    loading="eager"
+  />
   <!-- Dark overlay for mobile -->
-  <div class='absolute inset-0 bg-black/60 z-0'></div>
+  <div class='absolute inset-0 bg-black/60 z-0' aria-hidden="true"></div>
 
   <div
     class={clsx(

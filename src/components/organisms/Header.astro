@@ -21,7 +21,7 @@ import Logo from '../atoms/Logo.astro'
     <Logo />
 
     <!-- Navigation -->
-    <nav>
+    <nav aria-label="Main navigation">
       <ul
         class:list={[
           'flex items-center gap-4 lg:gap-8',
@@ -30,20 +30,26 @@ import Logo from '../atoms/Logo.astro'
         ]}
       >
         {
-          navLinks.map((link) => (
-            <li>
-              <a
-                href={link.href}
-                class:list={[
-                  'text-white text-base font-medium uppercase tracking-wide',
-                  'hover:text-red',
-                  'transition-colors duration-200',
-                ]}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))
+          navLinks.map((link) => {
+            const currentPath = Astro.url.pathname
+            const isActive = currentPath === link.href || 
+                           (link.href !== '/' && currentPath.startsWith(link.href))
+            return (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={[
+                    'text-white text-base font-medium uppercase tracking-wide',
+                    'hover:text-red',
+                    'transition-colors duration-200',
+                  ]}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            )
+          })
         }
       </ul>
     </nav>

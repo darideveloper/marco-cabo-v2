@@ -7,6 +7,8 @@ interface Props {
   baseKeywords?: string // Keywords of the page (optional, to ignore i18n)
   author?: string // Author of the page (optional, to ignore i18n)
   useTagLine?: boolean // Use tag line from i18n
+  robots?: string // Robots meta tag content
+  canonicalUrl?: string // Canonical URL for the page
 }
 const {
   currentPage,
@@ -15,6 +17,8 @@ const {
   baseDescription = '',
   baseKeywords = '',
   author = 'Mar Co. CABO',
+  robots,
+  canonicalUrl,
 } = Astro.props as Props
 
 // Data
@@ -78,18 +82,18 @@ const ogType = ogTypeMap[jsonType as keyof typeof ogTypeMap] || 'website'
   name='description'
   content={description}
 />
-{
-  keywordsContent && (
-    <meta
-      name='keywords'
-      content={keywordsContent}
-    />
-  )
-}
 <meta
   name='author'
   content={author}
 />
+{
+  robots && (
+    <meta
+      name='robots'
+      content={robots}
+    />
+  )
+}
 
 <!-- Open Graph tags -->
 <meta
@@ -106,7 +110,7 @@ const ogType = ogTypeMap[jsonType as keyof typeof ogTypeMap] || 'website'
 />
 <meta
   property='og:url'
-  content={domain}
+  content={canonicalUrl || domain}
 />
 <meta
   property='og:image'
@@ -150,8 +154,11 @@ const ogType = ogTypeMap[jsonType as keyof typeof ogTypeMap] || 'website'
   set:html={JSON.stringify(jsonLd)}
 />
 
-<!-- Sitemap -->
-<link
-  rel='sitemap'
-  href='/sitemap-index.xml'
-/>
+{
+  canonicalUrl && (
+    <link
+      rel='canonical'
+      href={canonicalUrl}
+    />
+  )
+}

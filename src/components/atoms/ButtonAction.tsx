@@ -17,6 +17,7 @@ export default function ButtonAction({
 }: Props) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={clsx(
         'bg-red',

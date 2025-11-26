@@ -1,9 +1,6 @@
 //  libs
 import clsx from 'clsx'
 
-// components
-import H2 from '../atoms/H2'
-
 // Icons
 import { FaArrowsRotate, FaArrowRight } from 'react-icons/fa6'
 import { FaCheck } from 'react-icons/fa'
@@ -62,7 +59,7 @@ export default function TripButton({
           className
         )}
       >
-        <H2
+        <span
           className={clsx(
             'text-white text-2xl lg:text-3xl',
             'm-0',
@@ -71,7 +68,8 @@ export default function TripButton({
             'flex-col',
             'items-center',
             'justify-center',
-            'gap-2'
+            'gap-2',
+            'font-bold'
           )}
         >
           <span>{title}</span>
@@ -82,7 +80,7 @@ export default function TripButton({
           ) : (
             <span className={iconAnimation}>{icon}</span>
           )}
-        </H2>
+        </span>
       </button>
     </div>
   )

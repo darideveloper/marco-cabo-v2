@@ -31,13 +31,19 @@ export default function CardVehicle({
       className={clsx('group')}
       suppressHydrationWarning
     >
-      <div
+      <button
         onClick={onClick}
+        type="button"
+        aria-label={`Select ${title} vehicle for up to ${numberOfGuests} guests`}
+        aria-pressed={isSelected}
         className={clsx(
           'rounded-lg overflow-hidden relative',
           'transition-all duration-300',
           'border-4',
           'cursor-pointer',
+          'w-full',
+          'bg-transparent',
+          'p-0',
           isSelected
             ? 'border-red shadow-[0_0_20px_rgba(249,41,5,0.6)]'
             : 'border-transparent',
@@ -78,6 +84,8 @@ export default function CardVehicle({
           src={image}
           alt={`${title} - Luxury Vehicle for ${numberOfGuests} Guests - Mar Co. CABO Los Cabos Transportation`}
           title={`${title} Vehicle - Up to ${numberOfGuests} Passengers - Los Cabos`}
+          loading="lazy"
+          decoding="async"
           className={clsx(
             'w-full',
             isSelected ? 'scale-110' : 'group-hover:scale-110',
@@ -105,7 +113,7 @@ export default function CardVehicle({
             {numberOfGuests} guest maximum
           </p>
         </div>
-      </div>
+      </button>
     </article>
   )
 }

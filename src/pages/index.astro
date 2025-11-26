@@ -14,7 +14,8 @@ import PageSEO from '../components/utils/PageSEO.astro'
     slot='seo'
     currentPage='Home'
     pageDescription='Premium private transportation and vacation planning in Los Cabos, Mexico.'
-    extraKeywords='private transportation, vacation planning, los cabos, baja california sur, mexico, vacation packages, luxury transportation, airport transfers, private tours, car service, luxury cars, limousine service, luxury limousines, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease, luxury cars for rent, luxury cars for sale, luxury cars for hire, luxury cars for lease'
+    extraKeywords='private transportation, vacation planning, los cabos, baja california sur, mexico, vacation packages, luxury transportation, airport transfers, private tours, car service, luxury cars, limousine service'
+    canonicalUrl={`${Astro.url.origin}${Astro.url.pathname}`}
   />
   <Hero
     title='Airport Transportation in Los Cabos'

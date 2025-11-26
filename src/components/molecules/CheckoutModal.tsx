@@ -97,6 +97,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
             </h2>
           </div>
           <button
+            type='button'
             onClick={onClose}
             className='text-gray-400 hover:text-gray-600 transition-colors text-2xl leading-none'
             aria-label='Close modal'
@@ -168,6 +169,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
 
         <div className='flex flex-col sm:flex-row justify-end gap-3'>
           <button
+            type='button'
             onClick={onClose}
             className={clsx(
               'w-full sm:w-auto',
@@ -181,6 +183,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
             Cancel
           </button>
           <button
+            type='button'
             onClick={async () => {
               const errorApiMessage =
                 'Something went wrong. Please try again in a moment.'

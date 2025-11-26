@@ -66,6 +66,8 @@ export default function InfoCard({
               ? `${imageProps.title} - Los Cabos Transportation`
               : 'Mar Co. CABO Transportation Services'
           }
+          loading="lazy"
+          decoding="async"
           className={clsx('w-full h-full object-cover', 'absolute inset-0')}
         />
       </div>
@@ -89,6 +91,8 @@ export default function InfoCard({
           src={props.image}
           alt={`${props.title} - Mar Co. CABO Los Cabos Transportation Services`}
           title={`${props.title} - Los Cabos Transportation`}
+          loading="lazy"
+          decoding="async"
           className={clsx('w-full h-full object-cover', 'absolute inset-0')}
         />
         <div className={clsx('absolute inset-0', 'bg-black/60')} />
@@ -104,7 +108,7 @@ export default function InfoCard({
             className={clsx(
               'text-white',
               'uppercase mb-2 lg:mb-4',
-              'text-2xl! lg:text-4xl!',
+              'text-2xl! lg:text-2xl!',
               'm-0',
               'text-center'
             )}
@@ -127,7 +131,7 @@ export default function InfoCard({
                 className={clsx(
                   'flex items-center justify-center',
                   'font-bold',
-                  'text-base! lg:text-lg!'
+                  'text-base! lg:text-base!'
                 )}
               >
                 {item}
@@ -216,7 +220,7 @@ export default function InfoCard({
             {props.serviceType && (
               <div
                 className={clsx(
-                  'flex flex-row justify-between items-center gap-2 border-b border-white/60 pb-2tr '
+                  'flex flex-row justify-between items-center gap-2 border-b border-white/60 pb-2'
                 )}
               >
                 <span className={clsx('font-medium whitespace-nowrap')}>

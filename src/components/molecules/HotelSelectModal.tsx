@@ -146,6 +146,7 @@ export default function HotelSelectModal({
       >
         {/* Close button */}
         <button
+          type="button"
           onClick={handleClose}
           className={clsx(
             'absolute top-4 right-4',
@@ -156,6 +157,7 @@ export default function HotelSelectModal({
             'rounded-full hover:bg-gray-100',
             'transition-colors'
           )}
+          aria-label="Close hotel selection modal"
         >
           ×
         </button>
@@ -266,6 +268,7 @@ export default function HotelSelectModal({
         {/* Buttons */}
         <div className={clsx('flex gap-3', 'justify-end')}>
           <button
+            type="button"
             onClick={handleClose}
             className={clsx(
               'px-4 py-2',
@@ -278,6 +281,7 @@ export default function HotelSelectModal({
             Cancel
           </button>
           <button
+            type="button"
             onClick={handleConfirm}
             disabled={selectedHotelId === null}
             className={clsx(

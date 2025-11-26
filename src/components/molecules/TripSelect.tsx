@@ -51,7 +51,7 @@ export default function TripSelect({ className, serviceTypes }: Props) {
     >
       {trips.map((trip, index) => (
         <TripButton
-          key={index}
+          key={trip.id}
           title={trip.title}
           isSelected={trip.id === selectedTrip}
           onClick={() => handleTripClick(trip.id, trip.title)}
