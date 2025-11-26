@@ -9,6 +9,7 @@ import { completeSale } from '../../libs/api/sales'
 interface Props {
   className?: string
   defaultClientName?: string
+  defaultClientLastName?: string
   serviceTypeName?: string
   maxPassengers?: number
   stripeCode?: string
@@ -18,6 +19,7 @@ interface Props {
 export default function ConfirmationForm({
   className,
   defaultClientName = '',
+  defaultClientLastName = '',
   serviceTypeName = '',
   maxPassengers = 0,
   stripeCode = '',
@@ -69,12 +71,15 @@ export default function ConfirmationForm({
     (state) => state.setClientPhone
   )
 
-  // Initialize client name with default value if provided and store is empty
+  // Initialize client name and last name with default values if provided and store is empty
   useEffect(() => {
     if (defaultClientName && !client_name) {
       setClientName(defaultClientName)
     }
-  }, [defaultClientName, client_name, setClientName])
+    if (defaultClientLastName && !client_last_name) {
+      setClientLastName(defaultClientLastName)
+    }
+  }, [defaultClientName, defaultClientLastName, client_name, client_last_name, setClientName, setClientLastName])
   const setArrivalDate = useConfirmationFormStore(
     (state) => state.setArrivalDate
   )
@@ -270,7 +275,11 @@ export default function ConfirmationForm({
             value={client_name}
             onChange={(e) => setClientName(e.target.value)}
             placeholder='e.g. Juan'
-            className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
+            readOnly={!!defaultClientName}
+            className={clsx(
+              'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900',
+              defaultClientName && 'bg-gray-100 cursor-not-allowed'
+            )}
             required
           />
         </div>
@@ -288,7 +297,11 @@ export default function ConfirmationForm({
             value={client_last_name}
             onChange={(e) => setClientLastName(e.target.value)}
             placeholder='e.g. Pérez'
-            className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900'
+            readOnly={!!defaultClientLastName}
+            className={clsx(
+              'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red/70 focus:border-transparent text-gray-900',
+              defaultClientLastName && 'bg-gray-100 cursor-not-allowed'
+            )}
             required
           />
         </div>

@@ -38,6 +38,7 @@ export interface SaleData {
     stripe_code: string
     client: {
         name: string
+        last_name: string
         email: string
     }
 }

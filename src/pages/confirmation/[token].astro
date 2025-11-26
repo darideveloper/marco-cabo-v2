@@ -125,6 +125,7 @@ const pageDescription = confirmationMessage
               <ConfirmationForm
                 client:load
                 defaultClientName={saleData.client.name}
+                defaultClientLastName={saleData.client.last_name}
                 serviceTypeName={saleData.service_type.name}
                 maxPassengers={saleData.vehicle?.passengers || 0}
                 stripeCode={saleData.stripe_code}
