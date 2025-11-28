@@ -2,6 +2,7 @@
 //  components
 import InfoCardsComponent from '../molecules/InfoCards'
 import CheckoutButton from '../molecules/CheckoutButton'
+import GoogleReviews from '../molecules/GoogleReviews.astro'
 ---
 
 <section class:list={['container', '']}>
@@ -10,4 +11,6 @@ import CheckoutButton from '../molecules/CheckoutButton'
   <div class='flex justify-center mt-6'>
     <CheckoutButton client:load />
   </div>
+
+  <GoogleReviews />
 </section>
