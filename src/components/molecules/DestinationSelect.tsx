@@ -69,6 +69,15 @@ export default function DestinationSelect({
     setModalOpen(true)
   }
 
+  const scrollToPricing = () => {
+    setTimeout(() => {
+      const pricingSection = document.getElementById('pricing-section')
+      if (pricingSection) {
+        pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 350) // Delay to allow modal closing animation (300ms) to complete
+  }
+
   const handleHotelSelect = (hotel: HotelDataType) => {
     if (destinationForModal) {
       setSelectedDestination(destinationForModal.id)
@@ -77,6 +86,9 @@ export default function DestinationSelect({
       setSelectedLocationId(hotel.id) // Store location ID
       setSelectedPostalCodeStore(null) // Clear postal code when hotel is selected
       setSelectedPostalCode(null) // Clear local postal code state
+      setModalOpen(false) // Close modal
+      setDestinationForModal(null) // Clear modal destination
+      scrollToPricing() // Scroll to pricing section
     }
   }
 
@@ -88,6 +100,9 @@ export default function DestinationSelect({
       setSelectedLocationId(postalCode.id) // Store location ID
       setSelectedHotelStore(null) // Clear hotel when postal code is selected
       setSelectedHotel(null) // Clear local hotel state
+      setModalOpen(false) // Close modal
+      setDestinationForModal(null) // Clear modal destination
+      scrollToPricing() // Scroll to pricing section
     }
   }
 
