@@ -1,6 +1,9 @@
 // libs
 import clsx from 'clsx'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+
+// components
+import Modal from './Modal'
 
 // store
 import { useMainFormStore } from '../../libs/store/mainFormStore'
@@ -61,58 +64,27 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
-  useEffect(() => {
-    if (!isOpen) return
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose()
-      }
-    }
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, onClose])
-
-  if (!isOpen) return null
-
   return (
-    <div
-      className={clsx(
-        'fixed inset-0 z-50',
-        'flex items-center justify-center',
-        'bg-black/60',
-        'transition-opacity duration-200 opacity-100'
-      )}
-      onClick={onClose}
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      maxWidth="max-w-lg"
+      padding="p-6 sm:p-8"
+      borderRadius="rounded-2xl"
+      animationDuration={200}
+      useAdvancedAnimations={false}
+      contentClassName="space-y-6"
     >
-      <div
-        className={clsx(
-          'bg-white rounded-2xl shadow-2xl',
-          'p-6 sm:p-8',
-          'max-w-lg w-full mx-4',
-          'space-y-6',
-          'transform transition-all duration-200',
-          'opacity-100 scale-100'
-        )}
-        onClick={(event) => event.stopPropagation()}
-      >
-        <div className='flex items-start justify-between gap-4'>
-          <div>
-            <p className='text-sm uppercase tracking-wide text-red font-semibold'>
-              You're almost there
-            </p>
-            <h2 className='text-2xl font-bold text-gray-900 mt-1'>
-              Review your transfer details
-            </h2>
-          </div>
-          <button
-            type='button'
-            onClick={onClose}
-            className='text-gray-400 hover:text-gray-600 transition-colors text-2xl leading-none'
-            aria-label='Close modal'
-          >
-            ×
-          </button>
+      <div className='flex items-start justify-between gap-4'>
+        <div>
+          <p className='text-sm uppercase tracking-wide text-red font-semibold'>
+            You're almost there
+          </p>
+          <h2 className='text-2xl font-bold text-gray-900 mt-1'>
+            Review your transfer details
+          </h2>
         </div>
+      </div>
 
         <div className='space-y-4'>
           <SummaryRow
@@ -263,8 +235,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
             {isSubmitting ? 'Sending...' : 'Continue'}
           </button>
         </div>
-      </div>
-    </div>
+    </Modal>
   )
 }
 

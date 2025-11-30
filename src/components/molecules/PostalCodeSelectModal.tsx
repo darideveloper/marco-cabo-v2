@@ -2,6 +2,9 @@
 import clsx from 'clsx'
 import { useState, useRef, useEffect } from 'react'
 
+// components
+import Modal from './Modal'
+
 //  props
 interface Props {
   isOpen: boolean
@@ -23,8 +26,6 @@ export default function PostalCodeSelectModal({
   >(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [isClosing, setIsClosing] = useState(false)
-  const [isOpening, setIsOpening] = useState(isOpen)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -53,40 +54,21 @@ export default function PostalCodeSelectModal({
     }
   }, [isDropdownOpen])
 
-  // Handle opening animation
-  useEffect(() => {
-    if (isOpen && !isClosing) {
-      // Start with opening state to show initial closed position
-      setIsOpening(true)
-      // Use requestAnimationFrame to ensure DOM is ready, then trigger animation
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setIsOpening(false)
-        })
-      })
-    }
-  }, [isOpen, isClosing])
-
   // Reset search when modal closes
   useEffect(() => {
     if (!isOpen) {
       setSearchQuery('')
       setSelectedPostalCodeId(null)
       setIsDropdownOpen(false)
-      setIsClosing(false)
-      setIsOpening(false)
     }
   }, [isOpen])
 
-  // Handle closing animation
+  // Handle closing with cleanup
   const handleClose = () => {
-    setIsClosing(true)
-    setTimeout(() => {
-      setSelectedPostalCodeId(null)
-      setSearchQuery('')
-      setIsDropdownOpen(false)
-      onClose()
-    }, 300) // Match animation duration
+    setSelectedPostalCodeId(null)
+    setSearchQuery('')
+    setIsDropdownOpen(false)
+    onClose()
   }
 
   const handleConfirm = () => {
@@ -103,10 +85,6 @@ export default function PostalCodeSelectModal({
     }
   }
 
-  if (!isOpen && !isClosing) return null
-
-  const isAnimating = isOpening || isClosing
-
   const handlePostalCodeClick = (postalCode: PostalCodesType) => {
     setSelectedPostalCodeId(postalCode.id)
     setSearchQuery(postalCode.name)
@@ -120,49 +98,16 @@ export default function PostalCodeSelectModal({
     : null
 
   return (
-    <div
-      className={clsx(
-        'fixed inset-0 z-50',
-        'flex items-center justify-center',
-        'bg-black/60',
-        'transition-opacity duration-300 ease-out',
-        isAnimating && isClosing ? 'opacity-0' : 'opacity-100'
-      )}
-      onClick={handleClose}
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      maxWidth="max-w-md"
+      padding="p-6"
+      borderRadius="rounded-lg"
+      animationDuration={300}
+      useAdvancedAnimations={true}
+      closeButtonAriaLabel="Close postal code selection modal"
     >
-      <div
-        className={clsx(
-          'bg-white rounded-lg',
-          'p-6',
-          'max-w-md w-full mx-4',
-          'shadow-xl',
-          'relative',
-          'transition-all duration-300 ease-out',
-          isOpening
-            ? 'opacity-0 scale-95 translate-y-2'
-            : isClosing
-            ? 'opacity-0 scale-95 translate-y-2'
-            : 'opacity-100 scale-100 translate-y-0'
-        )}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Close button */}
-        <button
-          type="button"
-          onClick={handleClose}
-          className={clsx(
-            'absolute top-4 right-4',
-            'text-gray-500 hover:text-gray-700',
-            'text-2xl font-bold',
-            'w-8 h-8',
-            'flex items-center justify-center',
-            'rounded-full hover:bg-gray-100',
-            'transition-colors'
-          )}
-          aria-label="Close postal code selection modal"
-        >
-          ×
-        </button>
 
         {/* Title */}
         <h2 className={clsx('text-2xl font-bold', 'mb-4', 'text-gray-800')}>
@@ -291,7 +236,6 @@ export default function PostalCodeSelectModal({
             Confirm
           </button>
         </div>
-      </div>
-    </div>
+    </Modal>
   )
 }
