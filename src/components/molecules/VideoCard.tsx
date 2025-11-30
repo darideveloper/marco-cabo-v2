@@ -23,7 +23,7 @@ export default function VideoCard({ className, videoUrl }: Props) {
     <div
       className={clsx(
         'rounded-lg overflow-hidden relative',
-        'w-full',
+        'w-full aspect-video',
         className
       )}
     >

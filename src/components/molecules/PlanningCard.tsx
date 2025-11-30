@@ -27,7 +27,7 @@ export default function PlanningCard({
         'rounded-lg overflow-hidden',
         'bg-grey-dark',
         'flex flex-col',
-        'justify-between',
+        'justify-between lg:justify-center',
         'p-4 md:p-6 lg:p-8',
         'items-center',
         className
@@ -35,7 +35,7 @@ export default function PlanningCard({
       data-aos='fade-up'
       suppressHydrationWarning
     >
-      <div className={clsx('flex flex-col', 'items-center', 'mt-0 xl:mt-8')}>
+      <div className={clsx('flex flex-col', 'items-center', 'mt-0 lg:mt-0')}>
         <H2
           className={clsx(
             'text-white text-2xl! lg:text-4xl!',
@@ -67,7 +67,7 @@ export default function PlanningCard({
         </H2>
       </div>
 
-      <div className={clsx('mt-auto', 'w-full', 'flex justify-center')}>
+      <div className={clsx('mt-auto lg:mt-0', 'w-full', 'flex justify-center')}>
         <ButtonAction
           text={buttonText}
           onClick={onClick}
