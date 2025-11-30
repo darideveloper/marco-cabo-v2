@@ -8,7 +8,7 @@ import SocialLinks from '../molecules/SocialLinks.astro'
 import { Mail, Phone, MapPin } from '@lucide/astro'
 
 // Get contact data
-import { email, phone, socialLinks } from '../../libs/constants/contact'
+import { email, phone, socialLinks, googleMapsUrl } from '../../libs/constants/contact'
 ---
 
 <footer class:list={['w-full']}>
@@ -137,9 +137,21 @@ import { email, phone, socialLinks } from '../../libs/constants/contact'
               {phone}
             </a>
           </p>
-          <p class:list={['m-0', 'text-black', 'flex items-center gap-2']}>
+          <p class:list={['m-0', 'flex items-center gap-2']}>
             <MapPin class='w-4 h-4 shrink-0' aria-hidden="true" />
-            <span>Los Cabos, Baja California Sur, México</span>
+            <a
+              href={googleMapsUrl}
+              target='_blank'
+              rel='noopener noreferrer'
+              class:list={[
+                'text-black',
+                'hover:text-red',
+                'transition-colors duration-200',
+              ]}
+              aria-label='View our location on Google Maps'
+            >
+              Los Cabos, Baja California Sur, México
+            </a>
           </p>
         </div>
       </div>

@@ -3,7 +3,7 @@
 import BaseSEO from './base/BaseSEO.astro'
 
 // Data
-import { phone } from '../../libs/constants/contact'
+import { phone, googleMapsUrl } from '../../libs/constants/contact'
 
 // Read props
 interface Props {
@@ -109,9 +109,10 @@ const extraJson = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 22.89524,
-    longitude: -109.94086,
+    latitude: 22.9335587,
+    longitude: -109.8892174,
   },
+  hasMap: googleMapsUrl,
 }
 ---
 
