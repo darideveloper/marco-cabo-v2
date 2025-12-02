@@ -2,6 +2,10 @@
 import clsx from 'clsx'
 import { useMemo, useEffect, useState } from 'react'
 
+// components
+import VideoModal from './VideoModal'
+import InfoModal from './InfoModal'
+
 // store
 import { useConfirmationFormStore } from '../../libs/store/confirmationFormStore'
 import { completeSale } from '../../libs/api/sales'
@@ -158,12 +162,12 @@ export default function ConfirmationForm({
     e.preventDefault()
 
     if (!isFormValid || !stripeCode || !clientEmail) {
-      setSubmitError('Please fill in all required fields')
+      setSubmitError('validation') // Mark as validation error
       return
     }
 
     if (!passengers || passengers <= 0) {
-      setSubmitError('Please enter a valid number of passengers')
+      setSubmitError('validation') // Mark as validation error
       return
     }
 
@@ -222,17 +226,16 @@ export default function ConfirmationForm({
           }
         }, 100)
       } else {
-        setSubmitError(
-          response.message || 'Failed to submit the form. Please try again.'
-        )
+        // Log the actual error for debugging
+        console.error('Form submission error:', response.message || 'Unknown error')
+        // Show generic error message to user
+        setSubmitError('generic')
       }
     } catch (error) {
+      // Log the actual error for debugging
       console.error('Error submitting form:', error)
-      setSubmitError(
-        error instanceof Error
-          ? error.message
-          : 'An error occurred while submitting the form. Please try again.'
-      )
+      // Show generic error message to user
+      setSubmitError('generic')
     } finally {
       setIsSubmitting(false)
     }
@@ -252,21 +255,33 @@ export default function ConfirmationForm({
         Your Travel Itinerary
       </h3>
 
-      {submitSuccess && (
-        <div className='bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg'>
-          <p className='font-medium'>Success!</p>
-          <p className='text-sm'>
-            Your reservation details have been submitted successfully.
-          </p>
-        </div>
-      )}
+      {/* Success Modal with Video */}
+      <VideoModal
+        isOpen={submitSuccess}
+        onClose={() => {
+          // Modal can be closed, but keep success state
+          // This allows users to see the form is submitted
+        }}
+        videoUrl="https://youtu.be/lJ2djBW2eSM"
+        videoTitle="Thank you for your reservation"
+        thanksMessage="Your travel itinerary has been submitted successfully. We're excited to help make your trip to Cabo unforgettable!"
+        buttonText="Vacation Planning"
+        buttonLink="https://caboexperiences.com"
+        buttonTarget="_blank"
+      />
 
-      {submitError && (
-        <div className='bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg'>
-          <p className='font-medium'>Error</p>
-          <p className='text-sm'>{submitError}</p>
-        </div>
-      )}
+      {/* Error Modal */}
+      <InfoModal
+        isOpen={!!submitError}
+        onClose={() => setSubmitError(null)}
+        title={submitError === 'validation' ? 'Validation Error' : 'Submission Error'}
+        message={
+          submitError === 'validation'
+            ? 'Please complete all required fields (marked with *) to continue.'
+            : 'We encountered an issue while processing your request. Please try again or contact our support team for assistance.'
+        }
+        type="error"
+      />
 
       {/* Client Information */}
       <div className='space-y-4'>

@@ -1,6 +1,7 @@
 // libs
 import clsx from 'clsx'
-import { useEffect, useState, ReactNode } from 'react'
+import { useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
 
 export interface ModalProps {
   isOpen: boolean
