@@ -97,7 +97,13 @@ export default function Modal({
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, handleEscapeKey, useAdvancedAnimations, animationDuration, onClose])
+  }, [
+    isOpen,
+    handleEscapeKey,
+    useAdvancedAnimations,
+    animationDuration,
+    onClose,
+  ])
 
   // Handle opening animation - ensure smooth enter animation
   useEffect(() => {
@@ -140,14 +146,14 @@ export default function Modal({
   const overlayClasses = clsx(
     'fixed inset-0 z-50',
     'flex items-center justify-center',
+    'overflow-y-auto',
+    'py-4',
     'bg-black/60',
     'transition-opacity',
     durationClass,
     'ease-out',
     // Overlay fades in on open, fades out on close
-    isOpening || isClosing
-      ? 'opacity-0'
-      : 'opacity-100',
+    isOpening || isClosing ? 'opacity-0' : 'opacity-100',
     overlayClassName
   )
 
@@ -157,6 +163,8 @@ export default function Modal({
     padding,
     maxWidth,
     'w-full mx-4',
+    'max-h-[90vh]',
+    'overflow-y-auto',
     'shadow-xl',
     'relative',
     contentClassName,
@@ -186,11 +194,17 @@ export default function Modal({
   )
 
   return (
-    <div className={overlayClasses} onClick={handleClose}>
-      <div className={contentClasses} onClick={(e) => e.stopPropagation()}>
+    <div
+      className={overlayClasses}
+      onClick={handleClose}
+    >
+      <div
+        className={contentClasses}
+        onClick={(e) => e.stopPropagation()}
+      >
         {showCloseButton && (
           <button
-            type="button"
+            type='button'
             onClick={handleClose}
             className={clsx(
               'absolute top-4 right-4',
@@ -212,4 +226,3 @@ export default function Modal({
     </div>
   )
 }
-

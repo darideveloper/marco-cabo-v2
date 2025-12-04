@@ -11,6 +11,7 @@ interface MainFormStore {
   contactFirstName: string
   contactLastName: string
   contactEmail: string
+  total: string
   setSelectedTrip: (tripId: number, tripName: string) => void
   setSelectedVehicle: (vehicleId: number, vehicleName: string) => void
   setSelectedLocationId: (locationId: number | null) => void
@@ -19,6 +20,7 @@ interface MainFormStore {
   setContactFirstName: (firstName: string) => void
   setContactLastName: (lastName: string) => void
   setContactEmail: (email: string) => void
+  setTotal: (total: string) => void
 }
 
 export const useMainFormStore = create<MainFormStore>((set) => ({
@@ -32,6 +34,7 @@ export const useMainFormStore = create<MainFormStore>((set) => ({
   contactFirstName: '',
   contactLastName: '',
   contactEmail: '',
+  total: '$ 0.00',
   setSelectedTrip: (tripId: number, tripName: string) => set({ selectedTrip: tripId, selectedTripName: tripName }),
   setSelectedVehicle: (vehicleId: number, vehicleName: string) => set({ selectedVehicleId: vehicleId, selectedVehicleName: vehicleName }),
   setSelectedLocationId: (locationId: number | null) => set({ selectedLocationId: locationId }),
@@ -40,4 +43,5 @@ export const useMainFormStore = create<MainFormStore>((set) => ({
   setContactFirstName: (firstName: string) => set({ contactFirstName: firstName }),
   setContactLastName: (lastName: string) => set({ contactLastName: lastName }),
   setContactEmail: (email: string) => set({ contactEmail: email }),
+  setTotal: (total: string) => set({ total }),
 }))

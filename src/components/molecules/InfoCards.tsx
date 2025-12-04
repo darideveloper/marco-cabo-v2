@@ -26,6 +26,7 @@ export default function InfoCards({ className }: Props) {
   const selectedPostalCode = useMainFormStore(
     (state) => state.selectedPostalCode
   )
+  const setTotal = useMainFormStore((state) => state.setTotal)
 
   const [price, setPrice] = useState<string>('$ 0.00')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -51,18 +52,23 @@ export default function InfoCards({ className }: Props) {
 
           if (pricingData.results && pricingData.results.length > 0) {
             const priceValue = pricingData.results[0].price
-            setPrice(`$ ${priceValue.toFixed(2)}`)
+            const formattedPrice = `$ ${priceValue.toFixed(2)}`
+            setPrice(formattedPrice)
+            setTotal(formattedPrice)
           } else {
             setPrice('$ 0.00')
+            setTotal('$ 0.00')
           }
         } catch (error) {
           console.error('Error fetching price:', error)
           setPrice('$ 0.00')
+          setTotal('$ 0.00')
         } finally {
           setIsLoading(false)
         }
       } else {
         setPrice('$ 0.00')
+        setTotal('$ 0.00')
       }
     }
 
