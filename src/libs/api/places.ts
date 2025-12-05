@@ -28,6 +28,8 @@ export interface GooglePlacesResponse {
   formattedAddress?: string
   rating?: number
   userRatingCount?: number
+  googleMapsUri?: string
+  placeId?: string
   reviews?: GooglePlacesReview[]
 }
 
@@ -51,7 +53,7 @@ const getPlaceDetails = async (
     method: 'GET',
     headers: {
       'X-Goog-Api-Key': apiKey,
-      'X-Goog-FieldMask': 'displayName,formattedAddress,rating,userRatingCount,reviews'
+      'X-Goog-FieldMask': 'displayName,formattedAddress,rating,userRatingCount,googleMapsUri,reviews'
     }
   })
 
@@ -60,7 +62,8 @@ const getPlaceDetails = async (
   }
 
   const data = await response.json()
-  return data as GooglePlacesResponse
+  // Add the placeId to the response
+  return { ...data, placeId: businessId } as GooglePlacesResponse
 }
 
 export default getPlaceDetails

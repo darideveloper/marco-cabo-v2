@@ -2,6 +2,7 @@
 //  components
 import H2 from '../atoms/H2'
 import GoogleReviewsSlider from '../molecules/GoogleReviewsSlider'
+import LeaveReviewButton from '../atoms/LeaveReviewButton'
 import getPlaceDetails from '../../libs/api/places'
 
 let placeData = null
@@ -63,7 +64,18 @@ try {
           reviews={placeData.reviews}
           placeName={placeData.displayName?.text || 'Mar Co. CABO'}
           formattedAddress={placeData.formattedAddress}
+          googleMapsUri={placeData.googleMapsUri}
+          placeId={placeData.placeId}
         />
+
+        {placeData.placeId && (
+          <div class='flex justify-center mt-8'>
+            <LeaveReviewButton
+              client:load
+              placeId={placeData.placeId}
+            />
+          </div>
+        )}
       </div>
     ) : error ? (
       <div class='my-16 text-center text-gray-600'>

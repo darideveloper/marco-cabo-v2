@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import type { Swiper as SwiperType } from 'swiper'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import type { GooglePlacesReview } from '../../libs/api/places'
+import { googleMapsUrl } from '../../libs/constants/contact'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -15,6 +16,8 @@ interface Props {
   reviews: GooglePlacesReview[]
   placeName?: string
   formattedAddress?: string
+  googleMapsUri?: string
+  placeId?: string
 }
 
 export default function GoogleReviewsSlider({
@@ -22,6 +25,8 @@ export default function GoogleReviewsSlider({
   reviews,
   placeName,
   formattedAddress,
+  googleMapsUri,
+  placeId,
 }: Props) {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
   const [retryingImages, setRetryingImages] = useState<Set<string>>(new Set())
@@ -145,14 +150,28 @@ export default function GoogleReviewsSlider({
             )}
           </div>
         </div>
-        <a
-          href='https://www.google.com/maps'
-          target='_blank'
-          rel='noopener noreferrer'
-          className='text-xs text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap'
-        >
-          View on Google
-        </a>
+        <div className='flex items-center gap-3'>
+          <a
+            href={
+              googleMapsUri || googleMapsUrl || 'https://www.google.com/maps'
+            }
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-xs text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap'
+          >
+            View on Google
+          </a>
+          {placeId && (
+            <a
+              href={`https://search.google.com/local/writereview?placeid=${placeId}`}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='text-xs text-white bg-blue-600 hover:bg-blue-700 font-medium whitespace-nowrap px-3 py-1.5 rounded-md transition-colors'
+            >
+              Leave a Review
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Swiper Slider */}
@@ -306,31 +325,6 @@ export default function GoogleReviewsSlider({
                       <p className='text-gray-700 leading-relaxed mt-3 text-sm sm:text-base'>
                         {review.text?.text || review.originalText?.text || ''}
                       </p>
-
-                      {/* Google Maps Link */}
-                      {review.googleMapsUri && (
-                        <a
-                          href={review.googleMapsUri}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          className='inline-flex items-center gap-1 text-xs sm:text-sm text-blue-600 hover:text-blue-800 mt-4'
-                        >
-                          <svg
-                            className='w-3 h-3 sm:w-4 sm:h-4'
-                            fill='none'
-                            stroke='currentColor'
-                            viewBox='0 0 24 24'
-                          >
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              strokeWidth={2}
-                              d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
-                            />
-                          </svg>
-                          View on Google Maps
-                        </a>
-                      )}
                     </div>
                   </div>
                 </div>
