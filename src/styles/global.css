@@ -122,3 +122,28 @@ button {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* Swiper custom pagination styles */
+.swiper-pagination-custom {
+  position: relative !important;
+  margin-top: 0 !important;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #d1d5db;
+  opacity: 1;
+  transition: all 0.3s;
+  margin: 0 4px;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet:hover {
+  background: #9ca3af;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet-active {
+  width: 32px;
+  background: var(--color-red);
+  border-radius: 4px;
+}

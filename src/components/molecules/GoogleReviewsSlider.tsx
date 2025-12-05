@@ -1,7 +1,13 @@
 //  libs
 import clsx from 'clsx'
-import { useState, useEffect } from 'react'
+import { useState, useRef } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import type { Swiper as SwiperType } from 'swiper'
+import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import type { GooglePlacesReview } from '../../libs/api/places'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 //  props
 interface Props {
@@ -17,36 +23,24 @@ export default function GoogleReviewsSlider({
   placeName,
   formattedAddress,
 }: Props) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
   const [retryingImages, setRetryingImages] = useState<Set<string>>(new Set())
+  const swiperRef = useRef<SwiperType | null>(null)
 
-  // Auto-advance slider
-  useEffect(() => {
-    if (!isAutoPlaying || reviews.length <= 1) return
+  // Duplicate reviews until we have at least 5
+  const getDisplayReviews = (): GooglePlacesReview[] => {
+    if (reviews.length === 0) return []
+    if (reviews.length >= 5) return reviews
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % reviews.length)
-    }, 5000) // Change slide every 5 seconds
-
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, reviews.length])
-
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index)
-    setIsAutoPlaying(false)
+    // Duplicate reviews to reach at least 5
+    const duplicated: GooglePlacesReview[] = []
+    while (duplicated.length < 5) {
+      duplicated.push(...reviews)
+    }
+    return duplicated.slice(0, 5)
   }
 
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length)
-    setIsAutoPlaying(false)
-  }
-
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % reviews.length)
-    setIsAutoPlaying(false)
-  }
+  const displayReviews = getDisplayReviews()
 
   const formatDate = (dateString: string) => {
     try {
@@ -63,9 +57,6 @@ export default function GoogleReviewsSlider({
 
   const getImageUrl = (photoUri: string | undefined) => {
     if (!photoUri) return null
-    // Google images allow CORS, so we can try direct loading first
-    // If that fails, the onError handler will catch it and show fallback
-    // For now, let's try direct loading since Google allows it
     return photoUri
   }
 
@@ -90,14 +81,11 @@ export default function GoogleReviewsSlider({
     return null
   }
 
-  const currentReview = reviews[currentIndex]
-
   return (
     <div
       className={clsx(
         'relative',
-        'max-w-4xl',
-        'mx-auto',
+        'w-full',
         'bg-white',
         'rounded-2xl',
         'shadow-lg',
@@ -124,7 +112,7 @@ export default function GoogleReviewsSlider({
       >
         <div className='flex items-center gap-3'>
           <svg
-            className='w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0'
+            className='w-7 h-7 sm:w-8 sm:h-8 shrink-0'
             viewBox='0 0 24 24'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
@@ -167,255 +155,272 @@ export default function GoogleReviewsSlider({
         </a>
       </div>
 
-      {/* Review Content */}
-      <div className='relative'>
-        <div
-          className='flex transition-transform duration-500 ease-in-out'
-          style={{
-            transform: `translateX(-${currentIndex * 100}%)`,
+      {/* Swiper Slider */}
+      <div className='relative pb-6 pt-10 sm:pt-16'>
+        <Swiper
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper
+            // Update navigation and pagination after Swiper is initialized
+            setTimeout(() => {
+              swiper.navigation.init()
+              swiper.navigation.update()
+              swiper.pagination.init()
+              swiper.pagination.render()
+              swiper.pagination.update()
+            }, 0)
           }}
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={24}
+          slidesPerView={1}
+          slidesPerGroup={1}
+          navigation={{
+            prevEl: '.swiper-button-prev-custom',
+            nextEl: '.swiper-button-next-custom',
+          }}
+          pagination={{
+            clickable: true,
+            el: '.swiper-pagination-custom',
+          }}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+          }}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+              slidesPerGroup: 2,
+            },
+            1024: {
+              slidesPerView: 3,
+              slidesPerGroup: 3,
+            },
+          }}
+          className='!pb-12'
         >
-          {reviews.map((review, index) => (
-            <div
-              key={review.name}
-              className='min-w-full px-4 sm:px-6 py-6 sm:py-8'
-              style={{ display: index === currentIndex ? 'block' : 'none' }}
-            >
-              <div className='flex items-start gap-3 sm:gap-4'>
-                {/* Author Photo */}
-                {review.authorAttribution?.photoUri &&
-                !imageErrors.has(review.name) ? (
-                  <img
-                    src={getImageUrl(review.authorAttribution.photoUri) || ''}
-                    alt={review.authorAttribution.displayName || 'Reviewer'}
-                    className='w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0 border border-gray-200'
-                    loading='lazy'
-                    decoding='async'
-                    crossOrigin='anonymous'
-                    referrerPolicy='no-referrer'
-                    onError={(e) => {
-                      const img = e.currentTarget
-                      const photoUri = review.authorAttribution?.photoUri
+          {displayReviews.map((review, index) => {
+            // Create unique key for duplicated reviews
+            const uniqueKey = `${review.name}-${index}`
+            return (
+              <SwiperSlide key={uniqueKey}>
+                <div className='px-4 sm:px-6 h-full'>
+                  <div className='flex items-start gap-3 sm:gap-4 h-full'>
+                    {/* Author Photo */}
+                    {review.authorAttribution?.photoUri &&
+                    !imageErrors.has(uniqueKey) ? (
+                      <img
+                        src={
+                          getImageUrl(review.authorAttribution.photoUri) || ''
+                        }
+                        alt={review.authorAttribution.displayName || 'Reviewer'}
+                        className='w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover shrink-0 border border-gray-200'
+                        loading='lazy'
+                        decoding='async'
+                        crossOrigin='anonymous'
+                        referrerPolicy='no-referrer'
+                        onError={(e) => {
+                          const img = e.currentTarget
+                          const photoUri = review.authorAttribution?.photoUri
 
-                      console.warn(
-                        'Failed to load profile image:',
-                        photoUri,
-                        'Current src:',
-                        img.src
-                      )
+                          console.warn(
+                            'Failed to load profile image:',
+                            photoUri,
+                            'Current src:',
+                            img.src
+                          )
 
-                      // Try proxy as fallback only once
-                      if (
-                        photoUri &&
-                        !retryingImages.has(review.name) &&
-                        (photoUri.includes('googleusercontent.com') ||
-                          photoUri.includes('google.com')) &&
-                        !img.src.includes('/api/proxy-image')
-                      ) {
-                        const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(
-                          photoUri
-                        )}`
-                        console.log('Trying proxy URL as fallback:', proxyUrl)
-                        setRetryingImages((prev) =>
-                          new Set(prev).add(review.name)
-                        )
-                        img.src = proxyUrl
-                      } else {
-                        // Both direct and proxy failed, show fallback
-                        console.error(
-                          'Both direct and proxy failed for image:',
-                          photoUri
-                        )
-                        setImageErrors((prev) => new Set(prev).add(review.name))
-                      }
-                    }}
-                    onLoad={() => {
-                      console.log(
-                        'Image loaded successfully:',
-                        review.authorAttribution?.photoUri
-                      )
-                    }}
-                  />
-                ) : (
-                  <div className='w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex-shrink-0 flex items-center justify-center border border-gray-200'>
-                    <svg
-                      className='w-6 h-6 sm:w-8 sm:h-8 text-gray-500'
-                      fill='currentColor'
-                      viewBox='0 0 20 20'
-                      aria-hidden='true'
-                    >
-                      <path
-                        fillRule='evenodd'
-                        d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z'
-                        clipRule='evenodd'
+                          // Try proxy as fallback only once
+                          if (
+                            photoUri &&
+                            !retryingImages.has(uniqueKey) &&
+                            (photoUri.includes('googleusercontent.com') ||
+                              photoUri.includes('google.com')) &&
+                            !img.src.includes('/api/proxy-image')
+                          ) {
+                            const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(
+                              photoUri
+                            )}`
+                            console.log(
+                              'Trying proxy URL as fallback:',
+                              proxyUrl
+                            )
+                            setRetryingImages((prev) =>
+                              new Set(prev).add(uniqueKey)
+                            )
+                            img.src = proxyUrl
+                          } else {
+                            // Both direct and proxy failed, show fallback
+                            console.error(
+                              'Both direct and proxy failed for image:',
+                              photoUri
+                            )
+                            setImageErrors((prev) =>
+                              new Set(prev).add(uniqueKey)
+                            )
+                          }
+                        }}
+                        onLoad={() => {
+                          console.log(
+                            'Image loaded successfully:',
+                            review.authorAttribution?.photoUri
+                          )
+                        }}
                       />
-                    </svg>
-                  </div>
-                )}
-
-                <div className='flex-1 min-w-0'>
-                  {/* Author Name and Rating */}
-                  <div className='flex items-start justify-between mb-2 gap-2'>
-                    <div className='flex-1 min-w-0'>
-                      <p className='font-semibold text-gray-900 text-sm sm:text-base'>
-                        {review.authorAttribution?.displayName || 'Anonymous'}
-                      </p>
-                      <div className='flex items-center gap-2 mt-1 flex-wrap'>
-                        <div className='flex items-center'>
-                          {renderStars(review.rating)}
-                        </div>
-                        <span className='text-xs sm:text-sm text-gray-500 whitespace-nowrap'>
-                          {review.relativePublishTimeDescription ||
-                            formatDate(review.publishTime)}
-                        </span>
+                    ) : (
+                      <div className='w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 shrink-0 flex items-center justify-center border border-gray-200'>
+                        <svg
+                          className='w-6 h-6 sm:w-8 sm:h-8 text-gray-500'
+                          fill='currentColor'
+                          viewBox='0 0 20 20'
+                          aria-hidden='true'
+                        >
+                          <path
+                            fillRule='evenodd'
+                            d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z'
+                            clipRule='evenodd'
+                          />
+                        </svg>
                       </div>
+                    )}
+
+                    <div className='flex-1 min-w-0'>
+                      {/* Author Name and Rating */}
+                      <div className='flex items-start justify-between mb-2 gap-2'>
+                        <div className='flex-1 min-w-0'>
+                          <p className='font-semibold text-gray-900 text-sm sm:text-base'>
+                            {review.authorAttribution?.displayName ||
+                              'Anonymous'}
+                          </p>
+                          <div className='flex items-center gap-2 mt-1 flex-wrap'>
+                            <div className='flex items-center'>
+                              {renderStars(review.rating)}
+                            </div>
+                            <span className='text-xs sm:text-sm text-gray-500 whitespace-nowrap'>
+                              {review.relativePublishTimeDescription ||
+                                formatDate(review.publishTime)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Review Text */}
+                      <p className='text-gray-700 leading-relaxed mt-3 text-sm sm:text-base'>
+                        {review.text?.text || review.originalText?.text || ''}
+                      </p>
+
+                      {/* Google Maps Link */}
+                      {review.googleMapsUri && (
+                        <a
+                          href={review.googleMapsUri}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='inline-flex items-center gap-1 text-xs sm:text-sm text-blue-600 hover:text-blue-800 mt-4'
+                        >
+                          <svg
+                            className='w-3 h-3 sm:w-4 sm:h-4'
+                            fill='none'
+                            stroke='currentColor'
+                            viewBox='0 0 24 24'
+                          >
+                            <path
+                              strokeLinecap='round'
+                              strokeLinejoin='round'
+                              strokeWidth={2}
+                              d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
+                            />
+                          </svg>
+                          View on Google Maps
+                        </a>
+                      )}
                     </div>
                   </div>
-
-                  {/* Review Text */}
-                  <p className='text-gray-700 leading-relaxed mt-3 text-sm sm:text-base'>
-                    {review.text?.text || review.originalText?.text || ''}
-                  </p>
-
-                  {/* Google Maps Link */}
-                  {review.googleMapsUri && (
-                    <a
-                      href={review.googleMapsUri}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='inline-flex items-center gap-1 text-xs sm:text-sm text-blue-600 hover:text-blue-800 mt-4'
-                    >
-                      <svg
-                        className='w-3 h-3 sm:w-4 sm:h-4'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
-                        />
-                      </svg>
-                      View on Google Maps
-                    </a>
-                  )}
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </SwiperSlide>
+            )
+          })}
+        </Swiper>
 
-        {/* Navigation Arrows */}
-        {reviews.length > 1 && (
-          <>
-            <button
-              onClick={goToPrevious}
-              className={clsx(
-                'absolute',
-                'left-2 sm:left-4',
-                'top-1/2',
-                '-translate-y-1/2',
-                'bg-white',
-                'rounded-full',
-                'p-1.5 sm:p-2',
-                'shadow-lg',
-                'border',
-                'border-gray-200',
-                'hover:bg-gray-50',
-                'active:bg-gray-100',
-                'transition-colors',
-                'z-10',
-                'focus:outline-none',
-                'focus:ring-2',
-                'focus:ring-red',
-                'focus:ring-offset-2'
-              )}
-              aria-label='Previous review'
-            >
-              <svg
-                className='w-5 h-5 sm:w-6 sm:h-6 text-gray-700'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M15 19l-7-7 7-7'
-                />
-              </svg>
-            </button>
-
-            <button
-              onClick={goToNext}
-              className={clsx(
-                'absolute',
-                'right-2 sm:right-4',
-                'top-1/2',
-                '-translate-y-1/2',
-                'bg-white',
-                'rounded-full',
-                'p-1.5 sm:p-2',
-                'shadow-lg',
-                'border',
-                'border-gray-200',
-                'hover:bg-gray-50',
-                'active:bg-gray-100',
-                'transition-colors',
-                'z-10',
-                'focus:outline-none',
-                'focus:ring-2',
-                'focus:ring-red',
-                'focus:ring-offset-2'
-              )}
-              aria-label='Next review'
-            >
-              <svg
-                className='w-5 h-5 sm:w-6 sm:h-6 text-gray-700'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M9 5l7 7-7 7'
-                />
-              </svg>
-            </button>
-          </>
-        )}
-      </div>
-
-      {/* Dots Indicator */}
-      {reviews.length > 1 && (
-        <div className='flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-t border-gray-200'>
-          {reviews.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={clsx(
-                'h-2',
-                'rounded-full',
-                'transition-all',
-                'duration-300',
-                'focus:outline-none',
-                'focus:ring-2',
-                'focus:ring-red',
-                'focus:ring-offset-2',
-                index === currentIndex
-                  ? 'bg-red w-8'
-                  : 'bg-gray-300 hover:bg-gray-400 w-2'
-              )}
-              aria-label={`Go to review ${index + 1}`}
+        {/* Custom Navigation Buttons */}
+        <button
+          className={clsx(
+            'swiper-button-prev-custom',
+            'absolute',
+            'left-2 sm:left-4',
+            'top-1/2',
+            '-translate-y-1/2',
+            'bg-white',
+            'rounded-full',
+            'p-1.5 sm:p-2',
+            'shadow-lg',
+            'border',
+            'border-gray-200',
+            'hover:bg-gray-50',
+            'active:bg-gray-100',
+            'transition-colors',
+            'z-10',
+            'focus:outline-none',
+            'focus:ring-2',
+            'focus:ring-red',
+            'focus:ring-offset-2'
+          )}
+          aria-label='Previous review'
+        >
+          <svg
+            className='w-5 h-5 sm:w-6 sm:h-6 text-gray-700'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M15 19l-7-7 7-7'
             />
-          ))}
-        </div>
-      )}
+          </svg>
+        </button>
+
+        <button
+          className={clsx(
+            'swiper-button-next-custom',
+            'absolute',
+            'right-2 sm:right-4',
+            'top-1/2',
+            '-translate-y-1/2',
+            'bg-white',
+            'rounded-full',
+            'p-1.5 sm:p-2',
+            'shadow-lg',
+            'border',
+            'border-gray-200',
+            'hover:bg-gray-50',
+            'active:bg-gray-100',
+            'transition-colors',
+            'z-10',
+            'focus:outline-none',
+            'focus:ring-2',
+            'focus:ring-red',
+            'focus:ring-offset-2'
+          )}
+          aria-label='Next review'
+        >
+          <svg
+            className='w-5 h-5 sm:w-6 sm:h-6 text-gray-700'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M9 5l7 7-7 7'
+            />
+          </svg>
+        </button>
+
+        {/* Custom Pagination */}
+        <div className='swiper-pagination-custom flex items-center justify-center gap-2 px-4 sm:px-6 pt-4' />
+      </div>
     </div>
   )
 }
