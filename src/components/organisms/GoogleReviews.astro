@@ -1,0 +1,74 @@
+---
+//  components
+import H2 from '../atoms/H2'
+import GoogleReviewsSlider from '../molecules/GoogleReviewsSlider'
+import getPlaceDetails from '../../libs/api/places'
+
+let placeData = null
+let error = null
+
+try {
+  placeData = await getPlaceDetails()
+} catch (err) {
+  error = err instanceof Error ? err.message : 'Failed to load reviews'
+  console.error('Error fetching Google Places data:', err)
+}
+---
+
+<section class:list={['container', '']}>
+  {
+    placeData && placeData.reviews && placeData.reviews.length > 0 ? (
+      <div class='my-16'>
+        <H2
+          client:load
+          className='text-center mb-8'
+        >
+          What Our Customers Say
+        </H2>
+
+        {placeData.rating && (
+          <div class='flex items-center justify-center gap-4 mb-6 flex-wrap'>
+            <div class='flex items-center gap-2'>
+              <div class='flex items-center'>
+                {[0, 1, 2, 3, 4].map((i) => {
+                  const filled = i < Math.floor(placeData.rating || 0)
+                  return (
+                    <svg
+                      class={`w-6 h-6 ${
+                        filled ? 'text-yellow-400' : 'text-gray-300'
+                      }`}
+                      fill='currentColor'
+                      viewBox='0 0 20 20'
+                    >
+                      <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
+                    </svg>
+                  )
+                })}
+              </div>
+              <span class='text-lg font-semibold text-gray-800'>
+                {placeData.rating.toFixed(1)}
+              </span>
+              {placeData.userRatingCount && (
+                <span class='text-sm text-gray-600'>
+                  ({placeData.userRatingCount}{' '}
+                  {placeData.userRatingCount === 1 ? 'review' : 'reviews'})
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        <GoogleReviewsSlider
+          client:load
+          reviews={placeData.reviews}
+          placeName={placeData.displayName?.text || 'Mar Co. CABO'}
+          formattedAddress={placeData.formattedAddress}
+        />
+      </div>
+    ) : error ? (
+      <div class='my-16 text-center text-gray-600'>
+        <p>Unable to load reviews at this time.</p>
+      </div>
+    ) : null
+  }
+</section>
