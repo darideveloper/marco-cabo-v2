@@ -244,6 +244,7 @@ export default function ConfirmationForm({
   return (
     <form
       onSubmit={handleSubmit}
+      noValidate
       className={clsx('space-y-6', className)}
       aria-label='Travel itinerary confirmation form'
       aria-labelledby='travel-itinerary-heading'
@@ -573,7 +574,17 @@ export default function ConfirmationForm({
       <div className='pt-4'>
         <button
           type='submit'
+          onClick={(e) => {
+            // Explicit check for Safari compatibility
+            // Safari sometimes doesn't respect disabled attribute changes
+            if (!isFormValid || isSubmitting || submitSuccess) {
+              e.preventDefault()
+              e.stopPropagation()
+              return false
+            }
+          }}
           disabled={!isFormValid || isSubmitting || submitSuccess}
+          aria-disabled={!isFormValid || isSubmitting || submitSuccess}
           className={clsx(
             'w-full px-6 py-3 rounded-lg font-semibold text-white transition-colors',
             isFormValid && !isSubmitting && !submitSuccess
