@@ -105,6 +105,7 @@ export default function HotelSelectModal({
       animationDuration={300}
       useAdvancedAnimations={true}
       closeButtonAriaLabel="Close hotel selection modal"
+      allowOverflow={true}
     >
 
         {/* Title */}
@@ -155,7 +156,7 @@ export default function HotelSelectModal({
             {isDropdownOpen && (
               <div
                 className={clsx(
-                  'absolute z-10 w-full mt-1',
+                  'absolute z-[100] w-full mt-1',
                   'bg-white border border-gray-300 rounded-lg',
                   'shadow-lg',
                   'max-h-60 overflow-y-auto'

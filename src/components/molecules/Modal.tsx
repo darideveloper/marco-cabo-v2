@@ -56,6 +56,11 @@ export interface ModalProps {
    * Custom className for the overlay
    */
   overlayClassName?: string
+  /**
+   * Whether to allow content to overflow (useful for dropdowns)
+   * @default false
+   */
+  allowOverflow?: boolean
 }
 
 export default function Modal({
@@ -72,6 +77,7 @@ export default function Modal({
   useAdvancedAnimations = true,
   contentClassName,
   overlayClassName,
+  allowOverflow = false,
 }: ModalProps) {
   const [isClosing, setIsClosing] = useState(false)
   const [isOpening, setIsOpening] = useState(true) // Start with true to show initial closed state
@@ -164,7 +170,7 @@ export default function Modal({
     maxWidth,
     'w-full mx-4',
     'max-h-[90vh]',
-    'overflow-y-auto',
+    allowOverflow ? 'overflow-visible' : 'overflow-y-auto',
     'shadow-xl',
     'relative',
     contentClassName,
