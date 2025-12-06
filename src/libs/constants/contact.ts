@@ -1,12 +1,12 @@
 export const socialLinks = [
     {
         iconName: 'facebook',
-        href: 'https://www.facebook.com/profile.php?id=100093181244966',
+        href: 'https://www.facebook.com/profile.php?id=61582972344027',
         label: 'Facebook',
     },
     {
         iconName: 'instagram',
-        href: 'https://www.instagram.com/profile.php?id=100093181244966',
+        href: 'https://www.instagram.com/mar.co.cabo',
         label: 'Instagram',
     },
 ]
