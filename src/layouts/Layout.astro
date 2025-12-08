@@ -65,6 +65,20 @@ interface Props {
       name='generator'
       content={Astro.generator}
     />
+    <!-- Google tag (gtag.js) -->
+    <script
+      is:inline
+      async
+      src='https://www.googletagmanager.com/gtag/js?id=G-0ZCDV77MYP'
+    ></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+      gtag('config', 'G-0ZCDV77MYP')
+    </script>
     <slot name='seo' />
   </head>
   <body>
