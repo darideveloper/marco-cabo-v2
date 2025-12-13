@@ -15,15 +15,19 @@ const hotelsData = await getHotelsData()
 const hotels = hotelsData.results as HotelsDataType[]
 
 const hotelData: HotelDataType[] = []
-hotels.forEach((hotel) => {
-  hotel.locations.forEach((location) => {
-    hotelData.push({
-      id: location.id,
-      name: location.name,
-      hotelName: hotel.name,
-    })
+if (hotels && Array.isArray(hotels)) {
+  hotels.forEach((hotel) => {
+    if (hotel.locations && Array.isArray(hotel.locations)) {
+      hotel.locations.forEach((location) => {
+        hotelData.push({
+          id: location.id,
+          name: location.name,
+          hotelName: hotel.name,
+        })
+      })
+    }
   })
-})
+}
 
 const postalCodes = await getPostalCodes()
 const postalCodesData = postalCodes.results as PostalCodesType[]
@@ -31,7 +35,7 @@ const postalCodesData = postalCodes.results as PostalCodesType[]
 
 <section class:list={['container', '', className]}>
   <DestinationSelect
-    client:load
+    client:only="react"
     hotelData={hotelData}
     postalCodesData={postalCodesData}
   />

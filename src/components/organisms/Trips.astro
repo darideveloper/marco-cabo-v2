@@ -7,7 +7,7 @@ const serviceTypes = await getServiceTypes()
 
 <section class:list={['container', '']}>
   <TripSelect
-    client:load
+    client:only="react"
     serviceTypes={serviceTypes.results as ServiceType[]}
   />
 </section>
