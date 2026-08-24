@@ -1,0 +1,70 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+context: |
+  ## Overview
+  Marco Cabo v2 ("marco-cabo-v2") is the public website for Mar Co. CABO, a luxury
+  airport-transfer and vacation-planning company in Los Cabos, Mexico (SJD airport).
+  It is a marketing site plus an online booking flow. Customers select a trip type,
+  vehicle and destination, see a live price, then pay via a Stripe Payment Link and
+  submit their flight itinerary on a post-payment confirmation page.
+
+  ## Tech stack
+  - Astro 5 (SSR, @astrojs/node adapter in "standalone" mode) + React 19 islands
+  - Tailwind CSS 4 via @tailwindcss/vite (custom @theme tokens in src/styles/global.css,
+    brand red = #F92905 exposed as `red`)
+  - Zustand 5 stores (no Redux/context)
+  - AOS (scroll animations), Swiper 12 (reviews slider), lucide + react-icons
+  - Backend: external Django REST API (token auth header `Authorization: Token <key>`),
+    all calls go through src/libs/common/fetchData.ts with base `${PUBLIC_API_BASE_URL}/api`
+  - Google Places API (server-side) for live reviews
+  - Analytics: Google Tag Manager + gtag + Umami, injected inline in src/layouts/Layout.astro
+  - Node >= 20.3.0. Package manager: npm (package-lock.json); pnpm-lock.yaml is gitignored.
+
+  ## Architecture conventions
+  - Atomic design: src/components/{atoms,molecules,organisms,utils}
+  - All backend data is fetched server-side in .astro organisms and passed as props
+    to React islands. Interactive widgets are React islands hydrated with `client:load`
+    or `client:only="react"`.
+  - Shared client state lives in src/libs/store/mainFormStore.ts (booking flow) and
+    src/libs/store/confirmationFormStore.ts (itinerary form).
+  - No test framework, no linter, no CI, no typecheck script currently configured.
+
+  ## Key flows (top-level capabilities)
+  - booking: trip / vehicle / destination selection + live pricing (home page)
+  - checkout: review modal, create sale (POST /sales/), redirect to Stripe Payment Link
+  - confirmation: fetch sale by stripe_code (GET /sales/?stripe_code=), submit itinerary
+    (POST /sales/done/) at /confirmation/[token]
+  - reviews: Google Places business details + Swiper slider, avatar image proxy fallback
+  - seo: PageSEO/BaseSEO, JSON-LD LocalBusiness, sitemap + robots.txt, analytics tags
+
+  ## Environment variables (see .env / .env.production; NEVER commit real secrets)
+  - PUBLIC_BASE_URL, PUBLIC_API_BASE_URL
+  - PUBLIC_TOKEN_KEY (Django auth token, shipped to the browser by design)
+  - PUBLIC_GOOGLE_PLACES_API_KEY, PUBLIC_GOOGLE_PLACES_BUSINESS_ID
+  These files are gitignored. Deploy via Nixpacks (nodejs_20, npm).
+
+  ## Domain vocabulary
+  - trip / service type: One Way or Round Trip
+  - vehicle: fleet item with a passenger capacity; image = /images/vehicles/{name}.webp
+  - destination: a Hotel (hotel + location) or a Villa/AirBnB postal code
+  - location id: a hotel location id or postal code id, sent to the pricing/sale API
+  - sale: created at checkout; has a stripe_code used as the confirmation token
+  - round trip detection is a fragile string match: service type name includes "round"
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+rules:
+  proposal:
+    - Keep proposals under 500 words
+    - Always include a "Non-goals" section when scoping
+    - Capabilities must map to existing specs in openspec/specs/ when modifying behavior
+  specs:
+    - Use SHALL/MUST for normative requirements; avoid should/may
+    - Every requirement MUST have at least one scenario with exactly 4 hashtags (####)
+    - Reference real endpoints, stores and components (e.g. mainFormStore, POST /sales/)
+  tasks:
+    - Break tasks into chunks of max 2 hours
+    - Each task must be verifiable via `astro build` or a manual page check
+    - Group tasks by capability and order by dependency (state store -> UI -> API)
