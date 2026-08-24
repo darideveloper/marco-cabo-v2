@@ -9,7 +9,7 @@ let placeData = null
 let error = null
 
 try {
-  placeData = await getPlaceDetails()
+  placeData = await getPlaceDetails(undefined, Astro.url.origin)
 } catch (err) {
   error = err instanceof Error ? err.message : 'Failed to load reviews'
   console.error('Error fetching Google Places data:', err)

@@ -34,7 +34,8 @@ export interface GooglePlacesResponse {
 }
 
 const getPlaceDetails = async (
-  placeId?: string
+  placeId?: string,
+  referer?: string
 ): Promise<GooglePlacesResponse> => {
   const apiKey = import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY
   const businessId = import.meta.env.PUBLIC_GOOGLE_PLACES_BUSINESS_ID || placeId
@@ -49,12 +50,18 @@ const getPlaceDetails = async (
 
   const url = `https://places.googleapis.com/v1/places/${businessId}`
   
+  const headers: Record<string, string> = {
+    'X-Goog-Api-Key': apiKey,
+    'X-Goog-FieldMask': 'displayName,formattedAddress,rating,userRatingCount,googleMapsUri,reviews',
+  }
+
+  if (referer) {
+    headers['Referer'] = referer
+  }
+
   const response = await fetch(url, {
     method: 'GET',
-    headers: {
-      'X-Goog-Api-Key': apiKey,
-      'X-Goog-FieldMask': 'displayName,formattedAddress,rating,userRatingCount,googleMapsUri,reviews'
-    }
+    headers,
   })
 
   if (!response.ok) {
