@@ -1,0 +1,48 @@
+---
+const image = '/images/banner-bottom.webp'
+---
+
+<section
+  class='w-screen relative bg-no-repeat bg-cover bg-center'
+  style={`background-image: url('${image}');`}
+  aria-label='Experiences and vacation planning banner'
+>
+  <!-- Decorative image for SEO and accessibility -->
+  <img src={image} alt='' class='sr-only' loading='lazy' />
+
+  <div class='container flex flex-col items-center justify-center text-center gap-4 py-32! min-h-[320px] lg:min-h-[400px]'>
+    <div data-aos='fade-up'>
+      <div class='flex items-center justify-center px-8 py-3 rounded-[20px]'>
+        <img
+          src='/images/logo.webp'
+          alt='Mar Co. CABO - Premium Transportation Services in Los Cabos'
+          title='Mar Co. CABO Logo - Luxury Transportation Los Cabos'
+          class='h-20 w-auto object-contain'
+        />
+      </div>
+    </div>
+    <p
+      class='text-white font-bold text-xl lg:text-2xl'
+      data-aos='fade-up'
+    >
+      Your Cabo Experience, Book It Today.
+    </p>
+    <p
+      class='text-white text-base lg:text-lg max-w-2xl'
+      data-aos='fade-up'
+    >
+      Explore activities, build your selection, and we'll reach out to confirm
+      availability and finalize the details.
+    </p>
+    <div data-aos='fade-up'>
+      <a
+        href='https://caboexperiences.com/experiences/'
+        target='_blank'
+        rel='noopener noreferrer'
+        class='inline-flex items-center justify-center bg-red text-white font-bold uppercase px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:opacity-80'
+      >
+        Go to Activities
+      </a>
+    </div>
+  </div>
+</section>
