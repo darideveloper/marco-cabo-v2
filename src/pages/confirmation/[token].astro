@@ -113,6 +113,15 @@ const pageDescription = confirmationMessage
                   <span class='font-semibold'>{saleData.client.email}</span>
                 </div>
 
+                {
+                  saleData.vip_code != null && (
+                    <div class='flex justify-between items-center py-2 border-b'>
+                      <span class='text-gray-600'>VIP code:</span>
+                      <span class='font-semibold'>{saleData.vip_code}</span>
+                    </div>
+                  )
+                }
+
                 <div class='flex justify-between items-center py-3 border-t-2 border-gray-300 mt-4'>
                   <span class='text-xl text-gray-700'>Total:</span>
                   <span class='text-2xl font-bold text-black'>

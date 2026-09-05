@@ -7,6 +7,7 @@ export interface CreateSalePayload {
     client_name: string
     client_last_name: string
     client_email: string
+    vip_code?: string
 }
 
 export interface CreateSaleResponse {
@@ -15,6 +16,10 @@ export interface CreateSaleResponse {
     data?: {
         payment_link?: string
         [key: string]: unknown
+    }
+    errors?: {
+        vip_code?: string[]
+        [key: string]: string[] | undefined
     }
     [key: string]: unknown
 }
@@ -36,9 +41,10 @@ export interface SaleData {
     }
     total: number
     stripe_code: string
+    vip_code: string | null
     client: {
         name: string
-        last_name: string
+        last_name: string | null
         email: string
     }
 }

@@ -32,6 +32,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
   const contactFirstName = useMainFormStore((state) => state.contactFirstName)
   const contactLastName = useMainFormStore((state) => state.contactLastName)
   const contactEmail = useMainFormStore((state) => state.contactEmail)
+  const vipCode = useMainFormStore((state) => state.vipCode)
   const total = useMainFormStore((state) => state.total)
   const setContactFirstName = useMainFormStore(
     (state) => state.setContactFirstName
@@ -40,6 +41,8 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
     (state) => state.setContactLastName
   )
   const setContactEmail = useMainFormStore((state) => state.setContactEmail)
+  const setVipCode = useMainFormStore((state) => state.setVipCode)
+  const clearVipCode = useMainFormStore((state) => state.clearVipCode)
   const destinationDisplay = selectedHotel
     ? `${selectedHotel.name} - ${selectedHotel.hotelName}`
     : selectedPostalCode?.name
@@ -64,11 +67,17 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [vipFieldError, setVipFieldError] = useState<string | null>(null)
+
+  const handleModalClose = () => {
+    setVipFieldError(null)
+    onClose()
+  }
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleModalClose}
       maxWidth='max-w-lg'
       padding='p-4 sm:p-6 md:p-8'
       borderRadius='rounded-2xl'
@@ -161,6 +170,50 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
             required
           />
         </div>
+        <div className='space-y-2'>
+          <label
+            className='text-sm font-medium text-gray-700'
+            htmlFor='vip-code'
+          >
+            VIP code (optional)
+          </label>
+          <input
+            id='vip-code'
+            type='text'
+            value={vipCode}
+            onChange={(event) => {
+              setVipCode(event.target.value)
+              if (vipFieldError) setVipFieldError(null)
+            }}
+            onBlur={(event) => {
+              setVipCode(event.target.value.trim())
+              if (vipFieldError) {
+                setVipFieldError(null)
+              }
+            }}
+            placeholder='e.g. VIP123'
+            maxLength={10}
+            inputMode='text'
+            autoComplete='off'
+            aria-invalid={!!vipFieldError}
+            aria-describedby={vipFieldError ? 'vip-code-error' : undefined}
+            className={clsx(
+              'w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:border-transparent text-gray-900',
+              vipFieldError
+                ? 'border-red-500 focus:ring-red/70'
+                : 'border-gray-300 focus:ring-red/70'
+            )}
+          />
+          {vipFieldError && (
+            <p
+              id='vip-code-error'
+              className='text-sm text-red-600'
+              role='alert'
+            >
+              {vipFieldError}
+            </p>
+          )}
+        </div>
         {!isFormValid && (
           <p className='text-sm text-red-600'>
             Please complete all fields to continue.
@@ -172,7 +225,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
       <div className='flex flex-col sm:flex-row justify-end gap-3'>
         <button
           type='button'
-          onClick={onClose}
+          onClick={handleModalClose}
           className={clsx(
             'w-full sm:w-auto',
             'px-4 py-2.5',
@@ -195,8 +248,10 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
               return
             }
             setSubmitError(null)
+            setVipFieldError(null)
             setIsSubmitting(true)
             try {
+              const vip = vipCode.trim()
               const response = await createSale({
                 vehicle: selectedVehicleId as number,
                 service_type: selectedTrip as number,
@@ -204,15 +259,35 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
                 client_name: contactFirstName.trim(),
                 client_last_name: contactLastName.trim(),
                 client_email: contactEmail.trim(),
+                ...(vip ? { vip_code: vip } : {}),
               })
+
+              const isVipError =
+                response?.status === 'error' &&
+                (response?.errors?.vip_code?.length ||
+                  response?.message === 'Invalid VIP code')
+
+              if (isVipError) {
+                setVipFieldError(
+                  'The VIP code you entered is invalid or inactive. Please correct it or clear the field to continue to payment.'
+                )
+                setTimeout(() => {
+                  document.getElementById('vip-code')?.focus()
+                }, 0)
+                return
+              }
 
               const paymentLink = response?.data?.payment_link
               if (paymentLink) {
+                clearVipCode()
+                setVipFieldError(null)
                 if (typeof window !== 'undefined') {
                   window.location.assign(paymentLink)
                 }
               } else if (response?.status === 'success') {
-                onClose()
+                clearVipCode()
+                setVipFieldError(null)
+                handleModalClose()
               } else {
                 throw new Error(response?.message || errorApiMessage)
               }
@@ -220,7 +295,17 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
               console.error('Error submitting sale:', error)
               const errorMessage =
                 error instanceof Error ? error.message : errorApiMessage
-              setSubmitError(errorMessage)
+              // Narrow: only exact backend message maps to field error (broad includes would misroute generic messages)
+              if (errorMessage === 'Invalid VIP code') {
+                setVipFieldError(
+                  'The VIP code you entered is invalid or inactive. Please correct it or clear the field to continue to payment.'
+                )
+                setTimeout(() => {
+                  document.getElementById('vip-code')?.focus()
+                }, 0)
+              } else {
+                setSubmitError(errorMessage)
+              }
             } finally {
               setIsSubmitting(false)
             }

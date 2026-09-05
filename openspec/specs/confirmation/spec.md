@@ -21,6 +21,7 @@ summary, or redirect/error when the token is missing or invalid.
 - **GIVEN** a token matching an existing sale
 - **WHEN** `getSaleByStripeCode(token)` (GET /sales/?stripe_code=) returns success
 - **THEN** the page renders the order summary (order id, service type, location, vehicle, client, paid total, stripe_code)
+- **AND** when `data.vip_code` is non-null, the summary also shows `VIP code: {vip_code}`; when `null`, the row is omitted
 
 #### Scenario: Invalid or failed lookup
 - **WHEN** the lookup fails or returns an error status
